@@ -33,6 +33,15 @@ export class Functions {
   }
 
   /**
+   * Returns a formatted reply
+   * @param {string} replyContent Reply content you would like to format
+   * @param {string} emoji Emoji you would like to add
+   */
+   formatReply(replyContent: string, emoji: string) {
+    return `${emoji} | ${replyContent}`
+   };
+
+  /**
    * Returns a formatted time
    * @param {number} time Your timestamp in ms
    * @param {TimestampStylesString} type
