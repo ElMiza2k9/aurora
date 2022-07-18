@@ -22,7 +22,7 @@ export default class StopCommand extends Command {
       interaction.reply({
         content: interaction.client.functions.formatReply(
           "Cleared the queue and destroyed the voice connection.",
-          interaction.client.config.emojis.check_mark
+          interaction.client.config.emojis.stop
         ),
       });
     }
