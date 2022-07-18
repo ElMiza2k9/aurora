@@ -1,0 +1,12 @@
+{
+  "token": "INSERT YOUR TOKEN HERE",
+  "debug": {
+    "handlerLogs": false,
+    "debugEvents": false
+  },
+  "commands": {
+    "guildCommands": false,
+    "clientId": "111111111111111111",
+    "guildId": "111111111111111111"
+  }
+}
