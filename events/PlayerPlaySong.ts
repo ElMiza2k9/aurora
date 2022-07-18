@@ -11,7 +11,7 @@ export default class PlayerPlaySongEvent extends Event {
     song.metadata.i.followUp({
       content: client.functions.formatReply(
         `Started playing **${client.functions.escapeMd(song.name)}**.`,
-        client.config.emojis.check_mark
+        client.config.emojis.play
       ),
     });
   }
