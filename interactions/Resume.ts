@@ -18,7 +18,7 @@ export default class ResumeCommand extends Command {
     );
 
     if (isChecked === true) {
-      queue.pause();
+      queue.resume();
       interaction.reply({
         content: interaction.client.functions.formatReply(
           "Resumed the playback.",
