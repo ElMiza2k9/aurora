@@ -9,7 +9,10 @@ export default class PlayerPlaySongEvent extends Event {
 
   async execute(client: AuroraClient, _queue: Queue, song: Song<any>) {
     song.metadata.i.followUp({
-      content: `Started playing **${client.functions.escapeMd(song.name)}**.`,
+      content: client.functions.formatReply(
+        `Started playing **${client.functions.escapeMd(song.name)}**.`,
+        client.config.emojis.check_mark
+      ),
     });
   }
 }

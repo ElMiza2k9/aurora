@@ -9,12 +9,15 @@ export default class PlayerErrorEvent extends Event {
   }
 
   async execute(
-    _client: AuroraClient,
+    client: AuroraClient,
     channel: TextChannel,
     error: DisTubeError<string>
   ) {
     channel.send({
-      content: `An unknown ${error.name} error happened during playback. Please check the logs for details.`,
+      content: client.functions.formatReply(
+        `An unknown ${error.name} error happened during playback. Please check the logs for details.`,
+        client.config.emojis.cross_mark
+      ),
     });
     console.log(`[error] ${error?.stack}`);
   }
