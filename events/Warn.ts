@@ -7,7 +7,7 @@ export default class WarnEvent extends Event {
   }
 
   async execute(client: AuroraClient, info: any) {
-    if (client.config.debug.debugEvents) {
+    if (client.config.debug.debug_events) {
       console.log(`[warn] ${info}`);
     }
   }

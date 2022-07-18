@@ -37,7 +37,7 @@ export class EventHandler {
         this.client.on(event.name, event.execute.bind(null, this.client));
       }
 
-      if (this.client.config.debug.handlerLogs) {
+      if (this.client.config.debug.handler_logs) {
         console.log(`[events] Loaded event ${event.name}`);
       }
     }

@@ -34,7 +34,7 @@ export class InteractionHandler {
 
       this.client.interactions.set(interaction.name, interaction);
 
-      if (this.client.config.debug.handlerLogs === true) {
+      if (this.client.config.debug.handler_logs === true) {
         console.log(`[debug] Loaded command ${interaction.name}`);
       }
     }
@@ -42,11 +42,11 @@ export class InteractionHandler {
 
   async createCommand(data: ApplicationCommandData) {
     if (
-      this.client.config.commands.guildCommands &&
-      this.client.config.commands.guildId
+      this.client.config.commands.guild_commands &&
+      this.client.config.commands.guild_id
     ) {
       const g = await this.client.guilds.fetch(
-        this.client.config.commands.guildId
+        this.client.config.commands.guild_id
       );
       await g.commands.create(data).catch(console.error);
     } else {
