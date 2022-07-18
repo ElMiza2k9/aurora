@@ -4,7 +4,6 @@
   "description": "A custom music bot for Adwaita Discord server.",
   "main": "index.ts",
   "scripts": {
-    "deploy": "node deploy.js",
     "prod": "ts-node index.ts",
     "dev": "nodemon",
     "format": "prettier --write \"**/*.{js,ts,json}\""

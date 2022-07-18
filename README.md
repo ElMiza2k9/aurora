@@ -1,4 +1,4 @@
-## Aurora
+# Aurora
 A custom music bot for [Adwaita Discord server](https://discord.gg/ctKs8WRQR5).
 
 ## Disclaimer
@@ -21,10 +21,9 @@ We aim to provide server owners with a way to reduce their dependency on third-p
 5. Fill in your `config.json` file.
     - *Optional: if you want to use guild commands instead of global ones, enable Developer Mode in `User Settings => Advanced`, then right-click the server where you want to use the bot and copy its ID.*
 6. Run `npm i` to install all the dependencies.
-7. Run `npm run deploy` to deploy slash commands.
-8. Run `npm run prod` to run the bot.
+7. Run `npm run prod` to run the bot.
     - If you're modifying the code (e.g. working on a PR), you may find `npm run dev` more useful.
-9. You're awesome!
+8. You're awesome!
 
 ## Contributing
 We strive to provide a quality product; however, nothing is ideal in this world. If you find any bugs or encounter issues, feel free to [open an issue](https://github.com/chamln/aurora/issues). If you found an issue and know how to fix it, or you have implemented a new feature, don't hesitate to [open a pull request](https://github.com/chamln/aurora/pulls) - we'll do our best to quickly review and merge your changes and inform you of problems, if any.
