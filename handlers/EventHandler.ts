@@ -1,5 +1,4 @@
 import glob from "glob";
-import {} from "distube";
 import { AuroraClient } from "../structures/AuroraClient";
 import { Event } from "../structures/Event";
 import { resolveFile, validateFile } from "../structures/HandlerFunctions";
