@@ -1,12 +1,16 @@
 {
   "token": "INSERT YOUR TOKEN HERE",
   "debug": {
-    "handlerLogs": false,
-    "debugEvents": false
+    "handler_logs": true,
+    "debug_events": true
   },
   "commands": {
-    "guildCommands": false,
-    "clientId": "111111111111111111",
-    "guildId": "111111111111111111"
+    "guild_commands": true,
+    "client_id": "111111111111111111",
+    "guild_id": "111111111111111111"
+  },
+  "emojis": {
+    "check_mark": ":white_check_mark:",
+    "cross_mark": ":x:"
   }
 }
