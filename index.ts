@@ -2,7 +2,7 @@ import { AuroraClient } from "./structures/AuroraClient";
 const client = new AuroraClient();
 client.login(client.config.token);
 
-if (client.config.debug.debugEvents) {
+if (client.config.debug.debug_events) {
   process.on("unhandledRejection", (error) =>
     console.error(`[error] ${error}`)
   );
