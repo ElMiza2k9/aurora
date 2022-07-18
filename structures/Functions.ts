@@ -37,9 +37,72 @@ export class Functions {
    * @param {string} replyContent Reply content you would like to format
    * @param {string} emoji Emoji you would like to add
    */
-   formatReply(replyContent: string, emoji: string) {
-    return `${emoji} | ${replyContent}`
-   };
+  formatReply(replyContent: string, emoji: string) {
+    return `${emoji} | ${replyContent}`;
+  }
+
+  /**
+   * Performs voice channel checks; useful for commands
+   * @param {Interaction} interaction Your interaction (aka slash command)
+   * @param {boolean} checkPlaying Whether to check queue and voice connection
+   */
+  async checkVoice(interaction: any, checkPlaying: boolean) {
+    if (!interaction.member.voice.channel) {
+      return interaction.reply({
+        content: this.formatReply(
+          "You're not in a voice channel.",
+          this.client.config.emojis.cross_mark
+        ),
+        ephemereal: true,
+      });
+    } else if (interaction.member.voice.selfDeaf) {
+      return interaction.reply({
+        content: this.formatReply(
+          "You've deafened yourself.",
+          this.client.config.emojis.cross_mark
+        ),
+        ephemereal: true,
+      });
+    } else if (interaction.member.voice.serverDeaf) {
+      return interaction.reply({
+        content: this.formatReply(
+          "You're deafened server-wide.",
+          this.client.config.emojis.cross_mark
+        ),
+        ephemereal: true,
+      });
+    } else if (
+      interaction.client.voice.channel &&
+      interaction.client.voice.channelId !== interaction.member.voice.channelId
+    ) {
+      return interaction.reply({
+        content: this.formatReply(
+          "You're not in the same voice channel as me.",
+          this.client.config.emojis.cross_mark
+        ),
+        ephemereal: true,
+      });
+    }
+
+    if (checkPlaying) {
+      const queue = await interaction.client.player.queues.get(
+        interaction.guild.id
+      );
+      const connection = await interaction.client.player.voices.get(
+        interaction.guild.id
+      );
+      if (!queue && !connection) {
+        return interaction.reply({
+          content: this.formatReply(
+            "There's no queue and/or voice connection in this server.",
+            this.client.config.emojis.cross_mark
+          ),
+        });
+      }
+    }
+
+    return true;
+  }
 
   /**
    * Returns a formatted time
