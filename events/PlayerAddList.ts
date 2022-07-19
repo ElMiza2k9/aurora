@@ -10,7 +10,9 @@ export default class PlayerAddListEvent extends Event {
   async execute(client: AuroraClient, _queue: Queue, playlist: Playlist<any>) {
     playlist.metadata.i.followUp({
       content: client.functions.formatReply(
-        `Added **${client.functions.escapeMd(playlist.name)}** (${playlist.songs.length} songs) to the queue.`,
+        `Added **${client.functions.escapeMd(playlist.name)}** (${
+          playlist.songs.length
+        } songs) to the queue.`,
         client.config.emojis.check_mark
       ),
     });
