@@ -115,10 +115,10 @@ export class Functions {
     }
 
     if (checkQueue) {
-      if (!queue || queue.songs.length < 2) {
+      if (!queue || queue.songs.length === 1) {
         return interaction.reply({
           content: this.formatReply(
-            "There's nothing to skip to.\nIf you want to destroy the voice connection, use `/stop` instead.",
+            "The current track is the last one in the queue.\nIf you want to destroy the voice connection, use `/stop` instead.",
             this.client.config.emojis.cross_mark
           ),
         });
