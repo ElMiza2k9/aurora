@@ -20,18 +20,24 @@ export default class QueueCommand extends Command {
       );
       const songs = queue.songs
         .map((song, pos) => {
-          return `${pos === 0 ? `Current:` : `#${pos}.`} ${song.name} \`[${
+          return `${
+            pos === 0 ? `Current:` : `#${pos}.`
+          } **${interaction.client.functions.escapeMd(song.name)}** \`[${
             song.formattedDuration
           }]\``;
         })
-        .slice(0, 10)
+        .slice(0, 11)
         .join("\n");
       interaction.reply({
         content: interaction.client.functions.formatReply(
-          `Here's the queue for ${interaction.client.functions.escapeMd(
+          `Here's the queue for **${interaction.client.functions.escapeMd(
             interaction.guild.name
-          )} (first 10 tracks):\n${songs}`,
-          interaction.client.config.emojis.check_mark
+          )}** (${
+            queue.songs.length > 10 ? "first 10" : queue.songs.length
+          } tracks):\n${songs}`,
+          queue.paused
+            ? interaction.client.config.emojis.pause
+            : interaction.client.config.emojis.play
         ),
       });
     }
