@@ -45,8 +45,17 @@ export class Functions {
    * Performs voice channel checks; useful for commands
    * @param {Interaction} interaction Your interaction (aka slash command)
    * @param {boolean} checkPlaying Whether to check queue and voice connection
+   * @param {boolean} checkQueue Whether to check queue size
    */
-  async checkVoice(interaction: any, checkPlaying: boolean) {
+  async checkVoice(
+    interaction: any,
+    checkPlaying: boolean,
+    checkQueue: boolean
+  ) {
+    const queue = await interaction.client.player.queues.get(
+      interaction.guild.id
+    );
+
     if (!interaction.member.voice.channel) {
       return interaction.reply({
         content: this.formatReply(
@@ -85,16 +94,31 @@ export class Functions {
     }
 
     if (checkPlaying) {
-      const queue = await interaction.client.player.queues.get(
-        interaction.guild.id
-      );
       const connection = await interaction.client.player.voices.get(
         interaction.guild.id
       );
-      if (!queue && !connection) {
+      if (!connection) {
         return interaction.reply({
           content: this.formatReply(
-            "There's no queue and/or voice connection in this server.",
+            "There's no voice connection in this server.",
+            this.client.config.emojis.cross_mark
+          ),
+        });
+      } else if (!queue) {
+        return interaction.reply({
+          content: this.formatReply(
+            "The queue is empty.",
+            this.client.config.emojis.cross_mark
+          ),
+        });
+      }
+    }
+
+    if (checkQueue) {
+      if (!queue || queue.songs.length < 2) {
+        return interaction.reply({
+          content: this.formatReply(
+            "There's nothing to skip to.\nIf you want to destroy the voice connection, use `/stop` instead.",
             this.client.config.emojis.cross_mark
           ),
         });

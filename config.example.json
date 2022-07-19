@@ -14,6 +14,7 @@
     "cross_mark": ":x:",
     "play": ":arrow_forward:",
     "pause": ":pause_button:",
-    "stop": ":stop_button:"
+    "stop": ":stop_button:",
+    "skip": ":track_next:"
   }
 }
