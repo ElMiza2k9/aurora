@@ -15,7 +15,7 @@ export default class PlayerErrorEvent extends Event {
   ) {
     channel.send({
       content: client.functions.formatReply(
-        `An unknown ${error.name} error happened during playback. Please check the logs for details.`,
+        `An unknown ${error.name} happened during playback. Please check the logs for details.`,
         client.config.emojis.cross_mark
       ),
     });
