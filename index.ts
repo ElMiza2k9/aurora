@@ -1,3 +1,9 @@
+import P from "bluebird";
+
+P.Promise.config({
+  longStackTraces: true
+});
+
 import { AuroraClient } from "./structures/AuroraClient";
 const client = new AuroraClient();
 client.login(client.config.token);
