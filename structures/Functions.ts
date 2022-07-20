@@ -129,6 +129,32 @@ export class Functions {
   }
 
   /**
+   * Checks if the command author is a bot owner
+   * @param {Interaction} interaction Your interaction (aka slash command)
+   */
+  checkOwner(interaction: any) {
+    if (!interaction.client.config.owners) {
+      return interaction.reply({
+        content: interaction.client.functions.formatReply(
+          "Owners list is empty, please check your config file.",
+          interaction.client.config.emojis.cross_mark
+        ),
+      });
+    } else if (
+      !interaction.client.config.owners.includes(interaction.user.id)
+    ) {
+      return interaction.reply({
+        content: interaction.client.functions.formatReply(
+          "You're not included in owners list.",
+          interaction.client.config.emojis.cross_mark
+        ),
+      });
+    }
+
+    return true;
+  }
+
+  /**
    * Returns a formatted time
    * @param {number} time Your timestamp in ms
    * @param {TimestampStylesString} type

@@ -1,5 +1,6 @@
 {
   "token": "INSERT YOUR TOKEN HERE",
+  "owners": [""],
   "debug": {
     "handler_logs": true,
     "debug_events": true
