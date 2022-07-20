@@ -102,15 +102,15 @@ export class Functions {
           content: this.formatReply(
             "There's no voice connection in this server.",
             this.client.config.emojis.cross_mark
-          ),
-        });
+            ), ephemeral: true,
+          });
       } else if (!queue) {
         return interaction.reply({
           content: this.formatReply(
             "The queue is empty.",
             this.client.config.emojis.cross_mark
-          ),
-        });
+            ), ephemeral: true,
+          });
       }
     }
 
@@ -120,8 +120,8 @@ export class Functions {
           content: this.formatReply(
             "The current track is the last one in the queue.\nIf you want to destroy the voice connection, use `/stop` instead.",
             this.client.config.emojis.cross_mark
-          ),
-        });
+            ), ephemeral: true,
+          });
       }
     }
 
@@ -138,7 +138,7 @@ export class Functions {
         content: interaction.client.functions.formatReply(
           "Owners list is empty, please check your config file.",
           interaction.client.config.emojis.cross_mark
-        ),
+        ), ephemeral: true,
       });
     } else if (
       !interaction.client.config.owners.includes(interaction.user.id)
@@ -147,7 +147,7 @@ export class Functions {
         content: interaction.client.functions.formatReply(
           "You're not included in owners list.",
           interaction.client.config.emojis.cross_mark
-        ),
+          ), ephemeral: true,
       });
     }
 
