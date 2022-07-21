@@ -20,8 +20,12 @@ export class Functions {
 
     return new EmbedBuilder()
       .setFooter({
-        text: interaction.user?.tag,
-        iconURL: interaction.user?.displayAvatarURL(),
+        text: interaction.client.config.embeds.showAuthor
+          ? interaction.user?.tag
+          : null,
+        iconURL: interaction.client.config.embeds.showAuthor
+          ? interaction.user?.displayAvatarURL()
+          : null,
       })
       .setColor(
         parseInt(interaction.client.config.embeds.hexColor, 16) ?? "#7289da"
