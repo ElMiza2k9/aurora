@@ -42,6 +42,7 @@ export default class EvalCommand extends Command {
                 )
               ),
           ],
+          ephemeral: true,
         });
       } catch (error) {
         return interaction.reply({
@@ -55,6 +56,7 @@ export default class EvalCommand extends Command {
                 )
               ),
           ],
+          ephemeral: true,
         });
       }
     }
