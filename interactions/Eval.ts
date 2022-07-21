@@ -32,17 +32,29 @@ export default class EvalCommand extends Command {
         });
 
         interaction.reply({
-          content: interaction.client.functions.formatReply(
-            `Evaluated successfully:\n\`\`\`js\n${evaled}\`\`\``,
-            interaction.client.config.emojis.check_mark
-          ),
+          embeds: [
+            interaction.client.functions
+              .buildEmbed(interaction)
+              .setDescription(
+                interaction.client.functions.formatReply(
+                  `Evaluated successfully:\n\`\`\`js\n${evaled}\`\`\``,
+                  interaction.client.config.emojis.check_mark
+                )
+              ),
+          ],
         });
       } catch (error) {
         return interaction.reply({
-          content: interaction.client.functions.formatReply(
-            `Evaluated with error:\n\`\`\`js\n${error?.stack}\`\`\``,
-            interaction.client.config.emojis.cross_mark
-          ),
+          embeds: [
+            interaction.client.functions
+              .buildEmbed(interaction)
+              .setDescription(
+                interaction.client.functions.formatReply(
+                  `Evaluated with error:\n\`\`\`js\n${error?.stack}\`\`\``,
+                  interaction.client.config.emojis.cross_mark
+                )
+              ),
+          ],
         });
       }
     }
