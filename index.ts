@@ -1,7 +1,7 @@
 import P from "bluebird";
 
 P.Promise.config({
-  longStackTraces: true
+  longStackTraces: true,
 });
 
 import { AuroraClient } from "./structures/AuroraClient";

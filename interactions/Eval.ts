@@ -14,7 +14,7 @@ export default class EvalCommand extends Command {
           name: "code",
           description: "The code you want to evaluate",
           required: true,
-        }
+        },
       ],
     });
   }
@@ -48,4 +48,3 @@ export default class EvalCommand extends Command {
     }
   }
 }
-
