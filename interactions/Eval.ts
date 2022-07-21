@@ -15,15 +15,22 @@ export default class EvalCommand extends Command {
           description: "The code you want to evaluate",
           required: true,
         },
+        {
+          type: ApplicationCommandOptionType.Boolean,
+          name: "ephemeral",
+          description: "Whether to send the result as an ephemeral message",
+          required: true,
+        },
       ],
     });
   }
   async execute(interaction) {
     const isOwner = interaction.client.functions.checkOwner(interaction);
+    const code = interaction.options.getString("code");
+    const isEphemeral = interaction.options.getBoolean("ephemeral");
 
     if (isOwner === true) {
       try {
-        const code = interaction.options.getString("code");
         let evaled = await eval(code);
 
         evaled = inspect(evaled, {
@@ -42,7 +49,7 @@ export default class EvalCommand extends Command {
                 )
               ),
           ],
-          ephemeral: true,
+          ephemeral: isEphemeral,
         });
       } catch (error) {
         return interaction.reply({
@@ -56,7 +63,7 @@ export default class EvalCommand extends Command {
                 )
               ),
           ],
-          ephemeral: true,
+          ephemeral: isEphemeral,
         });
       }
     }
