@@ -17,5 +17,9 @@
     "pause": ":pause_button:",
     "stop": ":stop_button:",
     "skip": ":track_next:"
+  },
+  "embeds": {
+    "hexColor": "7289da",
+    "setTimestamp": true
   }
 }

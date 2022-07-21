@@ -45,7 +45,7 @@ export default class QueueCommand extends Command {
               : interaction.client.config.emojis.play
           )}\n${songs}`
         );
-        
+
       interaction.reply({
         embeds: [embed],
       });

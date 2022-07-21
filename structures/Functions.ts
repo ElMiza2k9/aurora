@@ -1,10 +1,5 @@
 import { TimestampStylesString } from "@discordjs/builders";
-import {
-  Formatters,
-  Interaction,
-  EmbedBuilder,
-  escapeMarkdown,
-} from "discord.js";
+import { Formatters, EmbedBuilder, escapeMarkdown } from "discord.js";
 import { AuroraClient } from "./AuroraClient";
 
 export class Functions {
@@ -18,7 +13,7 @@ export class Functions {
    * Returns a pre-formatted embed
    * @param {Interaction} interaction Your interaction (aka slash command)
    */
-  buildEmbed(interaction: Interaction) {
+  buildEmbed(interaction: any) {
     if (!interaction) {
       throw Error("Expected interaction to be provided (buildEmbed)");
     }
@@ -28,8 +23,12 @@ export class Functions {
         text: interaction.user?.tag,
         iconURL: interaction.user?.displayAvatarURL(),
       })
-      .setColor("#7289da")
-      .setTimestamp();
+      .setColor(
+        parseInt(interaction.client.config.embeds.hexColor, 16) ?? "#7289da"
+      )
+      .setTimestamp(
+        interaction.client.config.embeds.setTimestamp ? Date.now() : null
+      );
   }
 
   /**
