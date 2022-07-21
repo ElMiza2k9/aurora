@@ -1,5 +1,4 @@
-import { TimestampStylesString } from "@discordjs/builders";
-import { Formatters, EmbedBuilder, escapeMarkdown } from "discord.js";
+import { Formatters, EmbedBuilder, escapeMarkdown, TimestampStylesString } from "discord.js";
 import { AuroraClient } from "./AuroraClient";
 
 export class Functions {
@@ -200,7 +199,7 @@ export class Functions {
    * @param {TimestampStylesString} type
    */
   formatTime(time: number, type: TimestampStylesString) {
-    return Formatters.time(parseInt(Math.floor(time / 1000).toString()), type);
+    return Formatters.time(Math.floor(new Date(time).getTime() / 1000), type);
   }
 
   /**
