@@ -26,19 +26,28 @@ export default class QueueCommand extends Command {
             song.formattedDuration
           }]\``;
         })
-        .slice(0, 11)
+        .slice(0, 10)
         .join("\n");
+
+      const embed = interaction.client.functions
+        .buildEmbed(interaction)
+        .setDescription(
+          `${interaction.client.functions.formatReply(
+            `Here's the queue for **${interaction.client.functions.escapeMd(
+              interaction.guild.name
+            )}** (${
+              queue.songs.length > 10
+                ? `1-10/${queue.songs.length}`
+                : queue.songs.length
+            } songs):`,
+            queue.paused
+              ? interaction.client.config.emojis.pause
+              : interaction.client.config.emojis.play
+          )}\n${songs}`
+        );
+        
       interaction.reply({
-        content: interaction.client.functions.formatReply(
-          `Here's the queue for **${interaction.client.functions.escapeMd(
-            interaction.guild.name
-          )}** (${
-            queue.songs.length > 10 ? "first 10" : queue.songs.length
-          } tracks):\n${songs}`,
-          queue.paused
-            ? interaction.client.config.emojis.pause
-            : interaction.client.config.emojis.play
-        ),
+        embeds: [embed],
       });
     }
   }

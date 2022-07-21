@@ -62,34 +62,46 @@ export class Functions {
           "You're not in a voice channel.",
           this.client.config.emojis.cross_mark
         ),
-        ephemereal: true,
+        ephemeral: true,
       });
     } else if (interaction.member.voice.selfDeaf) {
       return interaction.reply({
-        content: this.formatReply(
-          "You've deafened yourself.",
-          this.client.config.emojis.cross_mark
-        ),
-        ephemereal: true,
+        embeds: [
+          this.buildEmbed(interaction).setDescription(
+            this.formatReply(
+              "You've deafened yourself.",
+              this.client.config.emojis.cross_mark
+            )
+          ),
+        ],
+        ephemeral: true,
       });
     } else if (interaction.member.voice.serverDeaf) {
       return interaction.reply({
-        content: this.formatReply(
-          "You're deafened server-wide.",
-          this.client.config.emojis.cross_mark
-        ),
-        ephemereal: true,
+        embeds: [
+          this.buildEmbed(interaction).setDescription(
+            this.formatReply(
+              "You're deafened server-wide.",
+              this.client.config.emojis.cross_mark
+            )
+          ),
+        ],
+        ephemeral: true,
       });
     } else if (
       interaction.client.voice.channel &&
       interaction.client.voice.channelId !== interaction.member.voice.channelId
     ) {
       return interaction.reply({
-        content: this.formatReply(
-          "You're not in the same voice channel as me.",
-          this.client.config.emojis.cross_mark
-        ),
-        ephemereal: true,
+        embeds: [
+          this.buildEmbed(interaction).setDescription(
+            this.formatReply(
+              "You're not in the same voice channel as me.",
+              this.client.config.emojis.cross_mark
+            )
+          ),
+        ],
+        ephemeral: true,
       });
     }
 
@@ -99,29 +111,44 @@ export class Functions {
       );
       if (!connection) {
         return interaction.reply({
-          content: this.formatReply(
-            "There's no voice connection in this server.",
-            this.client.config.emojis.cross_mark
-            ), ephemeral: true,
-          });
+          embeds: [
+            this.buildEmbed(interaction).setDescription(
+              this.formatReply(
+                "There's no voice connection in this server.",
+                this.client.config.emojis.cross_mark
+              )
+            ),
+          ],
+          ephemeral: true,
+        });
       } else if (!queue) {
         return interaction.reply({
-          content: this.formatReply(
-            "The queue is empty.",
-            this.client.config.emojis.cross_mark
-            ), ephemeral: true,
-          });
+          embeds: [
+            this.buildEmbed(interaction).setDescription(
+              this.formatReply(
+                "The queue is empty.",
+                this.client.config.emojis.cross_mark
+              )
+            ),
+          ],
+          ephemeral: true,
+        });
       }
     }
 
     if (checkQueue) {
       if (!queue || queue.songs.length === 1) {
         return interaction.reply({
-          content: this.formatReply(
-            "The current track is the last one in the queue.\nIf you want to destroy the voice connection, use `/stop` instead.",
-            this.client.config.emojis.cross_mark
-            ), ephemeral: true,
-          });
+          embeds: [
+            this.buildEmbed(interaction).setDescription(
+              this.formatReply(
+                "The current track is the last one in the queue.\nIf you want to destroy the voice connection, use `/stop` instead.",
+                this.client.config.emojis.cross_mark
+              )
+            ),
+          ],
+          ephemeral: true,
+        });
       }
     }
 
@@ -135,19 +162,29 @@ export class Functions {
   checkOwner(interaction: any) {
     if (!interaction.client.config.owners) {
       return interaction.reply({
-        content: interaction.client.functions.formatReply(
-          "Owners list is empty, please check your config file.",
-          interaction.client.config.emojis.cross_mark
-        ), ephemeral: true,
+        embeds: [
+          this.buildEmbed(interaction).setDescription(
+            interaction.client.functions.formatReply(
+              "Owners list is empty, please check your config file.",
+              interaction.client.config.emojis.cross_mark
+            )
+          ),
+        ],
+        ephemeral: true,
       });
     } else if (
       !interaction.client.config.owners.includes(interaction.user.id)
     ) {
       return interaction.reply({
-        content: interaction.client.functions.formatReply(
-          "You're not included in owners list.",
-          interaction.client.config.emojis.cross_mark
-          ), ephemeral: true,
+        embeds: [
+          this.buildEmbed(interaction).setDescription(
+            interaction.client.functions.formatReply(
+              "You're not included in owners list.",
+              interaction.client.config.emojis.cross_mark
+            )
+          ),
+        ],
+        ephemeral: true,
       });
     }
 

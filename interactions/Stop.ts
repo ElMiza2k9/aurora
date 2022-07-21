@@ -20,10 +20,16 @@ export default class StopCommand extends Command {
     if (isChecked === true) {
       connection.leave();
       interaction.reply({
-        content: interaction.client.functions.formatReply(
-          "Cleared the queue and destroyed the voice connection.",
-          interaction.client.config.emojis.stop
-        ),
+        embeds: [
+          interaction.client.functions
+            .buildEmbed(interaction)
+            .setDescription(
+              interaction.client.functions.formatReply(
+                "Cleared the queue and destroyed the voice connection.",
+                interaction.client.config.emojis.stop
+              )
+            ),
+        ],
       });
     }
   }

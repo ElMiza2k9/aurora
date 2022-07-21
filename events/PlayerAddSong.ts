@@ -9,10 +9,16 @@ export default class PlayerAddSongEvent extends Event {
 
   async execute(client: AuroraClient, _queue: Queue, song: Song<any>) {
     song.metadata.i.followUp({
-      content: client.functions.formatReply(
-        `Added **${client.functions.escapeMd(song.name)}** to the queue.`,
-        client.config.emojis.check_mark
-      ),
+      embeds: [
+        client.functions
+          .buildEmbed(song.metadata.i)
+          .setDescription(
+            client.functions.formatReply(
+              `Added **${client.functions.escapeMd(song.name)}** to the queue.`,
+              client.config.emojis.check_mark
+            )
+          ),
+      ],
     });
   }
 }

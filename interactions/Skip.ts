@@ -21,12 +21,18 @@ export default class SkipCommand extends Command {
     if (isChecked === true) {
       queue.skip();
       interaction.reply({
-        content: interaction.client.functions.formatReply(
-          `Skipped **${interaction.client.functions.escapeMd(
-            queue.songs[0].name
-          )}**.`,
-          interaction.client.config.emojis.skip
-        ),
+        embeds: [
+          interaction.client.functions
+            .buildEmbed(interaction)
+            .setDescription(
+              interaction.client.functions.formatReply(
+                `Skipped **${interaction.client.functions.escapeMd(
+                  queue.songs[0].name
+                )}**.`,
+                interaction.client.config.emojis.skip
+              )
+            ),
+        ],
       });
     }
   }

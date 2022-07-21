@@ -20,10 +20,16 @@ export default class ResumeCommand extends Command {
     if (isChecked === true) {
       queue.resume();
       interaction.reply({
-        content: interaction.client.functions.formatReply(
-          "Resumed the playback.",
-          interaction.client.config.emojis.play
-        ),
+        embeds: [
+          interaction.client.functions
+            .buildEmbed(interaction)
+            .setDescription(
+              interaction.client.functions.formatReply(
+                "Resumed the playback.",
+                interaction.client.config.emojis.play
+              )
+            ),
+        ],
       });
     }
   }

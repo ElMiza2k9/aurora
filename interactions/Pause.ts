@@ -20,10 +20,16 @@ export default class PauseCommand extends Command {
     if (isChecked === true) {
       queue.pause();
       interaction.reply({
-        content: interaction.client.functions.formatReply(
-          "Paused the playback.",
-          interaction.client.config.emojis.pause
-        ),
+        embeds: [
+          interaction.client.functions
+            .buildEmbed(interaction)
+            .setDescription(
+              interaction.client.functions.formatReply(
+                "Paused the playback.",
+                interaction.client.config.emojis.pause
+              )
+            ),
+        ],
       });
     }
   }
