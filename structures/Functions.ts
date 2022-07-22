@@ -1,4 +1,9 @@
-import { Formatters, EmbedBuilder, escapeMarkdown, TimestampStylesString } from "discord.js";
+import {
+  Formatters,
+  EmbedBuilder,
+  escapeMarkdown,
+  TimestampStylesString,
+} from "discord.js";
 import { AuroraClient } from "./AuroraClient";
 
 export class Functions {
@@ -46,18 +51,16 @@ export class Functions {
   /**
    * Performs voice channel checks; useful for commands
    * @param {Interaction} interaction Your interaction (aka slash command)
-   * @param {boolean} checkPlaying Whether to check queue and voice connection
-   * @param {boolean} checkQueue Whether to check queue size
+   * @param {boolean} checkIfConnected Whether to check voice connection
+   * @param {boolean} checkIfQueueExists Whether to check if queue exists
+   * @param {boolean} checkIfLastSong Whether to check queue size
    */
   async checkVoice(
     interaction: any,
-    checkPlaying: boolean,
-    checkQueue: boolean
+    checkIfConnected: boolean,
+    checkIfQueueExists: boolean,
+    checkIfLastSong: boolean
   ) {
-    const queue = await interaction.client.player.queues.get(
-      interaction.guild.id
-    );
-
     if (!interaction.member.voice.channel) {
       return interaction.reply({
         content: this.formatReply(
@@ -107,7 +110,7 @@ export class Functions {
       });
     }
 
-    if (checkPlaying) {
+    if (checkIfConnected) {
       const connection = await interaction.client.player.voices.get(
         interaction.guild.id
       );
@@ -123,7 +126,15 @@ export class Functions {
           ],
           ephemeral: true,
         });
-      } else if (!queue) {
+      }
+    }
+
+    const queue = await interaction.client.player.queues.get(
+      interaction.guild.id
+    );
+
+    if (checkIfQueueExists) {
+      if (!queue) {
         return interaction.reply({
           embeds: [
             this.buildEmbed(interaction).setDescription(
@@ -138,7 +149,7 @@ export class Functions {
       }
     }
 
-    if (checkQueue) {
+    if (checkIfLastSong) {
       if (!queue || queue.songs.length === 1) {
         return interaction.reply({
           embeds: [

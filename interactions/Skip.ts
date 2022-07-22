@@ -12,6 +12,7 @@ export default class SkipCommand extends Command {
     const isChecked = await interaction.client.functions.checkVoice(
       interaction,
       true,
+      true,
       true
     );
     const queue = await interaction.client.player.queues.get(

@@ -11,6 +11,7 @@ export default class PauseCommand extends Command {
   async execute(interaction) {
     const isChecked = await interaction.client.functions.checkVoice(
       interaction,
+      true,
       true
     );
     const queue = await interaction.client.player.queues.get(

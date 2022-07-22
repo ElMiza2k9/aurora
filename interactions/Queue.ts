@@ -11,6 +11,7 @@ export default class QueueCommand extends Command {
   async execute(interaction) {
     const isChecked = await interaction.client.functions.checkVoice(
       interaction,
+      true,
       true
     );
 
