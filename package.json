@@ -1,6 +1,6 @@
 {
   "name": "aurora",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "A custom music bot for Adwaita Discord server.",
   "main": "index.ts",
   "scripts": {
