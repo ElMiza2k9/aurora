@@ -39,13 +39,6 @@ export default class AboutCommand extends Command {
           inline: true,
         },
         {
-          name: "Last restart",
-          value: this.client.functions.formatTime(
-            interaction.client.readyAt,
-            "R"
-          ),
-        },
-        {
           name: "Ping",
           value: `${interaction.client.ws.ping} ms`,
           inline: true,
