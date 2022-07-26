@@ -5,6 +5,7 @@ import {
   TimestampStylesString,
 } from "discord.js";
 import { AuroraClient } from "./AuroraClient";
+import dayjs from "dayjs";
 
 export class Functions {
   client: AuroraClient;
@@ -206,11 +207,15 @@ export class Functions {
 
   /**
    * Returns a formatted time
-   * @param {number} time Your timestamp in ms
-   * @param {TimestampStylesString} type
+   * @param {number | string | Date } time Your timestamp
+   * @param {TimestampStylesString} type Formatting type
    */
-  formatTime(time: number, type: TimestampStylesString) {
-    return Formatters.time(Math.floor(new Date(time).getTime() / 1000), type);
+  async formatTime(time: number | string | Date, type: TimestampStylesString) {
+    if (!time || !dayjs(time)) {
+      throw Error("time is not parseable or isn't provided (formatTime)");
+    }
+
+    return Formatters.time(dayjs(time).unix(), type);
   }
 
   /**
