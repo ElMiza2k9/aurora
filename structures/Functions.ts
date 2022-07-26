@@ -211,8 +211,10 @@ export class Functions {
    * @param {TimestampStylesString} type Formatting type
    */
   async formatTime(time: number | string | Date, type: TimestampStylesString) {
-    if (!time || !dayjs(time)) {
-      throw Error("time is not parseable or isn't provided (formatTime)");
+    if (!time) {
+      throw Error("time isn't provided (formatTime)");
+    } else if (!dayjs(time)) {
+      throw Error("time isn't parseable (formatTime)");
     }
 
     return Formatters.time(dayjs(time).unix(), type);
