@@ -1,5 +1,5 @@
 # Aurora
-A custom music bot for [Adwaita Discord server](https://discord.gg/ctKs8WRQR5).
+An in-house moderation & entertainment solution for [Adwaita](https://discord.gg/ctKs8WRQR5).
 
 ## Disclaimer
 We do not provide an invitable instance of Aurora. However, this doesn't mean you can upload the bot to any bot lists, such as top.gg or bots.gg. This bot is intended for self-hosting, only for your server.
