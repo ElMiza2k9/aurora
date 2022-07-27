@@ -6,7 +6,7 @@ export default class AvatarCommand extends Command {
   constructor(client: AuroraClient) {
     super(client, {
       name: "avatar",
-      description: "idk.",
+      description: "Shows your (or someone else's) avatar.",
       options: [
         {
           type: ApplicationCommandOptionType.User,
