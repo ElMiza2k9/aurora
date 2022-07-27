@@ -9,6 +9,7 @@ import * as Config from "../config.json";
 import * as Package from "../package.json";
 import { Functions } from "./Functions";
 import { EventHandler } from "../handlers/EventHandler";
+import { PrismaClient } from "@prisma/client";
 
 export class AuroraClient extends Client<true> {
   interactions: Collection<string, Command> = new Collection();
@@ -16,9 +17,12 @@ export class AuroraClient extends Client<true> {
   config: typeof Config;
   package: typeof Package;
   functions: Functions;
+  db: PrismaClient;
 
   constructor() {
     super(AuroraClientOptions);
+
+    this.db = new PrismaClient();
 
     this.player = new DistubePlayer(this, {
       nsfw: false,
