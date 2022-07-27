@@ -38,6 +38,12 @@ export default class EvalCommand extends Command {
           maxArrayLength: null,
         });
 
+        evaled = evaled
+          .replaceAll(interaction.client.token, "CLIENT_TOKEN")
+          .replaceAll(interaction.client.config.token, "CLIENT_TOKEN")
+          .replaceAll(`interaction.client.token`, "CLIENT_TOKEN")
+          .replaceAll(`interaction.client.config.token`, "CLIENT_TOKEN");
+
         interaction.reply({
           embeds: [
             interaction.client.functions
