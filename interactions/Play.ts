@@ -25,12 +25,12 @@ export default class PlayCommand extends Command {
 
     if (isChecked === true) {
       try {
-        interaction.deferReply();
         this.client.player.play(interaction.member.voice.channel, query, {
           textChannel: interaction.channel,
           member: interaction.member,
           metadata: { i: interaction },
         });
+        interaction.deferReply();
       } catch (error) {
         interaction.followUp({ content: error });
       }
