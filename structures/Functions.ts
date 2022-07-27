@@ -207,10 +207,10 @@ export class Functions {
 
   /**
    * Returns a formatted time
-   * @param {number | string | Date } time Your timestamp
+   * @param { string| number | Date } time Your timestamp
    * @param {TimestampStylesString} type Formatting type
    */
-  async formatTime(time: number | string | Date, type: TimestampStylesString) {
+  formatTime(time: string | number | Date, type: TimestampStylesString) {
     if (!time) {
       throw Error("time isn't provided (formatTime)");
     } else if (!dayjs(time)) {
