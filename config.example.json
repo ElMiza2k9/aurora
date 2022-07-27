@@ -1,7 +1,5 @@
 {
-  "token": "INSERT YOUR TOKEN HERE",
   "owners": [""],
-  "databaseUrl": "mongodb://localhost:27017/yourDatabaseName",
   "debug": {
     "handler_logs": true,
     "debug_events": true
