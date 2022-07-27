@@ -1,0 +1,19 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Guild {
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  guildId            String   @unique @map("guild_id")
+}
+
+model Member {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  guildId  String @map("guild_id")
+  memberId String @map("member_id")
+}
