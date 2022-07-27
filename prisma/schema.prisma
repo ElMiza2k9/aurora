@@ -8,8 +8,8 @@ generator client {
 }
 
 model Guild {
-  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
-  guildId            String   @unique @map("guild_id")
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  guildId String @unique @map("guild_id")
 }
 
 model Member {
