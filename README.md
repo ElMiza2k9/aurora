@@ -17,8 +17,8 @@ We aim to provide server owners with a way to reduce their dependency on third-p
 2. Clone this repository via `git clone` or download the latest release from the [releases page](https://github.com/chamln/aurora/releases).
     - If you have downloaded the latest release archive, extract its contents to a folder of choice.
 3. Create a bot account on Discord Developers portal and grab its token and client ID. Make sure to save this token in a safe place because you'll need to regenerate it in case you lose it.
-4. Navigate to the folder where you've unpacked the code and rename `config.example.json` to `config.json`.
-5. Fill in your `config.json` file.
+4. Navigate to the folder where you've unpacked the code. Rename `config.example.json` to `config.json` and `.env.example` to `.env`.
+5. Fill in these two files.
     - *Optional: if you want to use guild commands instead of global ones, enable Developer Mode in `User Settings => Advanced`, then right-click the server where you want to use the bot and copy its ID.*
 6. Run `npm i` to install all the dependencies.
 7. Run `npm run prod` to run the bot.
