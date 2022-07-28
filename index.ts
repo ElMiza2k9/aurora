@@ -1,4 +1,5 @@
 import P from "bluebird";
+import "dotenv/config";
 
 P.Promise.config({
   longStackTraces: true,
@@ -6,7 +7,7 @@ P.Promise.config({
 
 import { AuroraClient } from "./structures/AuroraClient";
 const client = new AuroraClient();
-client.login(process.env.TOKEN);
+client.login(process.env.CLIENT_TOKEN);
 
 if (client.config.debug.debug_events) {
   process.on("unhandledRejection", (error) =>
