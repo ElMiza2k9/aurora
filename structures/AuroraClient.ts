@@ -34,5 +34,6 @@ export class AuroraClient extends Client<true> {
     this.functions = new Functions(this);
 
     new EventHandler(this).loadEvents();
+    this.db.$connect();
   }
 }
