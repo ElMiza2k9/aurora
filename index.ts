@@ -6,7 +6,7 @@ P.Promise.config({
 
 import { AuroraClient } from "./structures/AuroraClient";
 const client = new AuroraClient();
-client.login(client.config.token);
+client.login(process.env.TOKEN);
 
 if (client.config.debug.debug_events) {
   process.on("unhandledRejection", (error) =>
