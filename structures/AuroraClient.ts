@@ -26,6 +26,7 @@ export class AuroraClient extends Client<true> {
 
     this.player = new DistubePlayer(this, {
       nsfw: false,
+      emitNewSongOnly: true,
       plugins: [new YtDlpPlugin(), new SpotifyPlugin(), new SoundCloudPlugin()],
     });
 
@@ -33,7 +34,7 @@ export class AuroraClient extends Client<true> {
     this.package = Package;
     this.functions = new Functions(this);
 
-    new EventHandler(this).loadEvents();
+    new EventHandler(this).init();
     this.db.$connect();
   }
 }

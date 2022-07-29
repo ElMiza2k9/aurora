@@ -10,7 +10,7 @@ export class EventHandler {
     this.client = client;
   }
 
-  async loadEvents() {
+  async init() {
     const files = glob.sync("./events/*.ts");
 
     for (const file of files) {

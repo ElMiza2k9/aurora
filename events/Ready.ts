@@ -14,7 +14,7 @@ export default class ReadyEvent extends Event {
       status: "dnd",
     });
 
-    await new InteractionHandler(client).loadInteractions();
+    await new InteractionHandler(client).init();
 
     console.log(
       `Ready! Logged in as ${client.user.tag} (id ${client.user.id})`

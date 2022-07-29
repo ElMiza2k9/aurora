@@ -13,7 +13,7 @@ export class InteractionHandler {
     this.createCommand = this.createCommand.bind(this);
   }
 
-  async loadInteractions() {
+  async init() {
     const files = glob.sync("./interactions/*.ts");
 
     for (const file of files) {
