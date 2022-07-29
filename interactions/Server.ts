@@ -14,14 +14,15 @@ export default class ServerCommand extends Command {
     const serverOwner = await guild.fetchOwner();
 
     interaction.reply({
+      content: interaction.client.functions.formatReply(
+        `Here's some info about **${interaction.client.functions.escapeMd(
+          guild.name
+        )}**:`,
+        interaction.client.config.emojis.check_mark
+      ),
       embeds: [
         interaction.client.functions
           .buildEmbed(interaction)
-          .setTitle(
-            `${interaction.client.functions.escapeMd(guild.name)} (ID ${
-              guild.id
-            })`
-          )
           .setThumbnail(guild.iconURL())
           .setDescription(
             guild.description
@@ -31,7 +32,7 @@ export default class ServerCommand extends Command {
           .addFields([
             {
               name: "Common info",
-              value: `**Server ID:** ${guild.id}
+              value: `**Snowflake:** ${guild.id}
 **Created by:** ${serverOwner.user} (ID ${serverOwner.user.id})
 **Creation date:** ${interaction.client.functions.formatTime(
                 guild.createdTimestamp,
