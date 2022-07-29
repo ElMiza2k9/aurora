@@ -56,10 +56,10 @@ export default class AvatarCommand extends Command {
   async execute(interaction) {
     const user = interaction.options.getUser("user") ?? interaction.user;
     const size = interaction.options.getInteger("size") ?? 512;
-    const format = interaction.options.getString("format") ?? "png";
+    const extension = interaction.options.getString("format") ?? "png";
     const forceStatic = interaction.options.getBoolean("static") ?? false;
     const avatar = user.displayAvatarURL({
-      format: format,
+      extension: extension,
       size: size,
       forceStatic: forceStatic,
     });
