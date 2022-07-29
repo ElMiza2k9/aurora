@@ -27,7 +27,7 @@ export default class UserCommand extends Command {
         content: interaction.client.functions.formatReply(
           `Some genius at Discord thought that registering teams as pseudo-users would be a good idea.
         Why should we respect their stupid decisions?`,
-          interaction.client.config.emoji.cross_mark
+          interaction.client.config.emojis.cross_mark
         ),
       });
     }
