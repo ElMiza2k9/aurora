@@ -30,7 +30,7 @@ export default class ServerCommand extends Command {
           )
           .addFields([
             {
-              name: "General",
+              name: "Common info",
               value: `**Server ID:** ${guild.id}
         **Created by:** ${serverOwner.user} (ID ${serverOwner.user.id})
         **Creation date:** ${interaction.client.functions.formatTime(
