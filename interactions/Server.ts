@@ -34,9 +34,9 @@ export default class ServerCommand extends Command {
               value: `**Server ID:** ${guild.id}
 **Created by:** ${serverOwner.user} (ID ${serverOwner.user.id})
 **Creation date:** ${interaction.client.functions.formatTime(
-          guild.createdTimestamp,
-          "R"
-        )}
+                guild.createdTimestamp,
+                "R"
+              )}
         `,
             },
             {
@@ -53,15 +53,20 @@ export default class ServerCommand extends Command {
               value: `
 **Total:** ${guild.channels.cache.size}
 **Text:** ${
-      guild.channels.cache.filter((c) => c.type === ChannelType.GuildText).size
-    }
+                guild.channels.cache.filter(
+                  (c) => c.type === ChannelType.GuildText
+                ).size
+              }
 **Voice:** ${
-      guild.channels.cache.filter((c) => c.type === ChannelType.GuildVoice).size
-    }
+                guild.channels.cache.filter(
+                  (c) => c.type === ChannelType.GuildVoice
+                ).size
+              }
 **Stages:** ${
-      guild.channels.cache.filter((c) => c.type === ChannelType.GuildStageVoice)
-        .size
-    }
+                guild.channels.cache.filter(
+                  (c) => c.type === ChannelType.GuildStageVoice
+                ).size
+              }
     `,
               inline: true,
             },
