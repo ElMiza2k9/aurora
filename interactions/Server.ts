@@ -32,8 +32,8 @@ export default class ServerCommand extends Command {
             {
               name: "Common info",
               value: `**Server ID:** ${guild.id}
-        **Created by:** ${serverOwner.user} (ID ${serverOwner.user.id})
-        **Creation date:** ${interaction.client.functions.formatTime(
+**Created by:** ${serverOwner.user} (ID ${serverOwner.user.id})
+**Creation date:** ${interaction.client.functions.formatTime(
           guild.createdTimestamp,
           "R"
         )}
@@ -42,23 +42,23 @@ export default class ServerCommand extends Command {
             {
               name: "Members",
               value: `
-          **Total:** ${guild.members.cache.size}
-          **Humans:** ${guild.members.cache.filter((m) => !m.user.bot).size}
-          **Bots:** ${guild.members.cache.filter((m) => m.user.bot).size}
+**Total:** ${guild.members.cache.size}
+**Humans:** ${guild.members.cache.filter((m) => !m.user.bot).size}
+**Bots:** ${guild.members.cache.filter((m) => m.user.bot).size}
           `,
               inline: true,
             },
             {
               name: "Channels",
               value: `
-    **Total:** ${guild.channels.cache.size}
-    **Text:** ${
+**Total:** ${guild.channels.cache.size}
+**Text:** ${
       guild.channels.cache.filter((c) => c.type === ChannelType.GuildText).size
     }
-    **Voice:** ${
+**Voice:** ${
       guild.channels.cache.filter((c) => c.type === ChannelType.GuildVoice).size
     }
-    **Stages:** ${
+**Stages:** ${
       guild.channels.cache.filter((c) => c.type === ChannelType.GuildStageVoice)
         .size
     }
@@ -68,15 +68,15 @@ export default class ServerCommand extends Command {
             {
               name: "Boosts",
               value: `
-        **Boosts count:** ${guild.premiumSubscriptionCount}
-        **Level:** ${guild.premiumTier}`,
+**Boosts count:** ${guild.premiumSubscriptionCount}
+**Level:** ${guild.premiumTier}`,
               inline: true,
             },
           ])
           .setImage(
             guild.bannerURL({
               size: 2048,
-              format: "png",
+              extension: "png",
             })
           ),
       ],
