@@ -32,7 +32,7 @@ export default class LoopCommand extends Command {
     const modeNames = {
       0: "disabled",
       1: "current song",
-      2: "entire queue"
+      2: "entire queue",
     };
 
     if (isChecked === true) {
