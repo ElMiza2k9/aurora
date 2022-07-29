@@ -26,7 +26,7 @@ We aim to provide server owners with a way to reduce their dependency on third-p
 8. You're awesome!
 
 ## Contributing
-We strive to provide a quality product; however, nothing is ideal in this world. If you find any bugs or encounter issues, feel free to [open an issue](https://github.com/chamln/aurora/issues). If you found an issue and know how to fix it, or you have implemented a new feature, don't hesitate to [open a pull request](https://github.com/chamln/aurora/pulls) - we'll do our best to quickly review and merge your changes and inform you of problems, if any.
+We strive to provide a quality product; however, nothing is ideal in this world. If you find any bugs or encounter issues, feel free to [start a discussion](https://github.com/chamln/aurora/discussions/new). If you found an issue and know how to fix it, or you have implemented a new feature, don't hesitate to [open a pull request](https://github.com/chamln/aurora/pulls) - we'll do our best to quickly review and merge your changes and inform you of problems, if any.
 
 ## Releases
 See the [releases page](https://github.com/chamln/aurora/releases) for a history of releases and highlights for each release.
