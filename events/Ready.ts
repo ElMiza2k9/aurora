@@ -9,14 +9,22 @@ export default class ReadyEvent extends Event {
   }
 
   async execute(client: AuroraClient) {
+    client.user.setPresence({
+      activities: [{ name: "loading..." }],
+      status: "dnd",
+    });
+
     await new InteractionHandler(client).loadInteractions();
 
     console.log(
       `Ready! Logged in as ${client.user.tag} (id ${client.user.id})`
     );
 
-    client.user.setActivity(`v${client.package.version}`, {
-      type: ActivityType.Listening,
+    client.user.setPresence({
+      activities: [
+        { name: `v${client.package.version}`, type: ActivityType.Listening },
+      ],
+      status: "online",
     });
   }
 }
