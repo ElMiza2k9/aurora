@@ -49,7 +49,7 @@ export default class CurrentCommand extends Command {
                 name: "Details",
                 value: `
 **Likes:** ${song.source === "youtube" ? song.likes : "Not a YouTube video"}
-**Views:** ${song.views !=0 ? song.views : "Unknown"}
+**Views:** ${song.views != 0 ? song.views : "Unknown"}
 **Live stream:** ${song.isLive ? "Yes" : "No"}
 **Playlist:** ${
                   song.playlist
