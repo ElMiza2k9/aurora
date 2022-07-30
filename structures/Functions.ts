@@ -64,10 +64,14 @@ export class Functions {
   ) {
     if (!interaction.member.voice.channel) {
       return interaction.reply({
-        content: this.formatReply(
-          "You're not in a voice channel.",
-          this.client.config.emojis.cross_mark
-        ),
+        embeds: [
+          this.buildEmbed(interaction).setDescription(
+            this.formatReply(
+              "You're not in a voice channel.",
+              this.client.config.emojis.cross_mark
+            )
+          ),
+        ],
         ephemeral: true,
       });
     } else if (interaction.guild.afkChannel &&
