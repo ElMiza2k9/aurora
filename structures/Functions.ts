@@ -70,6 +70,20 @@ export class Functions {
         ),
         ephemeral: true,
       });
+    } else if (interaction.guild.afkChannel &&
+      interaction.member.voice.channel.id === interaction.guild.afkChannel.id
+    ) {
+      return interaction.reply({
+        embeds: [
+          this.buildEmbed(interaction).setDescription(
+            this.formatReply(
+              "You're in AFK channel.",
+              this.client.config.emojis.cross_mark
+            )
+          ),
+        ],
+        ephemeral: true,
+      });
     } else if (interaction.member.voice.selfDeaf) {
       return interaction.reply({
         embeds: [
@@ -96,7 +110,7 @@ export class Functions {
       });
     } else if (
       interaction.client.voice.channel &&
-      interaction.client.voice.channelId !== interaction.member.voice.channelId
+      interaction.client.voice.channel.id !== interaction.member.voice.channel.id
     ) {
       return interaction.reply({
         embeds: [

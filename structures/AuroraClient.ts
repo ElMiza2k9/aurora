@@ -10,9 +10,10 @@ import * as Package from "../package.json";
 import { Functions } from "./Functions";
 import { EventHandler } from "../handlers/EventHandler";
 import { PrismaClient } from "@prisma/client";
+import { SubCommand } from "./SubCommand";
 
 export class AuroraClient extends Client<true> {
-  interactions: Collection<string, Command> = new Collection();
+  interactions: Collection<string, Command | SubCommand> = new Collection();
   player: DistubePlayer;
   config: typeof Config;
   package: typeof Package;
