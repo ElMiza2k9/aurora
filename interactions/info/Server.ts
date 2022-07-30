@@ -1,11 +1,12 @@
 import { ChannelType } from "discord.js";
-import { AuroraClient } from "../structures/AuroraClient";
-import { Command } from "../structures/Command";
+import { AuroraClient } from "../../structures/AuroraClient";
+import { SubCommand } from "../../structures/SubCommand";
 
-export default class ServerCommand extends Command {
+export default class ServerCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "server",
+      topName: "info",
       description: "Get the info about this server",
     });
   }

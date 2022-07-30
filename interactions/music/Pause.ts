@@ -1,17 +1,17 @@
-import { AuroraClient } from "../structures/AuroraClient";
-import { Command } from "../structures/Command";
+import { AuroraClient } from "../../structures/AuroraClient";
+import { SubCommand } from "../../structures/SubCommand";
 
-export default class SkipCommand extends Command {
+export default class PauseCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
-      name: "skip",
-      description: "Skips the current track, if it's not the last one",
+      name: "pause",
+      topName: "music",
+      description: "Pauses music playback",
     });
   }
   async execute(interaction) {
     const isChecked = await interaction.client.functions.checkVoice(
       interaction,
-      true,
       true,
       true
     );
@@ -20,17 +20,15 @@ export default class SkipCommand extends Command {
     );
 
     if (isChecked === true) {
-      queue.skip();
+      queue.pause();
       interaction.reply({
         embeds: [
           interaction.client.functions
             .buildEmbed(interaction)
             .setDescription(
               interaction.client.functions.formatReply(
-                `Skipped **${interaction.client.functions.escapeMd(
-                  queue.songs[0].name
-                )}**.`,
-                interaction.client.config.emojis.skip
+                "Paused the playback.",
+                interaction.client.config.emojis.pause
               )
             ),
         ],

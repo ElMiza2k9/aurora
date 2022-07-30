@@ -1,10 +1,11 @@
-import { AuroraClient } from "../structures/AuroraClient";
-import { Command } from "../structures/Command";
+import { AuroraClient } from "../../structures/AuroraClient";
+import { SubCommand } from "../../structures/SubCommand";
 
-export default class CurrentCommand extends Command {
+export default class CurrentCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "current",
+      topName: "music",
       description: "Shows the current track, if there's any",
     });
   }

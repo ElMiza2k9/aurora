@@ -1,11 +1,12 @@
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
-import { AuroraClient } from "../structures/AuroraClient";
-import { Command } from "../structures/Command";
+import { AuroraClient } from "../../structures/AuroraClient";
+import { SubCommand } from "../../structures/SubCommand";
 
-export default class AboutCommand extends Command {
+export default class AboutCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "about",
+      topName: "info",
       description: "Get the info about the bot",
     });
   }

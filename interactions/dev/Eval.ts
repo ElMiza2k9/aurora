@@ -1,12 +1,13 @@
 import { ApplicationCommandOptionType } from "discord.js";
-import { AuroraClient } from "../structures/AuroraClient";
-import { Command } from "../structures/Command";
+import { AuroraClient } from "../../structures/AuroraClient";
+import { SubCommand } from "../../structures/SubCommand";
 import { inspect } from "node:util";
 
-export default class EvalCommand extends Command {
+export default class EvalCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "eval",
+      topName: "dev",
       description: "Evaluate something. Proceed with caution.",
       options: [
         {

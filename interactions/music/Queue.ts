@@ -1,10 +1,11 @@
-import { AuroraClient } from "../structures/AuroraClient";
-import { Command } from "../structures/Command";
+import { AuroraClient } from "../../structures/AuroraClient";
+import { SubCommand } from "../../structures/SubCommand";
 
-export default class QueueCommand extends Command {
+export default class QueueCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "queue",
+      topName: "music",
       description: "Shows server queue",
     });
   }

@@ -1,11 +1,12 @@
 import { ApplicationCommandOptionType } from "discord.js";
-import { AuroraClient } from "../structures/AuroraClient";
-import { Command } from "../structures/Command";
+import { AuroraClient } from "../../structures/AuroraClient";
+import { SubCommand } from "../../structures/SubCommand";
 
-export default class LoopCommand extends Command {
+export default class LoopCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "loop",
+      topName: "music",
       description: "Manage player looping",
       options: [
         {

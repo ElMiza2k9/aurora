@@ -1,11 +1,12 @@
 import { ApplicationCommandOptionType } from "discord.js";
-import { AuroraClient } from "../structures/AuroraClient";
-import { Command } from "../structures/Command";
+import { AuroraClient } from "../../structures/AuroraClient";
+import { SubCommand } from "../../structures/SubCommand";
 
-export default class PlayCommand extends Command {
+export default class PlayCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "play",
+      topName: "music",
       description: "Play a song",
       options: [
         {

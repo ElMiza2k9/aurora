@@ -1,10 +1,11 @@
-import { AuroraClient } from "../structures/AuroraClient";
-import { Command } from "../structures/Command";
+import { AuroraClient } from "../../structures/AuroraClient";
+import { SubCommand } from "../../structures/SubCommand";
 
-export default class ResumeCommand extends Command {
+export default class ResumeCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "resume",
+      topName: "music",
       description: "Resumes music playback",
     });
   }

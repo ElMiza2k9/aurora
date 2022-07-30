@@ -1,10 +1,11 @@
-import { AuroraClient } from "../structures/AuroraClient";
-import { Command } from "../structures/Command";
+import { AuroraClient } from "../../structures/AuroraClient";
+import { SubCommand } from "../../structures/SubCommand";
 
-export default class StopCommand extends Command {
+export default class StopCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "stop",
+      topName: "music",
       description: "Stops music playback and destroys a voice connection",
     });
   }

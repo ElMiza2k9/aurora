@@ -1,11 +1,12 @@
 import { ApplicationCommandOptionType, UserFlags } from "discord.js";
-import { AuroraClient } from "../structures/AuroraClient";
-import { Command } from "../structures/Command";
+import { AuroraClient } from "../../structures/AuroraClient";
+import { SubCommand } from "../../structures/SubCommand";
 
-export default class UserCommand extends Command {
+export default class UserCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "user",
+      topName: "info",
       description: "Shows your (or someone else's) profile info.",
       options: [
         {

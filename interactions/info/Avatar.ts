@@ -1,11 +1,12 @@
 import { ApplicationCommandOptionType } from "discord.js";
-import { AuroraClient } from "../structures/AuroraClient";
-import { Command } from "../structures/Command";
+import { AuroraClient } from "../../structures/AuroraClient";
+import { SubCommand } from "../../structures/SubCommand";
 
-export default class AvatarCommand extends Command {
+export default class AvatarCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "avatar",
+      topName: "info",
       description: "Shows your (or someone else's) avatar.",
       options: [
         {
