@@ -1,6 +1,6 @@
 {
   "name": "aurora",
-  "version": "0.4.3",
+  "version": "0.5.0",
   "description": "An in-house moderation & entertainment solution for Adwaita.",
   "main": "index.ts",
   "scripts": {
