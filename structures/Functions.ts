@@ -6,6 +6,7 @@ import {
 } from "discord.js";
 import { AuroraClient } from "./AuroraClient";
 import dayjs from "dayjs";
+import { Prisma } from "@prisma/client";
 
 export class Functions {
   client: AuroraClient;
@@ -74,7 +75,8 @@ export class Functions {
         ],
         ephemeral: true,
       });
-    } else if (interaction.guild.afkChannel &&
+    } else if (
+      interaction.guild.afkChannel &&
       interaction.member.voice.channel.id === interaction.guild.afkChannel.id
     ) {
       return interaction.reply({
@@ -114,7 +116,8 @@ export class Functions {
       });
     } else if (
       interaction.client.voice.channel &&
-      interaction.client.voice.channel.id !== interaction.member.voice.channel.id
+      interaction.client.voice.channel.id !==
+        interaction.member.voice.channel.id
     ) {
       return interaction.reply({
         embeds: [
@@ -258,5 +261,131 @@ export class Functions {
       inlineCodeContent: true,
       codeBlockContent: true,
     });
+  }
+
+  async addUser(userId: string, guildId: string | undefined, data?: any) {
+    if (!guildId) return null;
+
+    try {
+      const user = await this.client.db.user.create({
+        data: {
+          user_id: userId,
+          guild_id: guildId,
+          ...data,
+        },
+      });
+
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async updateUser(
+    userId: string,
+    guildId: string | undefined,
+    data: Partial<Prisma.UserUpdateManyArgs["data"]>
+  ) {
+    try {
+      const user = await this.getUser(userId, guildId);
+
+      if (!user) {
+        this.addUser(userId, guildId, data);
+        return;
+      }
+
+      await this.client.db.user.updateMany({
+        where: { user_id: userId, guild_id: guildId },
+        data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async removeUser(userId: string, guildId: string) {
+    try {
+      await this.client.db.user.deleteMany({
+        where: { user_id: userId, guild_id: guildId },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getGuild(guildId: string | undefined | null) {
+    if (!guildId) return null;
+
+    try {
+      const guild =
+        (await this.client.db.guild.findFirst({
+          where: { guild_id: guildId },
+        })) ?? (await this.addGuild(guildId));
+
+      return guild;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getUser(userId: string, guildId: string | undefined) {
+    if (!guildId) return null;
+
+    try {
+      const user =
+        (await this.client.db.user.findFirst({
+          where: { user_id: userId, guild_id: guildId },
+        })) ?? (await this.addUser(userId, guildId));
+
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async addGuild(guildId: string | undefined) {
+    if (!guildId) return null;
+
+    try {
+      const guild = await this.client.db.guild.create({
+        data: {
+          guild_id: guildId,
+        },
+      });
+
+      return guild;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async updateGuild(
+    guildId: string | undefined,
+    data: Partial<Prisma.GuildUpdateInput>
+  ) {
+    if (!guildId) return;
+
+    try {
+      const guild = await this.getGuild(guildId);
+
+      if (!guild) {
+        await this.addGuild(guildId);
+      }
+
+      await this.client.db.guild.updateMany({
+        where: { guild_id: guildId },
+        data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async deleteGuild(guildId: string): Promise<void> {
+    try {
+      await this.client.db.guild.deleteMany({ where: { guild_id: guildId } });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
