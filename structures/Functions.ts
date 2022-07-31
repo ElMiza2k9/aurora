@@ -1,8 +1,8 @@
 import {
-  Formatters,
   EmbedBuilder,
   escapeMarkdown,
   TimestampStylesString,
+  time,
 } from "discord.js";
 import { AuroraClient } from "./AuroraClient";
 import dayjs from "dayjs";
@@ -228,17 +228,17 @@ export class Functions {
 
   /**
    * Returns a formatted time
-   * @param { string| number | Date } time Your timestamp
+   * @param { string | number | Date } timestamp Your timestamp
    * @param {TimestampStylesString} type Formatting type
    */
-  formatTime(time: string | number | Date, type: TimestampStylesString) {
-    if (!time) {
+  formatTime(timestamp: string | number | Date, type: TimestampStylesString) {
+    if (!timestamp) {
       throw Error("time isn't provided (formatTime)");
-    } else if (!dayjs(time)) {
-      throw Error("time isn't parseable (formatTime)");
+    } else if (!dayjs(timestamp)) {
+      throw Error("time isn't parsable (formatTime)");
     }
 
-    return Formatters.time(dayjs(time).unix(), type);
+    return time(dayjs(timestamp).unix(), type);
   }
 
   /**
