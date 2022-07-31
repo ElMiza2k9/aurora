@@ -32,7 +32,6 @@ export default class EvalCommand extends SubCommand {
 
     if (isOwner === true) {
       try {
-        interaction.deferReply()
         let evaled = await eval(code);
 
         evaled = inspect(evaled, {
@@ -46,7 +45,7 @@ export default class EvalCommand extends SubCommand {
           .replaceAll(`interaction.client.token`, "CLIENT_TOKEN")
           .replaceAll(`process.env["CLIENT_TOKEN"]`, "CLIENT_TOKEN");
 
-        interaction.followUp({
+        interaction.reply({
           embeds: [
             interaction.client.functions
               .buildEmbed(interaction)
@@ -60,7 +59,7 @@ export default class EvalCommand extends SubCommand {
           ephemeral: isEphemeral,
         });
       } catch (error) {
-        return interaction.followUp({
+        return interaction.reply({
           embeds: [
             interaction.client.functions
               .buildEmbed(interaction)
