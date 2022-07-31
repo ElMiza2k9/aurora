@@ -7,8 +7,7 @@
     "prod": "ts-node index.ts",
     "dev": "nodemon",
     "format": "prettier --write \"**/*.{js,ts,json}\"",
-    "prisma:format": "npx prisma format",
-    "prisma:generate": "npx prisma generate"
+    "prisma": "npx prisma format && npx prisma generate"
   },
   "engines": {
     "node": ">=16.9.0",
