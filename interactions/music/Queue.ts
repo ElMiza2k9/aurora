@@ -20,36 +20,34 @@ export default class QueueCommand extends SubCommand {
       const queue = await interaction.client.player.queues.get(
         interaction.guild.id
       );
-      const songs = queue.songs
-        .map((song, pos) => {
-          return `${
-            pos === 0 ? `Current:` : `#${pos}.`
-          } **${interaction.client.functions.escapeMd(song.name)}** \`[${
-            song.formattedDuration
-          }]\``;
-        })
-        .slice(0, 10)
-        .join("\n");
-
-      const embed = interaction.client.functions
-        .buildEmbed(interaction)
-        .setDescription(
-          `${interaction.client.functions.formatReply(
-            `Here's the queue for **${interaction.client.functions.escapeMd(
-              interaction.guild.name
-            )}** (${
-              queue.songs.length > 10
-                ? `1-10/${queue.songs.length}`
-                : queue.songs.length
-            } songs):`,
-            queue.paused
-              ? interaction.client.config.emojis.pause
-              : interaction.client.config.emojis.play
-          )}\n${songs}`
-        );
 
       interaction.reply({
-        embeds: [embed],
+        content: `${interaction.client.functions.formatReply(
+          `Here's the queue for **${interaction.client.functions.escapeMd(
+            interaction.guild.name
+          )}** (${
+            queue.songs.length > 10
+              ? `1-10/${queue.songs.length}`
+              : queue.songs.length
+          } songs):`,
+          queue.paused
+            ? interaction.client.config.emojis.pause
+            : interaction.client.config.emojis.play
+        )}`,
+        embeds: [
+          interaction.client.functions
+            .buildEmbed(interaction)
+            .setDescription(queue.songs
+              .map((song, pos) => {
+                return `${
+                  pos === 0 ? `Current:` : `#${pos}.`
+                } **${interaction.client.functions.escapeMd(song.name)}** \`[${
+                  song.formattedDuration
+                }]\``;
+              })
+              .slice(0, 10)
+              .join("\n")),
+        ],
       });
     }
   }
