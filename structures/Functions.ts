@@ -2,10 +2,8 @@ import {
   EmbedBuilder,
   escapeMarkdown,
   TimestampStylesString,
-  time,
 } from "discord.js";
 import { AuroraClient } from "./AuroraClient";
-import dayjs from "dayjs";
 import { Prisma } from "@prisma/client";
 
 export class Functions {
@@ -232,13 +230,14 @@ export class Functions {
    * @param {TimestampStylesString} type Formatting type
    */
   formatTime(timestamp: string | number | Date, type: TimestampStylesString) {
+    const parsed = new Date(timestamp).getTime() / 1000;
     if (!timestamp) {
       throw Error("time isn't provided (formatTime)");
-    } else if (!dayjs(timestamp)) {
+    } else if (!parsed) {
       throw Error("time isn't parsable (formatTime)");
     }
 
-    return time(dayjs(timestamp).unix(), type);
+    return `<t:${parseInt(parsed.toString())}:${type ?? "F"}>`;
   }
 
   /**
