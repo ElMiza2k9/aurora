@@ -22,7 +22,14 @@ export default class ReadyEvent extends Event {
 
     client.user.setPresence({
       activities: [
-        { name: `v${client.package.version}`, type: ActivityType.Listening },
+        {
+          name:
+            client.config.presence.name.replaceAll(
+              "{VERSION}",
+              `v${client.package.version}`
+            ) ?? `v${client.package.version}`,
+          type: ActivityType.Listening,
+        },
       ],
       status: "online",
     });
