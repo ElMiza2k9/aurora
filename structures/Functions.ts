@@ -266,7 +266,7 @@ export class Functions {
     if (!guildId) return null;
 
     try {
-      const user = await this.client.db.user.create({
+      const user = await this.client.db.users.create({
         data: {
           user_id: userId,
           guild_id: guildId,
@@ -283,7 +283,7 @@ export class Functions {
   async updateUser(
     userId: string,
     guildId: string | undefined,
-    data: Partial<Prisma.UserUpdateManyArgs["data"]>
+    data: Partial<Prisma.usersUpdateManyArgs["data"]>
   ) {
     try {
       const user = await this.getUser(userId, guildId);
@@ -293,7 +293,7 @@ export class Functions {
         return;
       }
 
-      await this.client.db.user.updateMany({
+      await this.client.db.users.updateMany({
         where: { user_id: userId, guild_id: guildId },
         data,
       });
@@ -304,7 +304,7 @@ export class Functions {
 
   async removeUser(userId: string, guildId: string) {
     try {
-      await this.client.db.user.deleteMany({
+      await this.client.db.users.deleteMany({
         where: { user_id: userId, guild_id: guildId },
       });
     } catch (error) {
@@ -317,7 +317,7 @@ export class Functions {
 
     try {
       const guild =
-        (await this.client.db.guild.findFirst({
+        (await this.client.db.guilds.findFirst({
           where: { guild_id: guildId },
         })) ?? (await this.addGuild(guildId));
 
@@ -332,7 +332,7 @@ export class Functions {
 
     try {
       const user =
-        (await this.client.db.user.findFirst({
+        (await this.client.db.users.findFirst({
           where: { user_id: userId, guild_id: guildId },
         })) ?? (await this.addUser(userId, guildId));
 
@@ -346,7 +346,7 @@ export class Functions {
     if (!guildId) return null;
 
     try {
-      const guild = await this.client.db.guild.create({
+      const guild = await this.client.db.guilds.create({
         data: {
           guild_id: guildId,
         },
@@ -360,7 +360,7 @@ export class Functions {
 
   async updateGuild(
     guildId: string | undefined,
-    data: Partial<Prisma.GuildUpdateInput>
+    data: Partial<Prisma.guildsUpdateInput>
   ) {
     if (!guildId) return;
 
@@ -371,7 +371,7 @@ export class Functions {
         await this.addGuild(guildId);
       }
 
-      await this.client.db.guild.updateMany({
+      await this.client.db.guilds.updateMany({
         where: { guild_id: guildId },
         data,
       });
@@ -382,7 +382,7 @@ export class Functions {
 
   async deleteGuild(guildId: string): Promise<void> {
     try {
-      await this.client.db.guild.deleteMany({ where: { guild_id: guildId } });
+      await this.client.db.guilds.deleteMany({ where: { guild_id: guildId } });
     } catch (error) {
       console.log(error);
     }
