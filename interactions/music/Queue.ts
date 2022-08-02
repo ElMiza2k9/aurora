@@ -35,9 +35,8 @@ export default class QueueCommand extends SubCommand {
             : interaction.client.config.emojis.play
         )}`,
         embeds: [
-          interaction.client.functions
-            .buildEmbed(interaction)
-            .setDescription(queue.songs
+          interaction.client.functions.buildEmbed(interaction).setDescription(
+            queue.songs
               .map((song, pos) => {
                 return `${
                   pos === 0 ? `Current:` : `#${pos}.`
@@ -46,7 +45,8 @@ export default class QueueCommand extends SubCommand {
                 }]\``;
               })
               .slice(0, 10)
-              .join("\n")),
+              .join("\n")
+          ),
         ],
       });
     }
