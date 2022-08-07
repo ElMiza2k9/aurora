@@ -11,6 +11,7 @@ import { Functions } from "./Functions";
 import { EventHandler } from "../handlers/EventHandler";
 import { PrismaClient } from "@prisma/client";
 import { SubCommand } from "./SubCommand";
+import TempChannelsManager from "discord-temp-channels";
 
 export class AuroraClient extends Client<true> {
   interactions: Collection<string, Command | SubCommand> = new Collection();
@@ -19,6 +20,7 @@ export class AuroraClient extends Client<true> {
   package: typeof Package;
   functions: Functions;
   db: PrismaClient;
+  tempvoice: TempChannelsManager;
 
   constructor() {
     super(AuroraClientOptions);
@@ -34,6 +36,7 @@ export class AuroraClient extends Client<true> {
     this.config = Config;
     this.package = Package;
     this.functions = new Functions(this);
+    this.tempvoice = new TempChannelsManager(this);
 
     new EventHandler(this).init();
     this.db.$connect();
