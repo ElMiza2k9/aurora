@@ -32,6 +32,7 @@ export default class EvalCommand extends SubCommand {
 
     if (isOwner === true) {
       try {
+        await interaction.deferReply();
         let evaled = await eval(code);
 
         evaled = inspect(evaled, {
@@ -45,28 +46,28 @@ export default class EvalCommand extends SubCommand {
           .replaceAll(`interaction.client.token`, "CLIENT_TOKEN")
           .replaceAll(`process.env["CLIENT_TOKEN"]`, "CLIENT_TOKEN");
 
-        interaction.reply({
+        interaction.followUp({
           embeds: [
             interaction.client.functions
-              .buildEmbed(interaction)
+              .embed(interaction)
               .setDescription(
-                interaction.client.functions.formatReply(
+                interaction.client.functions.reply(
                   `Evaluated successfully:\n\`\`\`js\n${evaled}\`\`\``,
-                  interaction.client.config.emojis.check_mark
+                  ":white_check_mark:"
                 )
               ),
           ],
           ephemeral: isEphemeral,
         });
       } catch (error) {
-        return interaction.reply({
+        return interaction.followUp({
           embeds: [
             interaction.client.functions
-              .buildEmbed(interaction)
+              .embed(interaction)
               .setDescription(
-                interaction.client.functions.formatReply(
+                interaction.client.functions.reply(
                   `Evaluated with error:\n\`\`\`js\n${error?.stack}\`\`\``,
-                  interaction.client.config.emojis.cross_mark
+                  ":x:"
                 )
               ),
           ],
