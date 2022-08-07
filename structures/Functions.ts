@@ -17,9 +17,9 @@ export class Functions {
    * Returns a pre-formatted embed
    * @param {Interaction} interaction Your interaction (aka slash command)
    */
-  buildEmbed(interaction: any) {
+  embed(interaction: any) {
     if (!interaction) {
-      throw Error("Expected interaction to be provided (buildEmbed)");
+      throw Error("Expected interaction to be provided (embed)");
     }
 
     return new EmbedBuilder()
@@ -44,7 +44,7 @@ export class Functions {
    * @param {string} replyContent Reply content you would like to format
    * @param {string} emoji Emoji you would like to add
    */
-  formatReply(replyContent: string, emoji: string) {
+  reply(replyContent: string, emoji: string) {
     return `${emoji} | ${replyContent}`;
   }
 
@@ -64,11 +64,8 @@ export class Functions {
     if (!interaction.member.voice.channel) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            this.formatReply(
-              "You're not in a voice channel.",
-              this.client.config.emojis.cross_mark
-            )
+          this.embed(interaction).setDescription(
+            this.reply("You're not in a voice channel.", ":x:")
           ),
         ],
         ephemeral: true,
@@ -79,11 +76,8 @@ export class Functions {
     ) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            this.formatReply(
-              "You're in AFK channel.",
-              this.client.config.emojis.cross_mark
-            )
+          this.embed(interaction).setDescription(
+            this.reply("You're in AFK channel.", ":x:")
           ),
         ],
         ephemeral: true,
@@ -91,11 +85,8 @@ export class Functions {
     } else if (interaction.member.voice.selfDeaf) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            this.formatReply(
-              "You've deafened yourself.",
-              this.client.config.emojis.cross_mark
-            )
+          this.embed(interaction).setDescription(
+            this.reply("You've deafened yourself.", ":x:")
           ),
         ],
         ephemeral: true,
@@ -103,11 +94,8 @@ export class Functions {
     } else if (interaction.member.voice.serverDeaf) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            this.formatReply(
-              "You're deafened server-wide.",
-              this.client.config.emojis.cross_mark
-            )
+          this.embed(interaction).setDescription(
+            this.reply("You're deafened server-wide.", ":x:")
           ),
         ],
         ephemeral: true,
@@ -119,11 +107,8 @@ export class Functions {
     ) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            this.formatReply(
-              "You're not in the same voice channel as me.",
-              this.client.config.emojis.cross_mark
-            )
+          this.embed(interaction).setDescription(
+            this.reply("You're not in the same voice channel as me.", ":x:")
           ),
         ],
         ephemeral: true,
@@ -137,11 +122,8 @@ export class Functions {
       if (!connection) {
         return interaction.reply({
           embeds: [
-            this.buildEmbed(interaction).setDescription(
-              this.formatReply(
-                "There's no voice connection in this server.",
-                this.client.config.emojis.cross_mark
-              )
+            this.embed(interaction).setDescription(
+              this.reply("There's no voice connection in this server.", ":x:")
             ),
           ],
           ephemeral: true,
@@ -157,11 +139,8 @@ export class Functions {
       if (!queue) {
         return interaction.reply({
           embeds: [
-            this.buildEmbed(interaction).setDescription(
-              this.formatReply(
-                "The queue is empty.",
-                this.client.config.emojis.cross_mark
-              )
+            this.embed(interaction).setDescription(
+              this.reply("The queue is empty.", ":x:")
             ),
           ],
           ephemeral: true,
@@ -173,10 +152,10 @@ export class Functions {
       if (!queue || queue.songs.length === 1) {
         return interaction.reply({
           embeds: [
-            this.buildEmbed(interaction).setDescription(
-              this.formatReply(
+            this.embed(interaction).setDescription(
+              this.reply(
                 "The current track is the last one in the queue.\nIf you want to destroy the voice connection, use `/stop` instead.",
-                this.client.config.emojis.cross_mark
+                ":x:"
               )
             ),
           ],
@@ -196,10 +175,10 @@ export class Functions {
     if (!interaction.client.config.owners) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            interaction.client.functions.formatReply(
+          this.embed(interaction).setDescription(
+            interaction.client.functions.reply(
               "Owners list is empty, please check your config file.",
-              interaction.client.config.emojis.cross_mark
+              ":x:"
             )
           ),
         ],
@@ -210,10 +189,10 @@ export class Functions {
     ) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            interaction.client.functions.formatReply(
+          this.embed(interaction).setDescription(
+            interaction.client.functions.reply(
               "You're not included in owners list.",
-              interaction.client.config.emojis.cross_mark
+              ":x:"
             )
           ),
         ],
@@ -266,7 +245,7 @@ export class Functions {
     if (!guildId) return null;
 
     try {
-      const user = await this.client.db.users.create({
+      const user = await this.client.db.user.create({
         data: {
           user_id: userId,
           guild_id: guildId,
@@ -283,7 +262,7 @@ export class Functions {
   async updateUser(
     userId: string,
     guildId: string | undefined,
-    data: Partial<Prisma.usersUpdateManyArgs["data"]>
+    data: Partial<Prisma.UserUpdateManyArgs["data"]>
   ) {
     try {
       const user = await this.getUser(userId, guildId);
@@ -293,7 +272,7 @@ export class Functions {
         return;
       }
 
-      await this.client.db.users.updateMany({
+      await this.client.db.user.updateMany({
         where: { user_id: userId, guild_id: guildId },
         data,
       });
@@ -304,7 +283,7 @@ export class Functions {
 
   async removeUser(userId: string, guildId: string) {
     try {
-      await this.client.db.users.deleteMany({
+      await this.client.db.user.deleteMany({
         where: { user_id: userId, guild_id: guildId },
       });
     } catch (error) {
@@ -317,7 +296,7 @@ export class Functions {
 
     try {
       const guild =
-        (await this.client.db.guilds.findFirst({
+        (await this.client.db.guild.findFirst({
           where: { guild_id: guildId },
         })) ?? (await this.addGuild(guildId));
 
@@ -332,7 +311,7 @@ export class Functions {
 
     try {
       const user =
-        (await this.client.db.users.findFirst({
+        (await this.client.db.user.findFirst({
           where: { user_id: userId, guild_id: guildId },
         })) ?? (await this.addUser(userId, guildId));
 
@@ -346,7 +325,7 @@ export class Functions {
     if (!guildId) return null;
 
     try {
-      const guild = await this.client.db.guilds.create({
+      const guild = await this.client.db.guild.create({
         data: {
           guild_id: guildId,
         },
@@ -360,7 +339,7 @@ export class Functions {
 
   async updateGuild(
     guildId: string | undefined,
-    data: Partial<Prisma.guildsUpdateInput>
+    data: Partial<Prisma.GuildUpdateInput>
   ) {
     if (!guildId) return;
 
@@ -371,7 +350,7 @@ export class Functions {
         await this.addGuild(guildId);
       }
 
-      await this.client.db.guilds.updateMany({
+      await this.client.db.guild.updateMany({
         where: { guild_id: guildId },
         data,
       });
@@ -382,7 +361,7 @@ export class Functions {
 
   async deleteGuild(guildId: string): Promise<void> {
     try {
-      await this.client.db.guilds.deleteMany({ where: { guild_id: guildId } });
+      await this.client.db.guild.deleteMany({ where: { guild_id: guildId } });
     } catch (error) {
       console.log(error);
     }
