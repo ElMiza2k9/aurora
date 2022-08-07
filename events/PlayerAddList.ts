@@ -10,7 +10,7 @@ export default class PlayerAddListEvent extends Event {
   async execute(client: AuroraClient, _queue: Queue, playlist: Playlist<any>) {
     playlist.metadata.i.followUp({
       content: client.functions.reply(
-        `Added **${client.functions.escapeMd(playlist.name)}** (${
+        `Added **${client.functions.md(playlist.name)}** (${
           playlist.songs.length
         } songs) to the queue.`,
         ":white_check_mark:"
@@ -18,9 +18,7 @@ export default class PlayerAddListEvent extends Event {
       embeds: [
         playlist.metadata.i.client.functions
           .embed(playlist.metadata.i)
-          .setTitle(
-            playlist.metadata.i.client.functions.escapeMd(playlist.name)
-          )
+          .setTitle(playlist.metadata.i.client.functions.md(playlist.name))
           .setURL(playlist.url)
           .setThumbnail(playlist.thumbnail)
           .addFields([
@@ -39,7 +37,7 @@ export default class PlayerAddListEvent extends Event {
               })`,
               value: playlist.songs
                 .map((song, pos) => {
-                  return `#${pos + 1}. **${client.functions.escapeMd(
+                  return `#${pos + 1}. **${client.functions.md(
                     song.name
                   )}** \`[${song.formattedDuration}]\``;
                 })

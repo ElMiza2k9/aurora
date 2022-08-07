@@ -16,7 +16,7 @@ export default class ServerCommand extends SubCommand {
 
     interaction.reply({
       content: interaction.client.functions.reply(
-        `Here's some info about **${interaction.client.functions.escapeMd(
+        `Here's some info about **${interaction.client.functions.md(
           guild.name
         )}**:`,
         ":white_check_mark:"
@@ -27,7 +27,7 @@ export default class ServerCommand extends SubCommand {
           .setThumbnail(guild.iconURL())
           .setDescription(
             guild.description
-              ? interaction.client.functions.escapeMd(guild.description)
+              ? interaction.client.functions.md(guild.description)
               : `This server has no description.`
           )
           .addFields([

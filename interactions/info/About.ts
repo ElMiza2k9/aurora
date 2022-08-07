@@ -24,9 +24,7 @@ export default class AboutCommand extends SubCommand {
           .embed(interaction)
           .setThumbnail(interaction.client.user.avatarURL())
           .setDescription(
-            `${this.client.functions.escapeMd(
-              interaction.client.user.username
-            )} v${
+            `${this.client.functions.md(interaction.client.user.username)} v${
               this.client.package.version
             } is a self-hosted instance of [${this.client.functions.toCapitalize(
               this.client.package.name

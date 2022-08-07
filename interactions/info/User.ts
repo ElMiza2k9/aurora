@@ -35,7 +35,7 @@ Why should we respect their stupid decisions?`,
 
     interaction.reply({
       content: interaction.client.functions.reply(
-        `Here's some info about **${interaction.client.functions.escapeMd(
+        `Here's some info about **${interaction.client.functions.md(
           user.tag
         )}**:`,
         ":white_check_mark:"
@@ -65,9 +65,7 @@ Why should we respect their stupid decisions?`,
                   )}
 **Server nickname:** ${
                     guildMember.nickname
-                      ? interaction.client.functions.escapeMd(
-                          guildMember.nickname
-                        )
+                      ? interaction.client.functions.md(guildMember.nickname)
                       : "No nickname set"
                   }
           `

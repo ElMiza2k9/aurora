@@ -10,13 +10,13 @@ export default class PlayerPlaySongEvent extends Event {
   async execute(client: AuroraClient, _queue: Queue, song: Song<any>) {
     song.metadata.i.followUp({
       content: client.functions.reply(
-        `Started playing **${client.functions.escapeMd(song.name)}**.`,
+        `Started playing **${client.functions.md(song.name)}**.`,
         ":arrow_forward:"
       ),
       embeds: [
         song.metadata.i.client.functions
           .embed(song.metadata.i)
-          .setTitle(song.metadata.i.client.functions.escapeMd(song.name))
+          .setTitle(song.metadata.i.client.functions.md(song.name))
           .setURL(song.url)
           .setThumbnail(song.thumbnail)
           .addFields([
@@ -27,9 +27,7 @@ export default class PlayerPlaySongEvent extends Event {
 **Requested by:** ${song.user}
 **Uploaded by:** ${
                 song.uploader.name
-                  ? song.metadata.i.client.functions.escapeMd(
-                      song.uploader.name
-                    )
+                  ? song.metadata.i.client.functions.md(song.uploader.name)
                   : "Unknown"
               }`,
               inline: true,
@@ -42,7 +40,7 @@ export default class PlayerPlaySongEvent extends Event {
 **Live stream:** ${song.isLive ? "Yes" : "No"}
 **Playlist:** ${
                 song.playlist
-                  ? `${song.metadata.i.client.functions.escapeMd(
+                  ? `${song.metadata.i.client.functions.md(
                       song.playlist.name
                     )} (${song.playlist.songs.length} songs)`
                   : "No playlist"

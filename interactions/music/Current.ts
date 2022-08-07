@@ -30,7 +30,7 @@ export default class CurrentCommand extends SubCommand {
         embeds: [
           interaction.client.functions
             .embed(interaction)
-            .setTitle(interaction.client.functions.escapeMd(song.name))
+            .setTitle(interaction.client.functions.md(song.name))
             .setURL(song.url)
             .setThumbnail(song.thumbnail)
             .addFields([
@@ -41,7 +41,7 @@ export default class CurrentCommand extends SubCommand {
 **Requested by:** ${song.user}
 **Uploaded by:** ${
                   song.uploader.name
-                    ? interaction.client.functions.escapeMd(song.uploader.name)
+                    ? interaction.client.functions.md(song.uploader.name)
                     : "Unknown"
                 }`,
                 inline: true,
@@ -54,7 +54,7 @@ export default class CurrentCommand extends SubCommand {
 **Live stream:** ${song.isLive ? "Yes" : "No"}
 **Playlist:** ${
                   song.playlist
-                    ? `${interaction.client.functions.escapeMd(
+                    ? `${interaction.client.functions.md(
                         song.playlist.name
                       )} (${song.playlist.songs.length} songs)`
                     : "No playlist"

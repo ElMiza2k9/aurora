@@ -28,7 +28,7 @@ export default class SkipCommand extends SubCommand {
             .embed(interaction)
             .setDescription(
               interaction.client.functions.reply(
-                `Skipped **${interaction.client.functions.escapeMd(
+                `Skipped **${interaction.client.functions.md(
                   queue.songs[0].name
                 )}**.`,
                 ":track_next:"

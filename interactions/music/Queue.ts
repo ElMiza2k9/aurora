@@ -29,7 +29,7 @@ export default class QueueCommand extends SubCommand {
 
       interaction.reply({
         content: `${interaction.client.functions.reply(
-          `Here's the queue for **${interaction.client.functions.escapeMd(
+          `Here's the queue for **${interaction.client.functions.md(
             interaction.guild.name
           )}** (${
             queue.songs.length > 11
@@ -42,7 +42,7 @@ export default class QueueCommand extends SubCommand {
           interaction.client.functions.embed(interaction).addFields([
             {
               name: "Now playing",
-              value: `**[${interaction.client.functions.escapeMd(
+              value: `**[${interaction.client.functions.md(
                 queue.songs[0].name
               )}](${queue.songs[0].url})** \`[${
                 queue.songs[0].formattedDuration
@@ -57,9 +57,9 @@ export default class QueueCommand extends SubCommand {
                       .map((song, pos) => {
                         return `#${
                           pos + 1
-                        }. **[${interaction.client.functions.escapeMd(
-                          song.name
-                        )}](${song.url})** \`[${song.formattedDuration}]\``;
+                        }. **[${interaction.client.functions.md(song.name)}](${
+                          song.url
+                        })** \`[${song.formattedDuration}]\``;
                       })
                       .slice(0, 10)
                       .join("\n")

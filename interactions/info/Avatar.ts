@@ -71,9 +71,7 @@ export default class AvatarCommand extends SubCommand {
           .embed(interaction)
           .setDescription(
             interaction.client.functions.reply(
-              `${interaction.client.functions.escapeMd(
-                user.username
-              )}'s avatar:`,
+              `${interaction.client.functions.md(user.username)}'s avatar:`,
               ":white_check_mark:"
             )
           )

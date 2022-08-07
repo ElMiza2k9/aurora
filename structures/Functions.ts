@@ -231,7 +231,7 @@ export class Functions {
    * Formats a given string to escape any markdown symbols
    * @param {any} str String to format
    */
-  escapeMd(str: any) {
+  md(str: any) {
     return escapeMarkdown(str, {
       codeBlock: true,
       spoiler: true,
