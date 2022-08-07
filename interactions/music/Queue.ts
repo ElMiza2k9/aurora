@@ -53,13 +53,14 @@ export default class QueueCommand extends SubCommand {
               value:
                 queue.songs.length > 1
                   ? queue.songs
-                      .filter((p) => p > 0)
-                      .map(
-                        (song, pos) =>
-                          `#${pos}. **[${interaction.client.functions.escapeMd(
-                            song.name
-                          )}](${song.url})** \`[${song.formattedDuration}]\``
-                      )
+                      .slice(1)
+                      .map((song, pos) => {
+                        return `#${
+                          pos + 1
+                        }. **[${interaction.client.functions.escapeMd(
+                          song.name
+                        )}](${song.url})** \`[${song.formattedDuration}]\``;
+                      })
                       .slice(0, 10)
                       .join("\n")
                   : "Nothing yet...",
