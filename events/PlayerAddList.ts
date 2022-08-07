@@ -9,15 +9,15 @@ export default class PlayerAddListEvent extends Event {
 
   async execute(client: AuroraClient, _queue: Queue, playlist: Playlist<any>) {
     playlist.metadata.i.followUp({
-      content: client.functions.formatReply(
+      content: client.functions.reply(
         `Added **${client.functions.escapeMd(playlist.name)}** (${
           playlist.songs.length
         } songs) to the queue.`,
-        client.config.emojis.check_mark
+        ":white_check_mark:"
       ),
       embeds: [
         playlist.metadata.i.client.functions
-          .buildEmbed(playlist.metadata.i)
+          .embed(playlist.metadata.i)
           .setTitle(
             playlist.metadata.i.client.functions.escapeMd(playlist.name)
           )

@@ -20,9 +20,9 @@ export default class InteractionCreateEvent extends Event {
       await command.execute(interaction);
     } catch (error) {
       await interaction.reply({
-        content: client.functions.formatReply(
+        content: client.functions.reply(
           `An unknown ${error.name} happened while processing your command. Please check the logs for details.`,
-          client.config.emojis.cross_mark
+          ":x:"
         ),
         ephemeral: true,
       });

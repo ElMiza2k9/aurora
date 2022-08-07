@@ -9,13 +9,13 @@ export default class PlayerPlaySongEvent extends Event {
 
   async execute(client: AuroraClient, _queue: Queue, song: Song<any>) {
     song.metadata.i.followUp({
-      content: client.functions.formatReply(
+      content: client.functions.reply(
         `Started playing **${client.functions.escapeMd(song.name)}**.`,
-        client.config.emojis.play
+        ":arrow_forward:"
       ),
       embeds: [
         song.metadata.i.client.functions
-          .buildEmbed(song.metadata.i)
+          .embed(song.metadata.i)
           .setTitle(song.metadata.i.client.functions.escapeMd(song.name))
           .setURL(song.url)
           .setThumbnail(song.thumbnail)

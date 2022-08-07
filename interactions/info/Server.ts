@@ -15,15 +15,15 @@ export default class ServerCommand extends SubCommand {
     const serverOwner = await guild.fetchOwner();
 
     interaction.reply({
-      content: interaction.client.functions.formatReply(
+      content: interaction.client.functions.reply(
         `Here's some info about **${interaction.client.functions.escapeMd(
           guild.name
         )}**:`,
-        interaction.client.config.emojis.check_mark
+        ":white_check_mark:"
       ),
       embeds: [
         interaction.client.functions
-          .buildEmbed(interaction)
+          .embed(interaction)
           .setThumbnail(guild.iconURL())
           .setDescription(
             guild.description

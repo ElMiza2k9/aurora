@@ -23,13 +23,13 @@ export default class CurrentCommand extends SubCommand {
       const song = queue.songs[0];
 
       interaction.reply({
-        content: interaction.client.functions.formatReply(
+        content: interaction.client.functions.reply(
           "Here's some info about the current song:",
-          interaction.client.config.emojis.check_mark
+          ":white_check_mark:"
         ),
         embeds: [
           interaction.client.functions
-            .buildEmbed(interaction)
+            .embed(interaction)
             .setTitle(interaction.client.functions.escapeMd(song.name))
             .setURL(song.url)
             .setThumbnail(song.thumbnail)

@@ -68,13 +68,13 @@ export default class AvatarCommand extends SubCommand {
     interaction.reply({
       embeds: [
         interaction.client.functions
-          .buildEmbed(interaction)
+          .embed(interaction)
           .setDescription(
-            interaction.client.functions.formatReply(
+            interaction.client.functions.reply(
               `${interaction.client.functions.escapeMd(
                 user.username
               )}'s avatar:`,
-              interaction.client.config.emojis.check_mark
+              ":white_check_mark:"
             )
           )
           .setImage(avatar),

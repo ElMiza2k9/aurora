@@ -9,13 +9,13 @@ export default class PlayerAddSongEvent extends Event {
 
   async execute(client: AuroraClient, _queue: Queue, song: Song<any>) {
     song.metadata.i.followUp({
-      content: client.functions.formatReply(
+      content: client.functions.reply(
         `Added **${client.functions.escapeMd(song.name)}** to the queue.`,
-        client.config.emojis.check_mark
+        ":white_check_mark:"
       ),
       embeds: [
         song.metadata.i.client.functions
-          .buildEmbed(song.metadata.i)
+          .embed(song.metadata.i)
           .setTitle(song.metadata.i.client.functions.escapeMd(song.name))
           .setURL(song.url)
           .setThumbnail(song.thumbnail)

@@ -25,24 +25,24 @@ export default class UserCommand extends SubCommand {
 
     if (userFlags.has(UserFlags.TeamPseudoUser)) {
       return interaction.reply({
-        content: interaction.client.functions.formatReply(
+        content: interaction.client.functions.reply(
           `Some genius at Discord thought that registering teams as pseudo-users would be a good idea.
 Why should we respect their stupid decisions?`,
-          interaction.client.config.emojis.cross_mark
+          ":x:"
         ),
       });
     }
 
     interaction.reply({
-      content: interaction.client.functions.formatReply(
+      content: interaction.client.functions.reply(
         `Here's some info about **${interaction.client.functions.escapeMd(
           user.tag
         )}**:`,
-        interaction.client.config.emojis.check_mark
+        ":white_check_mark:"
       ),
       embeds: [
         interaction.client.functions
-          .buildEmbed(interaction)
+          .embed(interaction)
           .setThumbnail(user.avatarURL({}))
           .addFields([
             {

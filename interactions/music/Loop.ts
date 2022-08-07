@@ -44,13 +44,13 @@ export default class LoopCommand extends SubCommand {
       interaction.reply({
         embeds: [
           interaction.client.functions
-            .buildEmbed(interaction)
+            .embed(interaction)
             .setDescription(
-              interaction.client.functions.formatReply(
+              interaction.client.functions.reply(
                 mode.value > 0
                   ? `Loop mode set to **${modeNames[mode.value]}**.`
                   : "Disabled player looping.",
-                interaction.client.config.emojis.check_mark
+                ":white_check_mark:"
               )
             ),
         ],

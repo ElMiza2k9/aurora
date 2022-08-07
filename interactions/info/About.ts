@@ -15,13 +15,13 @@ export default class AboutCommand extends SubCommand {
       interaction.client.package.homepage ?? "https://github.com?chamln/aurora";
 
     interaction.reply({
-      content: interaction.client.functions.formatReply(
+      content: interaction.client.functions.reply(
         `Here's some info about me:`,
-        interaction.client.config.emojis.check_mark
+        ":white_check_mark:"
       ),
       embeds: [
         this.client.functions
-          .buildEmbed(interaction)
+          .embed(interaction)
           .setThumbnail(interaction.client.user.avatarURL())
           .setDescription(
             `${this.client.functions.escapeMd(

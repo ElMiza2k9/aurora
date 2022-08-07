@@ -12,14 +12,6 @@
   "presence": {
     "name": "anything you want (type {VERSION} to insert bot's version)"
   },
-  "emojis": {
-    "check_mark": ":white_check_mark:",
-    "cross_mark": ":x:",
-    "play": ":arrow_forward:",
-    "pause": ":pause_button:",
-    "stop": ":stop_button:",
-    "skip": ":track_next:"
-  },
   "embeds": {
     "hexColor": "7289da",
     "showAuthor": true,

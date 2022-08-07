@@ -23,11 +23,11 @@ export default class ResumeCommand extends SubCommand {
       interaction.reply({
         embeds: [
           interaction.client.functions
-            .buildEmbed(interaction)
+            .embed(interaction)
             .setDescription(
-              interaction.client.functions.formatReply(
+              interaction.client.functions.reply(
                 "Resumed the playback.",
-                interaction.client.config.emojis.play
+                ":arrow_forward:"
               )
             ),
         ],

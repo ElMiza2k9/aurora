@@ -24,11 +24,11 @@ export default class PauseCommand extends SubCommand {
       interaction.reply({
         embeds: [
           interaction.client.functions
-            .buildEmbed(interaction)
+            .embed(interaction)
             .setDescription(
-              interaction.client.functions.formatReply(
+              interaction.client.functions.reply(
                 "Paused the playback.",
-                interaction.client.config.emojis.pause
+                ":pause_button:"
               )
             ),
         ],
