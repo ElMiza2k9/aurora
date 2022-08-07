@@ -7,13 +7,18 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model guilds {
+model Guild {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   guild_id String @unique
+  locale   String @default("en-US")
+
+  @@map("guilds")
 }
 
-model users {
+model User {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   guild_id String
   user_id  String
+
+  @@map("users")
 }
