@@ -16,37 +16,66 @@ export default class QueueCommand extends SubCommand {
       true
     );
 
+    const loopModes = {
+      0: "Disabled",
+      1: "Current song",
+      2: "Entire queue",
+    };
+
     if (isChecked === true) {
       const queue = await interaction.client.player.queues.get(
         interaction.guild.id
       );
 
       interaction.reply({
-        content: `${interaction.client.functions.formatReply(
+        content: `${interaction.client.functions.reply(
           `Here's the queue for **${interaction.client.functions.escapeMd(
             interaction.guild.name
           )}** (${
-            queue.songs.length > 10
+            queue.songs.length > 11
               ? `1-10/${queue.songs.length}`
               : queue.songs.length
           } songs):`,
-          queue.paused
-            ? interaction.client.config.emojis.pause
-            : interaction.client.config.emojis.play
+          queue.paused ? ":pause_button:" : ":arrow_forward:"
         )}`,
         embeds: [
-          interaction.client.functions.buildEmbed(interaction).setDescription(
-            queue.songs
-              .map((song, pos) => {
-                return `${
-                  pos === 0 ? `Current:` : `#${pos}.`
-                } **${interaction.client.functions.escapeMd(song.name)}** \`[${
-                  song.formattedDuration
-                }]\``;
-              })
-              .slice(0, 10)
-              .join("\n")
-          ),
+          interaction.client.functions.embed(interaction).addFields([
+            {
+              name: "Now playing",
+              value: `**[${interaction.client.functions.escapeMd(
+                queue.songs[0].name
+              )}](${queue.songs[0].url})** \`[${
+                queue.songs[0].formattedDuration
+              }]\``,
+            },
+            {
+              name: "Up next",
+              value:
+                queue.songs.length > 1
+                  ? queue.songs
+                      .filter((p) => p > 0)
+                      .map(
+                        (song, pos) =>
+                          `#${pos}. **[${interaction.client.functions.escapeMd(
+                            song.name
+                          )}](${song.url})** \`[${song.formattedDuration}]\``
+                      )
+                      .slice(0, 10)
+                      .join("\n")
+                  : "Nothing yet...",
+            },
+            {
+              name: "Queue length",
+              value: queue.formattedDuration,
+              inline: true,
+            },
+            { name: "Volume", value: `${queue.volume}%`, inline: true },
+            {
+              name: "Loop mode",
+              value: loopModes[queue.repeatMode],
+              inline: true,
+            },
+          ]),
         ],
       });
     }
