@@ -46,6 +46,8 @@ export default class EvalCommand extends SubCommand {
           .replaceAll(`interaction.client.token`, "CLIENT_TOKEN")
           .replaceAll(`process.env["CLIENT_TOKEN"]`, "CLIENT_TOKEN");
 
+        evaled = interaction.client.functions.md(evaled);
+
         interaction.followUp({
           embeds: [
             interaction.client.functions
