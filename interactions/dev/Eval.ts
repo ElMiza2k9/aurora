@@ -43,8 +43,10 @@ export default class EvalCommand extends SubCommand {
         evaled = evaled
           .replaceAll(interaction.client.token, "CLIENT_TOKEN")
           .replaceAll(process.env["CLIENT_TOKEN"], "CLIENT_TOKEN")
+          .replaceAll(process.env["DATABASE_URL"], "DATABASE_URL")
           .replaceAll(`interaction.client.token`, "CLIENT_TOKEN")
-          .replaceAll(`process.env["CLIENT_TOKEN"]`, "CLIENT_TOKEN");
+          .replaceAll(`process.env["CLIENT_TOKEN"]`, "CLIENT_TOKEN")
+          .replaceAll(`process.env["DATABASE_URL"]`, "DATABASE_URL");
 
         evaled = interaction.client.functions.md(evaled);
 
