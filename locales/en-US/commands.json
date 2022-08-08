@@ -1,0 +1,21 @@
+{
+  "info": {
+    "about": {
+      "reply": "Here's some info about me:",
+      "fields": {
+        "servers": "Servers",
+        "channels": "Channels",
+        "users": "Users",
+        "latency": { "name": "Latency", "value": "{{latency}} ms" },
+        "ram_heap": { "name": "RAM (heap)", "value": "{{mem}} MB" },
+        "ram_all": { "name": "RAM (all)", "value": "{{mem}} MB" }
+      },
+      "footer": "© 2022 {{author}}. Licensed under {{license}}.",
+      "buttons": {
+        "0": "Source code",
+        "1": "Issue tracker",
+        "2": "Discord server"
+      }
+    }
+  }
+}

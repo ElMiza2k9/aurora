@@ -1,0 +1,21 @@
+{
+  "info": {
+    "about": {
+      "reply": "Вот немного информации обо мне:",
+      "fields": {
+        "servers": "Серверов",
+        "channels": "Каналов",
+        "users": "Пользователей",
+        "latency": { "name": "Задержка", "value": "{{latency}} мс" },
+        "ram_heap": { "name": "ОЗУ (heap)", "value": "{{mem}} МБ" },
+        "ram_all": { "name": "ОЗУ (всего)", "value": "{{mem}} МБ" }
+      },
+      "footer": "© 2022 {{author}}. Лицензировано под {{license}}.",
+      "buttons": {
+        "0": "Исходный код",
+        "1": "Трекер проблем",
+        "2": "Discord-сервер"
+      }
+    }
+  }
+}
