@@ -1,4 +1,5 @@
 import * as DJS from "discord.js";
+import i18next from "i18next";
 import { AuroraClient } from "../structures/AuroraClient";
 import { Event } from "../structures/Event";
 
@@ -16,12 +17,15 @@ export default class InteractionCreateEvent extends Event {
     const command = client.interactions.get(this.getCommand(interaction));
     if (!command) return;
 
+    const dbGuild = await client.functions.getGuild(interaction?.guild?.id);
+    let locale = (global.l = i18next.getFixedT(dbGuild?.locale || "en-US"));
+
     try {
-      await command.execute(interaction);
+      await command.execute(interaction, locale);
     } catch (error) {
       await interaction.reply({
         content: client.functions.reply(
-          `An unknown ${error.name} happened while processing your command. Please check the logs for details.`,
+          locale("events:interactionCreate:error", { error: `${error.name}` }),
           ":x:"
         ),
         ephemeral: true,
