@@ -241,14 +241,14 @@ export class Functions {
     });
   }
 
-  async addUser(userId: string, guildId: string | undefined, data?: any) {
-    if (!guildId) return null;
+  async addUser(userId: string, guild_id: string | undefined, data?: any) {
+    if (!guild_id) return null;
 
     try {
       const user = await this.client.db.user.create({
         data: {
           user_id: userId,
-          guild_id: guildId,
+          guild_id: guild_id,
           ...data,
         },
       });
@@ -261,19 +261,19 @@ export class Functions {
 
   async updateUser(
     userId: string,
-    guildId: string | undefined,
+    guild_id: string | undefined,
     data: Partial<Prisma.UserUpdateManyArgs["data"]>
   ) {
     try {
-      const user = await this.getUser(userId, guildId);
+      const user = await this.getUser(userId, guild_id);
 
       if (!user) {
-        this.addUser(userId, guildId, data);
+        this.addUser(userId, guild_id, data);
         return;
       }
 
       await this.client.db.user.updateMany({
-        where: { user_id: userId, guild_id: guildId },
+        where: { user_id: userId, guild_id: guild_id },
         data,
       });
     } catch (error) {
@@ -281,24 +281,24 @@ export class Functions {
     }
   }
 
-  async removeUser(userId: string, guildId: string) {
+  async removeUser(userId: string, guild_id: string) {
     try {
       await this.client.db.user.deleteMany({
-        where: { user_id: userId, guild_id: guildId },
+        where: { user_id: userId, guild_id: guild_id },
       });
     } catch (error) {
       console.log(error);
     }
   }
 
-  async getGuild(guildId: string | undefined | null) {
-    if (!guildId) return null;
+  async getGuild(guild_id: string | undefined | null) {
+    if (!guild_id) return null;
 
     try {
       const guild =
         (await this.client.db.guild.findFirst({
-          where: { guild_id: guildId },
-        })) ?? (await this.addGuild(guildId));
+          where: { guild_id: guild_id },
+        })) ?? (await this.addGuild(guild_id));
 
       return guild;
     } catch (error) {
@@ -306,14 +306,14 @@ export class Functions {
     }
   }
 
-  async getUser(userId: string, guildId: string | undefined) {
-    if (!guildId) return null;
+  async getUser(userId: string, guild_id: string | undefined) {
+    if (!guild_id) return null;
 
     try {
       const user =
         (await this.client.db.user.findFirst({
-          where: { user_id: userId, guild_id: guildId },
-        })) ?? (await this.addUser(userId, guildId));
+          where: { user_id: userId, guild_id: guild_id },
+        })) ?? (await this.addUser(userId, guild_id));
 
       return user;
     } catch (error) {
@@ -321,13 +321,13 @@ export class Functions {
     }
   }
 
-  async addGuild(guildId: string | undefined) {
-    if (!guildId) return null;
+  async addGuild(guild_id: string | undefined) {
+    if (!guild_id) return null;
 
     try {
       const guild = await this.client.db.guild.create({
         data: {
-          guild_id: guildId,
+          guild_id: guild_id,
         },
       });
 
@@ -338,20 +338,20 @@ export class Functions {
   }
 
   async updateGuild(
-    guildId: string | undefined,
+    guild_id: string | undefined,
     data: Partial<Prisma.GuildUpdateInput>
   ) {
-    if (!guildId) return;
+    if (!guild_id) return;
 
     try {
-      const guild = await this.getGuild(guildId);
+      const guild = await this.getGuild(guild_id);
 
       if (!guild) {
-        await this.addGuild(guildId);
+        await this.addGuild(guild_id);
       }
 
       await this.client.db.guild.updateMany({
-        where: { guild_id: guildId },
+        where: { guild_id: guild_id },
         data,
       });
     } catch (error) {
@@ -359,9 +359,9 @@ export class Functions {
     }
   }
 
-  async deleteGuild(guildId: string): Promise<void> {
+  async deleteGuild(guild_id: string): Promise<void> {
     try {
-      await this.client.db.guild.deleteMany({ where: { guild_id: guildId } });
+      await this.client.db.guild.deleteMany({ where: { guild_id: guild_id } });
     } catch (error) {
       console.log(error);
     }
