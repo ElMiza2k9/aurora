@@ -7,14 +7,10 @@ P.Promise.config({
 
 import { AuroraClient } from "./structures/AuroraClient";
 const client = new AuroraClient();
-client.login(process.env.CLIENT_TOKEN);
+client.init();
 
 if (client.config.debug.debug_events) {
   process.on("unhandledRejection", (error) =>
     console.error(`[error] ${error}`)
   );
-  process.on("uncaughtExceptionMonitor", (error) =>
-    console.error(`[uncaught exception] ${error}`)
-  );
-  process.on("warning", (warning) => console.warn(`[warning] ${warning}`));
 }
