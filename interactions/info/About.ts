@@ -10,82 +10,78 @@ export default class AboutCommand extends SubCommand {
       description: "Get the info about the bot",
     });
   }
-  async execute(interaction) {
+  async execute(interaction, l) {
     const baseURL =
-      interaction.client.package.homepage ?? "https://github.com?chamln/aurora";
+      interaction.client.package.homepage ?? "https://github.com/chamln/aurora";
 
     interaction.reply({
       content: interaction.client.functions.reply(
-        `Here's some info about me:`,
+        l("commands:info:about:reply"),
         ":white_check_mark:"
       ),
       embeds: [
         this.client.functions
           .embed(interaction)
           .setThumbnail(interaction.client.user.avatarURL())
-          .setDescription(
-            `${this.client.functions.md(interaction.client.user.username)} v${
-              this.client.package.version
-            } is a self-hosted instance of [${this.client.functions.toCapitalize(
-              this.client.package.name
-            )}](${this.client.package.homepage}).`
-          )
           .addFields(
             {
-              name: "Servers",
+              name: l("commands:info:about:fields:servers"),
               value: interaction.client.guilds.cache.size.toString(),
               inline: true,
             },
             {
-              name: "Channels",
+              name: l("commands:info:about:fields:channels"),
               value: interaction.client.channels.cache.size.toString(),
               inline: true,
             },
             {
-              name: "Users",
+              name: l("commands:info:about:fields:users"),
               value: interaction.client.guilds.cache
                 .reduce((a, g) => a + g.memberCount, 0)
                 .toString(),
               inline: true,
             },
             {
-              name: "Ping",
-              value: `${interaction.client.ws.ping} ms`,
+              name: l("commands:info:about:fields:latency:name"),
+              value: l("commands:info:about:fields:latency:value", {
+                latency: `${interaction.client.ws.ping}`,
+              }),
               inline: true,
             },
             {
-              name: "RAM (heap)",
-              value: `${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(
-                2
-              )} MB`,
+              name: l("commands:info:about:fields:ram_heap:name"),
+              value: l("commands:info:about:fields:ram_heap:value", {
+                mem: `${(process.memoryUsage().heapUsed / 1048576).toFixed(2)}`,
+              }),
               inline: true,
             },
             {
-              name: "RAM (all)",
-              value: `${(process.memoryUsage().rss / 1024 / 1024).toFixed(
-                2
-              )} MB`,
+              name: l("commands:info:about:fields:ram_all:name"),
+              value: l("commands:info:about:fields:ram_all:value", {
+                mem: `${(process.memoryUsage().rss / 1048576).toFixed(2)}`,
+              }),
               inline: true,
             }
           )
           .setFooter({
-            text: `© 2022 ${
-              this.client.package.author ?? "chamln"
-            }. Licensed under ${this.client.package.license ?? "Apache 2.0"}.`,
+            text: l("commands:info:about:footer", {
+              author: `${this.client.package.author ?? "chamln"}`,
+              license: `${this.client.package.license ?? "Apache 2.0"}`,
+            }),
           }),
       ],
       components: [
         new ActionRowBuilder().addComponents([
           new ButtonBuilder()
-            .setLabel("Source code")
+            .setLabel(l("commands:info:about:buttons:0"))
             .setStyle(ButtonStyle.Link)
             .setURL(baseURL),
           new ButtonBuilder()
-            .setLabel("Report issues/suggest features")
+            .setLabel(l("commands:info:about:buttons:1"))
             .setStyle(ButtonStyle.Link)
-            .setURL(`${baseURL}/discussions`),
+            .setURL(`${baseURL}/issues`),
           new ButtonBuilder()
-            .setLabel("Discord server")
+            .setLabel(l("commands:info:about:buttons:2"))
             .setStyle(ButtonStyle.Link)
             .setURL("https://discord.gg/ctKs8WRQR5"),
         ]),
