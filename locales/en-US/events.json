@@ -1,0 +1,5 @@
+{
+  "interactionCreate": {
+    "error": "An unknown {{error}} happened while processing your command. Please check the logs for details."
+  }
+}
