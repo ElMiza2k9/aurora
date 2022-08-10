@@ -23,9 +23,9 @@ export default class InteractionCreateEvent extends Event {
     try {
       await command.execute(interaction, locale);
     } catch (error) {
-      await interaction.reply({
+      await interaction.followUp({
         content: client.functions.reply(
-          locale("events:interactionCreate:error", { error: `${error.name}` }),
+          locale("misc:error", { error: `${error.name}` }),
           ":x:"
         ),
         ephemeral: true,
