@@ -16,6 +16,22 @@ export default class ReadyEvent extends Event {
 
     await new InteractionHandler(client).init();
 
+    const tempvoices = await this.client.db.tempVoice.findMany();
+
+    tempvoices.forEach(t => {
+      if(!this.client.channels.cache.get(t.channel_id)) return;
+      this.client.tempvoice.registerChannel(t.channel_id, {
+        childCategory: t.category_id,
+        childAutoDeleteIfEmpty: t.delete_if_empty,
+        childAutoDeleteIfOwnerLeaves: t.delete_if_no_owner,
+        childMaxUsers: t.member_limit,
+        childBitrate: t.bitrate,
+        childFormat: (member, count) => `#${count} [${member.user.username}]`,
+      });
+    });
+
+    console.log(`[tempvoices] Registered ${tempvoices.length} tempvoices`)
+
     console.log(
       `Ready! Logged in as ${client.user.tag} (id ${client.user.id})`
     );

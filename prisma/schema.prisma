@@ -22,3 +22,16 @@ model User {
 
   @@map("users")
 }
+
+model TempVoice {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  guild_id           String
+  channel_id         String  @unique
+  category_id        String
+  delete_if_empty    Boolean
+  delete_if_no_owner Boolean
+  member_limit       Int
+  bitrate            Int
+
+  @@map("tempvoices")
+}
