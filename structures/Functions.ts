@@ -51,12 +51,14 @@ export class Functions {
   /**
    * Performs voice channel checks; useful for commands
    * @param {Interaction} interaction Your interaction (aka slash command)
+   * @param {any} t Locale
    * @param {boolean} checkIfConnected Whether to check voice connection
    * @param {boolean} checkIfQueueExists Whether to check if queue exists
    * @param {boolean} checkIfLastSong Whether to check queue size
    */
-  async checkVoice(
+  async voice(
     interaction: any,
+    t: any,
     checkIfConnected: boolean,
     checkIfQueueExists: boolean,
     checkIfLastSong: boolean
@@ -65,7 +67,7 @@ export class Functions {
       return interaction.reply({
         embeds: [
           this.embed(interaction).setDescription(
-            this.reply("You're not in a voice channel.", ":x:")
+            this.reply(t("functions:voice:not_in_voice"), ":x:")
           ),
         ],
         ephemeral: true,
@@ -77,7 +79,7 @@ export class Functions {
       return interaction.reply({
         embeds: [
           this.embed(interaction).setDescription(
-            this.reply("You're in AFK channel.", ":x:")
+            this.reply(t("functions:voice:in_afk"), ":x:")
           ),
         ],
         ephemeral: true,
@@ -86,7 +88,7 @@ export class Functions {
       return interaction.reply({
         embeds: [
           this.embed(interaction).setDescription(
-            this.reply("You've deafened yourself.", ":x:")
+            this.reply(t("functions:voice:self_deaf"), ":x:")
           ),
         ],
         ephemeral: true,
@@ -95,7 +97,7 @@ export class Functions {
       return interaction.reply({
         embeds: [
           this.embed(interaction).setDescription(
-            this.reply("You're deafened server-wide.", ":x:")
+            this.reply(t("functions:voice:server_deaf"), ":x:")
           ),
         ],
         ephemeral: true,
@@ -108,7 +110,7 @@ export class Functions {
       return interaction.reply({
         embeds: [
           this.embed(interaction).setDescription(
-            this.reply("You're not in the same voice channel as me.", ":x:")
+            this.reply(t("functions:voice:not_same_channel"), ":x:")
           ),
         ],
         ephemeral: true,
@@ -123,7 +125,7 @@ export class Functions {
         return interaction.reply({
           embeds: [
             this.embed(interaction).setDescription(
-              this.reply("There's no voice connection in this server.", ":x:")
+              this.reply(t("functions:voice:no_connection"), ":x:")
             ),
           ],
           ephemeral: true,
@@ -140,7 +142,7 @@ export class Functions {
         return interaction.reply({
           embeds: [
             this.embed(interaction).setDescription(
-              this.reply("The queue is empty.", ":x:")
+              this.reply(t("functions:voice:no_queue"), ":x:")
             ),
           ],
           ephemeral: true,
@@ -154,7 +156,7 @@ export class Functions {
           embeds: [
             this.embed(interaction).setDescription(
               this.reply(
-                "The current track is the last one in the queue.\nIf you want to destroy the voice connection, use `/stop` instead.",
+                t("functions:voice:last_song", { cmd: `/music stop` }),
                 ":x:"
               )
             ),
@@ -170,14 +172,15 @@ export class Functions {
   /**
    * Checks if the command author is a bot owner
    * @param {Interaction} interaction Your interaction (aka slash command)
+   * @param {any} t Locale
    */
-  checkOwner(interaction: any) {
+  owner(interaction: any, t: any) {
     if (!interaction.client.config.owners) {
       return interaction.reply({
         embeds: [
           this.embed(interaction).setDescription(
             interaction.client.functions.reply(
-              "Owners list is empty, please check your config file.",
+              t("functions:owner:empty_list"),
               ":x:"
             )
           ),
@@ -191,7 +194,7 @@ export class Functions {
         embeds: [
           this.embed(interaction).setDescription(
             interaction.client.functions.reply(
-              "You're not included in owners list.",
+              t("functions:owner:not_included"),
               ":x:"
             )
           ),

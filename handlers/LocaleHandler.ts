@@ -25,7 +25,7 @@ export class LocaleHandler {
           })
         )
         .init({
-          ns: ["commands", "events", "permissions"],
+          ns: ["commands", "events", "functions", "misc", "permissions"],
           defaultNS: "commands",
           preload: readdirSync("./locales"),
           fallbackLng: "en-US",
