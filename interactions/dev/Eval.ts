@@ -25,8 +25,8 @@ export default class EvalCommand extends SubCommand {
       ],
     });
   }
-  async execute(interaction) {
-    const isOwner = interaction.client.functions.checkOwner(interaction);
+  async execute(interaction, l) {
+    const isOwner = interaction.client.functions.owner(interaction, l);
     const code = interaction.options.getString("code");
     const isEphemeral = interaction.options.getBoolean("ephemeral");
 
