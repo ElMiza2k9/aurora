@@ -9,9 +9,10 @@ export default class CurrentCommand extends SubCommand {
       description: "Shows the current track, if there's any",
     });
   }
-  async execute(interaction) {
-    const isChecked = await interaction.client.functions.checkVoice(
+  async execute(interaction, l) {
+    const isChecked = await interaction.client.functions.voice(
       interaction,
+      l,
       true,
       true
     );
@@ -37,7 +38,7 @@ export default class CurrentCommand extends SubCommand {
               {
                 name: "Common info",
                 value: `
-**Duration:** ${song.duration != 0 ? song.formattedDuration : "Unknown"}
+**Duration:** ${song.source === "youtube" ? song.formattedDuration : "Unknown"}
 **Requested by:** ${song.user}
 **Uploaded by:** ${
                   song.uploader.name
@@ -49,9 +50,8 @@ export default class CurrentCommand extends SubCommand {
               {
                 name: "Details",
                 value: `
-**Likes:** ${song.source === "youtube" ? song.likes : "Not a YouTube video"}
-**Views:** ${song.views != 0 ? song.views : "Unknown"}
-**Live stream:** ${song.isLive ? "Yes" : "No"}
+**Views:** ${song.source === "youtube" ? song.views : "Unknown"}
+**Live stream:** ${song.isLive ? l("misc:true") : l("misc:false")}
 **Playlist:** ${
                   song.playlist
                     ? `${interaction.client.functions.md(

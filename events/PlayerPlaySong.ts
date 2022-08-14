@@ -7,7 +7,7 @@ export default class PlayerPlaySongEvent extends Event {
     super(client, "playSong", false, true);
   }
 
-  async execute(client: AuroraClient, _queue: Queue, song: Song<any>) {
+  async execute(client: AuroraClient, _queue: Queue, song: Song<any>, l) {
     song.metadata.i.followUp({
       content: client.functions.reply(
         `Started playing **${client.functions.md(song.name)}**.`,
@@ -23,21 +23,20 @@ export default class PlayerPlaySongEvent extends Event {
             {
               name: "Common info",
               value: `
-**Duration:** ${song.duration != 0 ? song.formattedDuration : "Unknown"}
+**Duration:** ${song.duration != 0 ? song.formattedDuration : l("misc:unknown")}
 **Requested by:** ${song.user}
 **Uploaded by:** ${
                 song.uploader.name
                   ? song.metadata.i.client.functions.md(song.uploader.name)
-                  : "Unknown"
+                  : l("misc:unknown")
               }`,
               inline: true,
             },
             {
               name: "Details",
               value: `
-**Likes:** ${song.source === "youtube" ? song.likes : "Not a YouTube video"}
-**Views:** ${song.views != 0 ? song.views : "Unknown"}
-**Live stream:** ${song.isLive ? "Yes" : "No"}
+**Views:** ${song.views != 0 ? song.views : l("misc:unknown")}
+**Live stream:** ${song.isLive ? l("misc:true") : l("misc:false")}
 **Playlist:** ${
                 song.playlist
                   ? `${song.metadata.i.client.functions.md(

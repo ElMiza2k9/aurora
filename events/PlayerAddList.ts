@@ -7,7 +7,7 @@ export default class PlayerAddListEvent extends Event {
     super(client, "addList", false, true);
   }
 
-  async execute(client: AuroraClient, _queue: Queue, playlist: Playlist<any>) {
+  async execute(client: AuroraClient, _queue: Queue, playlist: Playlist<any>, l) {
     playlist.metadata.i.followUp({
       content: client.functions.reply(
         `Added **${client.functions.md(playlist.name)}** (${
@@ -25,7 +25,7 @@ export default class PlayerAddListEvent extends Event {
             {
               name: "Common info",
               value: `
-**Duration:** ${playlist.duration != 0 ? playlist.formattedDuration : "Unknown"}
+**Duration:** ${playlist.duration != 0 ? playlist.formattedDuration : l("misc:unknown")}
 **Requested by:** ${playlist.user}`,
               inline: true,
             },
