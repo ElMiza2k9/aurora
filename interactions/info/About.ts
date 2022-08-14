@@ -26,7 +26,7 @@ export default class AboutCommand extends SubCommand {
           .addFields(
             {
               name: l("commands:info:about:fields:version"),
-              value: `v${interaction.client.config.version}`,
+              value: `v${interaction.client.package.version}`,
               inline: true,
             },
             {
