@@ -18,7 +18,7 @@ export default class PlayCommand extends SubCommand {
       ],
     });
   }
-  async execute(interaction, t) {
+  async execute(interaction, l) {
     const isChecked = await interaction.client.functions.voice(interaction);
     const query = await interaction.options.getString("query");
 
@@ -32,7 +32,7 @@ export default class PlayCommand extends SubCommand {
         interaction.deferReply();
       } catch (error) {
         interaction.followUp({
-          content: t("misc:error", { error: error.name }),
+          content: l("misc:error", { error: error.name }),
         });
       }
     }
