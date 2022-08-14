@@ -33,13 +33,6 @@ export default class ChannelCreateCommand extends SubCommand {
           ":angry:"
         ),
       });
-    } else if (user.bot) {
-      return interaction.followUp({
-        content: interaction.client.functions.reply(
-          l("commands:roleplay:hug:checks:bot"),
-          ":thinking:"
-        ),
-      });
     } else {
       const gif = await fetch(`https://nekos.life/api/v2/img/hug`).then((res) =>
         res.json()
