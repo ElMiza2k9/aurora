@@ -38,19 +38,23 @@ export default class CurrentCommand extends SubCommand {
               {
                 name: "Common info",
                 value: `
-**Duration:** ${song.source === "youtube" ? song.formattedDuration : "Unknown"}
+**Duration:** ${
+                  song.source === "youtube"
+                    ? song.formattedDuration
+                    : l("misc:unknown")
+                }
 **Requested by:** ${song.user}
 **Uploaded by:** ${
                   song.uploader.name
                     ? interaction.client.functions.md(song.uploader.name)
-                    : "Unknown"
+                    : l("misc:unknown")
                 }`,
                 inline: true,
               },
               {
                 name: "Details",
                 value: `
-**Views:** ${song.source === "youtube" ? song.views : "Unknown"}
+**Views:** ${song.source === "youtube" ? song.views : l("misc:unknown")}
 **Live stream:** ${song.isLive ? l("misc:true") : l("misc:false")}
 **Playlist:** ${
                   song.playlist

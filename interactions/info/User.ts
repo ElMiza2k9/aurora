@@ -66,11 +66,13 @@ ${l("commands:info:user:fields:server_info:joined_at", {
     "R"
   )}`,
 })}
-${l("commands:info:user:fields:server_info:nickname", { nickname: `${
-  guildMember.nickname
-    ? interaction.client.functions.md(guildMember.nickname)
-    : `${l("misc:no_server_nickname")}`
-}`})}
+${l("commands:info:user:fields:server_info:nickname", {
+  nickname: `${
+    guildMember.nickname
+      ? interaction.client.functions.md(guildMember.nickname)
+      : `${l("misc:no_server_nickname")}`
+  }`,
+})}
           `
                 : l("misc:user_not_in_server"),
             },
