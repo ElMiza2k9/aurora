@@ -1,6 +1,7 @@
 import {
   EmbedBuilder,
   escapeMarkdown,
+  EscapeMarkdownOptions,
   TimestampStylesString,
 } from "discord.js";
 import { AuroraClient } from "./AuroraClient";
@@ -233,15 +234,10 @@ export class Functions {
   /**
    * Formats a given string to escape any markdown symbols
    * @param {any} str String to format
+   * @param {EscapeMarkdownOptions} options Escaping options
    */
-  md(str: any) {
-    return escapeMarkdown(str, {
-      codeBlock: true,
-      spoiler: true,
-      inlineCode: true,
-      inlineCodeContent: true,
-      codeBlockContent: true,
-    });
+  md(str: any, options?: EscapeMarkdownOptions) {
+    return escapeMarkdown(str, options);
   }
 
   async addUser(userId: string, guild_id: string | undefined, data?: any) {
