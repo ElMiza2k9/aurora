@@ -1,7 +1,7 @@
 import { AuroraClient } from "../structures/AuroraClient";
 import { Event } from "../structures/Event";
 import { InteractionHandler } from "../handlers/InteractionHandler";
-import { ActivityType } from "discord.js";
+import { ActivityType, PresenceStatusData } from "discord.js";
 
 export default class ReadyEvent extends Event {
   constructor(client: AuroraClient) {
@@ -44,10 +44,10 @@ export default class ReadyEvent extends Event {
               "{VERSION}",
               `v${client.package.version}`
             ) ?? `v${client.package.version}`,
-          type: ActivityType.Listening,
+          type: client.config.presence.type ?? ActivityType.Listening,
         },
       ],
-      status: "online",
+      status: client.config.presence.status as PresenceStatusData ?? "online",
     });
   }
 }
