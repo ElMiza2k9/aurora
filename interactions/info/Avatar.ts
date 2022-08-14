@@ -54,7 +54,7 @@ export default class AvatarCommand extends SubCommand {
       ],
     });
   }
-  async execute(interaction) {
+  async execute(interaction, l) {
     const user = interaction.options.getUser("user") ?? interaction.user;
     const size = interaction.options.getInteger("size") ?? 512;
     const extension = interaction.options.getString("format") ?? "png";
@@ -71,7 +71,9 @@ export default class AvatarCommand extends SubCommand {
           .embed(interaction)
           .setDescription(
             interaction.client.functions.reply(
-              `${interaction.client.functions.md(user.username)}'s avatar:`,
+              l("commands:info:avatar:reply", {
+                user: `${interaction.client.functions.md(user.username)}`,
+              }),
               ":white_check_mark:"
             )
           )

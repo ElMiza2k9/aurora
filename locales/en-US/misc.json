@@ -5,5 +5,9 @@
     "1": "level 1",
     "2": "level 2",
     "3": "level 3"
-  }
+  },
+  "no_server_nickname": "No nickname set",
+  "user_not_in_server": "This user didn't join this server.",
+  "true": "Yes",
+  "false": "No"
 }

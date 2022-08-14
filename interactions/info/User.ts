@@ -18,7 +18,7 @@ export default class UserCommand extends SubCommand {
       ],
     });
   }
-  async execute(interaction) {
+  async execute(interaction, l) {
     const user = interaction.options.getUser("user");
     const guildMember = interaction.guild.members.cache.get(user.id);
     const userFlags = await user.fetchFlags();
@@ -26,8 +26,7 @@ export default class UserCommand extends SubCommand {
     if (userFlags.has(UserFlags.TeamPseudoUser)) {
       return interaction.reply({
         content: interaction.client.functions.reply(
-          `Some genius at Discord thought that registering teams as pseudo-users would be a good idea.
-Why should we respect their stupid decisions?`,
+          l("commands:info:user:pseudo_user"),
           ":x:"
         ),
       });
@@ -35,41 +34,45 @@ Why should we respect their stupid decisions?`,
 
     interaction.reply({
       content: interaction.client.functions.reply(
-        `Here's some info about **${interaction.client.functions.md(
-          user.tag
-        )}**:`,
+        l("commands:info:user:reply", {
+          user: `**${interaction.client.functions.md(user.tag)}**`,
+        }),
         ":white_check_mark:"
       ),
       embeds: [
         interaction.client.functions
           .embed(interaction)
-          .setThumbnail(user.avatarURL({}))
+          .setThumbnail(user.avatarURL())
           .addFields([
             {
-              name: "Common info",
+              name: l("commands:info:user:fields:common_info:name"),
               value: `
-**Snowflake:** ${user.id}
-**Creation date:** ${interaction.client.functions.formatTime(
-                user.createdTimestamp,
-                "R"
-              )}
+${l("commands:info:user:fields:common_info:id", { id: `${user.id}` })}
+${l("commands:info:user:fields:common_info:created_at", {
+  timestamp: `${interaction.client.functions.formatTime(
+    user.createdTimestamp,
+    "R"
+  )}`,
+})}
         `,
             },
             {
-              name: "Server info",
+              name: l("commands:info:user:fields:server_info:name"),
               value: guildMember
                 ? `
-**Join date:** ${interaction.client.functions.formatTime(
-                    guildMember.joinedAt,
-                    "R"
-                  )}
-**Server nickname:** ${
-                    guildMember.nickname
-                      ? interaction.client.functions.md(guildMember.nickname)
-                      : "No nickname set"
-                  }
+${l("commands:info:user:fields:server_info:joined_at", {
+  timestamp: `${interaction.client.functions.formatTime(
+    guildMember.joinedAt,
+    "R"
+  )}`,
+})}
+${l("commands:info:user:fields:server_info:nickname", { nickname: `${
+  guildMember.nickname
+    ? interaction.client.functions.md(guildMember.nickname)
+    : `${l("misc:no_server_nickname")}`
+}`})}
           `
-                : "This user didn't join this server.",
+                : l("misc:user_not_in_server"),
             },
           ])
           .setImage(

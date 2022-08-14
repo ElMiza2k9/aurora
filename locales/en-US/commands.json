@@ -16,6 +16,60 @@
         "1": "Issue tracker",
         "2": "Discord server"
       }
+    },
+    "avatar": {
+      "reply": "{{user}}'s avatar:"
+    },
+    "server": {
+      "reply": "Here's some info about {{server}}:",
+      "fields": {
+        "common_info": {
+          "name": "Common info",
+          "id": "Server ID: {{id}}",
+          "created_by": "Created by: {{user}}",
+          "created_at": "Created at: {{timestamp}}",
+          "boost_count": "Boosts: {{boosts}} - {{level}}"
+        },
+        "members": {
+          "name": "Members",
+          "total": "Total: {{total}}",
+          "humans": "Humans: {{humans}}",
+          "bots": "Bots: {{bots}}"
+        },
+        "channels": {
+          "name": "Channels",
+          "total": "Total: {{total}}",
+          "text": "Text: {{text}}",
+          "voice": "Voice: {{voice}}",
+          "stages": "Stages: {{stages}}",
+          "forums": "Forums: {{forums}}"
+        }
+      }
+    },
+    "user": {
+      "pseudo_user": "Some genius at Discord thought that registering teams as pseudo-users would be a good idea.\nWhy should we respect their stupid decisions?",
+      "reply": "Here's some info about {{user}}:",
+      "fields": {
+        "common_info": {
+          "name": "Common info",
+          "id": "User ID: {{id}}",
+          "created_at": "Created at: {{timestamp}}"
+        },
+        "server_info": {
+          "name": "Server info",
+          "joined_at": "Joined at: {{timestamp}}",
+          "nickname": "Server nickname: {{nickname}}"
+        }
+      }
+    }
+  },
+  "roleplay": {
+    "hug": {
+      "checks": {
+        "self": "Go hug your pillow!",
+        "bot": "Why'd you hug a bot?"
+      },
+      "reply": "{{user}}, you've been hugged by {{author}}!"
     }
   }
 }
