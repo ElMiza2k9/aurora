@@ -1,3 +1,4 @@
+import { escapeMarkdown } from "discord.js";
 import { Queue, Song } from "distube";
 import { AuroraClient } from "../structures/AuroraClient";
 import { Event } from "../structures/Event";
@@ -10,13 +11,13 @@ export default class PlayerPlaySongEvent extends Event {
   async execute(client: AuroraClient, _queue: Queue, song: Song<any>, l) {
     song.metadata.i.followUp({
       content: client.functions.reply(
-        `Started playing **${client.functions.md(song.name)}**.`,
+        `Started playing **${escapeMarkdown(song.name as string)}**.`,
         ":arrow_forward:"
       ),
       embeds: [
         song.metadata.i.client.functions
           .embed(song.metadata.i)
-          .setTitle(song.metadata.i.client.functions.md(song.name))
+          .setTitle(escapeMarkdown(song.name as string))
           .setURL(song.url)
           .setThumbnail(song.thumbnail)
           .addFields([
@@ -27,7 +28,7 @@ export default class PlayerPlaySongEvent extends Event {
 **Requested by:** ${song.user}
 **Uploaded by:** ${
                 song.uploader.name
-                  ? song.metadata.i.client.functions.md(song.uploader.name)
+                  ? escapeMarkdown(song.uploader.name)
                   : l("misc:unknown")
               }`,
               inline: true,
@@ -39,9 +40,9 @@ export default class PlayerPlaySongEvent extends Event {
 **Live stream:** ${song.isLive ? l("misc:true") : l("misc:false")}
 **Playlist:** ${
                 song.playlist
-                  ? `${song.metadata.i.client.functions.md(
-                      song.playlist.name
-                    )} (${song.playlist.songs.length} songs)`
+                  ? `${escapeMarkdown(song.playlist.name)} (${
+                      song.playlist.songs.length
+                    } songs)`
                   : "No playlist"
               }
                   `,

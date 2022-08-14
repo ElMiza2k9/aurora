@@ -1,4 +1,4 @@
-import { ChannelType } from "discord.js";
+import { ChannelType, escapeMarkdown } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
@@ -15,14 +15,14 @@ export default class ServerCommand extends SubCommand {
     const serverOwner = await guild.fetchOwner();
 
     interaction.reply({
-      content: interaction.client.functions.reply(
+      content: this.client.functions.reply(
         l("commands:info:server:reply", {
-          server: `**${interaction.client.functions.md(guild.name)}**`,
+          server: `**${escapeMarkdown(guild.name)}**`,
         }),
         ":white_check_mark:"
       ),
       embeds: [
-        interaction.client.functions
+        this.client.functions
           .embed(interaction)
           .setThumbnail(guild.iconURL())
           .addFields([
@@ -34,10 +34,7 @@ ${l("commands:info:server:fields:common_info:created_by", {
   user: `${serverOwner.user}`,
 })}
 ${l("commands:info:server:fields:common_info:created_at", {
-  timestamp: `${interaction.client.functions.formatTime(
-    guild.createdTimestamp,
-    "R"
-  )}
+  timestamp: `${this.client.functions.formatTime(guild.createdTimestamp, "R")}
 ${l("commands:info:server:fields:common_info:boost_count", {
   boosts: `${guild.premiumSubscriptionCount}`,
   level: `${l(`misc:boost_levels:${guild.premiumTier}`)}`,

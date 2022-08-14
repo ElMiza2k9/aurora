@@ -1,3 +1,4 @@
+import { escapeMarkdown } from "discord.js";
 import { Playlist, Queue } from "distube";
 import { AuroraClient } from "../structures/AuroraClient";
 import { Event } from "../structures/Event";
@@ -15,7 +16,7 @@ export default class PlayerAddListEvent extends Event {
   ) {
     playlist.metadata.i.followUp({
       content: client.functions.reply(
-        `Added **${client.functions.md(playlist.name)}** (${
+        `Added **${escapeMarkdown(playlist.name as string)}** (${
           playlist.songs.length
         } songs) to the queue.`,
         ":white_check_mark:"
@@ -23,7 +24,7 @@ export default class PlayerAddListEvent extends Event {
       embeds: [
         playlist.metadata.i.client.functions
           .embed(playlist.metadata.i)
-          .setTitle(playlist.metadata.i.client.functions.md(playlist.name))
+          .setTitle(escapeMarkdown(playlist.name))
           .setURL(playlist.url)
           .setThumbnail(playlist.thumbnail)
           .addFields([
@@ -46,8 +47,8 @@ export default class PlayerAddListEvent extends Event {
               })`,
               value: playlist.songs
                 .map((song, pos) => {
-                  return `#${pos + 1}. **${client.functions.md(
-                    song.name
+                  return `#${pos + 1}. **${escapeMarkdown(
+                    song.name as string
                   )}** \`[${song.formattedDuration}]\``;
                 })
                 .slice(0, 10)

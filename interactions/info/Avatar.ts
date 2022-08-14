@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType } from "discord.js";
+import { ApplicationCommandOptionType, escapeMarkdown } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
@@ -67,12 +67,12 @@ export default class AvatarCommand extends SubCommand {
 
     interaction.reply({
       embeds: [
-        interaction.client.functions
+        this.client.functions
           .embed(interaction)
           .setDescription(
-            interaction.client.functions.reply(
+            this.client.functions.reply(
               l("commands:info:avatar:reply", {
-                user: `${interaction.client.functions.md(user.username)}`,
+                user: `${escapeMarkdown(user.username)}`,
               }),
               ":white_check_mark:"
             )
