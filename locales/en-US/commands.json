@@ -66,8 +66,7 @@
   "roleplay": {
     "hug": {
       "checks": {
-        "self": "Go hug your pillow!",
-        "bot": "Why'd you hug a bot?"
+        "self": "Go hug your pillow!"
       },
       "reply": "{{user}}, you've been hugged by {{author}}!"
     }
