@@ -54,7 +54,7 @@ export default class ShellCommand extends SubCommand {
         ephemeral: true,
       });
     }
-    
+
     const code = interaction.options.getString("code");
     const isEphemeral = interaction.options.getBoolean("ephemeral");
 

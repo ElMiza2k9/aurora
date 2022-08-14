@@ -47,7 +47,7 @@ export default class ReadyEvent extends Event {
           type: client.config.presence.type ?? ActivityType.Listening,
         },
       ],
-      status: client.config.presence.status as PresenceStatusData ?? "online",
+      status: (client.config.presence.status as PresenceStatusData) ?? "online",
     });
   }
 }

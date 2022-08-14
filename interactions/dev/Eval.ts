@@ -55,7 +55,7 @@ export default class EvalCommand extends SubCommand {
         ephemeral: true,
       });
     }
-    
+
     try {
       await interaction.deferReply();
       let evaled = await eval(interaction.options.getString("code"));
