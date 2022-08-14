@@ -12,31 +12,31 @@ export default class AboutCommand extends SubCommand {
   }
   async execute(interaction, l) {
     const baseURL =
-      interaction.client.package.homepage ?? "https://github.com/chamln/aurora";
+      this.client.package.homepage ?? "https://github.com/chamln/aurora";
 
     interaction.reply({
-      content: interaction.client.functions.reply(
+      content: this.client.functions.reply(
         l("commands:info:about:reply"),
         ":white_check_mark:"
       ),
       embeds: [
         this.client.functions
           .embed(interaction)
-          .setThumbnail(interaction.client.user.avatarURL())
+          .setThumbnail(this.client.user.avatarURL())
           .addFields(
             {
               name: l("commands:info:about:fields:version"),
-              value: `v${interaction.client.package.version}`,
+              value: `v${this.client.package.version}`,
               inline: true,
             },
             {
               name: l("commands:info:about:fields:channels"),
-              value: interaction.client.channels.cache.size.toString(),
+              value: this.client.channels.cache.size.toString(),
               inline: true,
             },
             {
               name: l("commands:info:about:fields:users"),
-              value: interaction.client.guilds.cache
+              value: this.client.guilds.cache
                 .reduce((a, g) => a + g.memberCount, 0)
                 .toString(),
               inline: true,
@@ -44,7 +44,7 @@ export default class AboutCommand extends SubCommand {
             {
               name: l("commands:info:about:fields:latency:name"),
               value: l("commands:info:about:fields:latency:value", {
-                latency: `${interaction.client.ws.ping}`,
+                latency: `${this.client.ws.ping}`,
               }),
               inline: true,
             },

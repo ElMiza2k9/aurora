@@ -64,7 +64,7 @@ export default class ChannelCreateCommand extends SubCommand {
 
     await interaction.deferReply();
 
-    await interaction.client.tempvoice.registerChannel(channel.id, {
+    await this.client.tempvoice.registerChannel(channel.id, {
       childCategory: category.id,
       childAutoDeleteIfEmpty: deleteIfEmpty,
       childAutoDeleteIfOwnerLeaves: deleteIfNoOwner,
@@ -73,7 +73,7 @@ export default class ChannelCreateCommand extends SubCommand {
       childFormat: (member, count) => `#${count} [${member.user.username}]`,
     });
 
-    await interaction.client.db.tempVoice.create({
+    await this.client.db.tempVoice.create({
       data: {
         guild_id: interaction.guild.id,
         channel_id: channel.id,
@@ -86,7 +86,7 @@ export default class ChannelCreateCommand extends SubCommand {
     });
 
     await interaction.followUp({
-      content: interaction.client.functions.reply(
+      content: this.client.functions.reply(
         `Done - now join the <#${channel.id}> channel to check it out!`,
         ":white_check_mark:"
       ),
