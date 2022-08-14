@@ -3,7 +3,7 @@
     "about": {
       "reply": "Here's some info about me:",
       "fields": {
-        "servers": "Servers",
+        "version": "Version",
         "channels": "Channels",
         "users": "Users",
         "latency": { "name": "Latency", "value": "{{latency}} ms" },

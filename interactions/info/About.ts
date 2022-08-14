@@ -25,8 +25,8 @@ export default class AboutCommand extends SubCommand {
           .setThumbnail(interaction.client.user.avatarURL())
           .addFields(
             {
-              name: l("commands:info:about:fields:servers"),
-              value: interaction.client.guilds.cache.size.toString(),
+              name: l("commands:info:about:fields:version"),
+              value: `v${interaction.client.config.version}`,
               inline: true,
             },
             {

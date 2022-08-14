@@ -3,7 +3,7 @@
     "about": {
       "reply": "Вот немного информации обо мне:",
       "fields": {
-        "servers": "Серверов",
+        "version": "Версия",
         "channels": "Каналов",
         "users": "Пользователей",
         "latency": { "name": "Задержка", "value": "{{latency}} мс" },
