@@ -1,3 +1,9 @@
 {
-  "error": "An unknown {{error}} happened while processing your command. Please check the logs for details."
+  "error": "An unknown {{error}} happened while processing your command. Please check the logs for details.",
+  "boost_levels": {
+    "0": "no level",
+    "1": "level 1",
+    "2": "level 2",
+    "3": "level 3"
+  }
 }
