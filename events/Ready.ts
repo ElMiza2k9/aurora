@@ -18,8 +18,8 @@ export default class ReadyEvent extends Event {
 
     const tempvoices = await this.client.db.tempVoice.findMany();
 
-    tempvoices.forEach(t => {
-      if(!this.client.channels.cache.get(t.channel_id)) return;
+    tempvoices.forEach((t) => {
+      if (!this.client.channels.cache.get(t.channel_id)) return;
       this.client.tempvoice.registerChannel(t.channel_id, {
         childCategory: t.category_id,
         childAutoDeleteIfEmpty: t.delete_if_empty,
@@ -30,7 +30,7 @@ export default class ReadyEvent extends Event {
       });
     });
 
-    console.log(`[tempvoices] Registered ${tempvoices.length} tempvoices`)
+    console.log(`[tempvoices] Registered ${tempvoices.length} tempvoices`);
 
     console.log(
       `Ready! Logged in as ${client.user.tag} (id ${client.user.id})`
