@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType } from "discord.js";
+import { ApplicationCommandOptionType, escapeMarkdown } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
@@ -25,59 +25,92 @@ export default class ShellCommand extends SubCommand {
     });
   }
   async execute(interaction, l) {
-    const isOwner = interaction.client.functions.owner(interaction, l);
+    if (!this.client.config.owners) {
+      return interaction.reply({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(
+                l("functions:owner:empty_list"),
+                ":x:"
+              )
+            ),
+        ],
+        ephemeral: true,
+      });
+    } else if (!this.client.config.owners.includes(interaction.user.id)) {
+      return interaction.reply({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(
+                l("functions:owner:not_included"),
+                ":x:"
+              )
+            ),
+        ],
+        ephemeral: true,
+      });
+    }
+    
     const code = interaction.options.getString("code");
     const isEphemeral = interaction.options.getBoolean("ephemeral");
 
-    if (isOwner === true) {
-      try {
-        await interaction.deferReply();
-        let evaled = await require("child_process")
-          .execSync(code)
-          .toString("utf8")
-          .split(2000);
+    try {
+      await interaction.deferReply();
+      let evaled = await require("child_process")
+        .execSync(code)
+        .toString("utf8")
+        .split(2000);
 
-        evaled = evaled
-          .toString()
-          .replaceAll(interaction.client.token, "CLIENT_TOKEN")
-          .replaceAll(process.env["CLIENT_TOKEN"], "CLIENT_TOKEN")
-          .replaceAll(process.env["DATABASE_URL"], "DATABASE_URL")
-          .replaceAll(`interaction.client.token`, "CLIENT_TOKEN")
-          .replaceAll(`process.env["CLIENT_TOKEN"]`, "CLIENT_TOKEN")
-          .replaceAll(`process.env["DATABASE_URL"]`, "DATABASE_URL");
+      evaled = evaled
+        .toString()
+        .replaceAll(this.client.token, "CLIENT_TOKEN")
+        .replaceAll(process.env["CLIENT_TOKEN"], "CLIENT_TOKEN")
+        .replaceAll(process.env["DATABASE_URL"], "DATABASE_URL")
+        .replaceAll(`this.client.token`, "CLIENT_TOKEN")
+        .replaceAll(`process.env["CLIENT_TOKEN"]`, "CLIENT_TOKEN")
+        .replaceAll(`process.env["DATABASE_URL"]`, "DATABASE_URL");
 
-        evaled = interaction.client.functions.md(evaled);
+      evaled = escapeMarkdown(evaled, {
+        bold: false,
+        italic: false,
+        underline: false,
+        strikethrough: false,
+        spoiler: false,
+      });
 
-        interaction.followUp({
-          embeds: [
-            interaction.client.functions
-              .embed(interaction)
-              .setDescription(
-                interaction.client.functions.reply(
-                  `Evaluated successfully:\n\`\`\`sh\n${
-                    evaled != "" ? evaled : "No response"
-                  }\`\`\``,
-                  ":white_check_mark:"
-                )
-              ),
-          ],
-          ephemeral: isEphemeral,
-        });
-      } catch (error) {
-        return interaction.followUp({
-          embeds: [
-            interaction.client.functions
-              .embed(interaction)
-              .setDescription(
-                interaction.client.functions.reply(
-                  `Evaluated with error:\n\`\`\`sh\n${error?.stack}\`\`\``,
-                  ":x:"
-                )
-              ),
-          ],
-          ephemeral: isEphemeral,
-        });
-      }
+      interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(
+                `Evaluated successfully:\n\`\`\`sh\n${
+                  evaled != "" ? evaled : "No response"
+                }\`\`\``,
+                ":white_check_mark:"
+              )
+            ),
+        ],
+        ephemeral: isEphemeral,
+      });
+    } catch (error) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(
+                `Evaluated with error:\n\`\`\`sh\n${error?.stack}\`\`\``,
+                ":x:"
+              )
+            ),
+        ],
+        ephemeral: isEphemeral,
+      });
     }
   }
 }

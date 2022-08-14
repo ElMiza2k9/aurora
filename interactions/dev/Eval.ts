@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType } from "discord.js";
+import { ApplicationCommandOptionType, escapeMarkdown } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 import { inspect } from "node:util";
@@ -26,58 +26,88 @@ export default class EvalCommand extends SubCommand {
     });
   }
   async execute(interaction, l) {
-    const isOwner = interaction.client.functions.owner(interaction, l);
-    const code = interaction.options.getString("code");
-    const isEphemeral = interaction.options.getBoolean("ephemeral");
+    if (!this.client.config.owners) {
+      return interaction.reply({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(
+                l("functions:owner:empty_list"),
+                ":x:"
+              )
+            ),
+        ],
+        ephemeral: true,
+      });
+    } else if (!this.client.config.owners.includes(interaction.user.id)) {
+      return interaction.reply({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(
+                l("functions:owner:not_included"),
+                ":x:"
+              )
+            ),
+        ],
+        ephemeral: true,
+      });
+    }
+    
+    try {
+      await interaction.deferReply();
+      let evaled = await eval(interaction.options.getString("code"));
 
-    if (isOwner === true) {
-      try {
-        await interaction.deferReply();
-        let evaled = await eval(code);
+      evaled = inspect(evaled, {
+        depth: 0,
+        maxArrayLength: null,
+      });
 
-        evaled = inspect(evaled, {
-          depth: 0,
-          maxArrayLength: null,
-        });
+      evaled = evaled
+        .replaceAll(this.client.token, "CLIENT_TOKEN")
+        .replaceAll(process.env["CLIENT_TOKEN"], "CLIENT_TOKEN")
+        .replaceAll(process.env["DATABASE_URL"], "DATABASE_URL")
+        .replaceAll(`this.client.token`, "CLIENT_TOKEN")
+        .replaceAll(`process.env["CLIENT_TOKEN"]`, "CLIENT_TOKEN")
+        .replaceAll(`process.env["DATABASE_URL"]`, "DATABASE_URL");
 
-        evaled = evaled
-          .replaceAll(interaction.client.token, "CLIENT_TOKEN")
-          .replaceAll(process.env["CLIENT_TOKEN"], "CLIENT_TOKEN")
-          .replaceAll(process.env["DATABASE_URL"], "DATABASE_URL")
-          .replaceAll(`interaction.client.token`, "CLIENT_TOKEN")
-          .replaceAll(`process.env["CLIENT_TOKEN"]`, "CLIENT_TOKEN")
-          .replaceAll(`process.env["DATABASE_URL"]`, "DATABASE_URL");
+      evaled = escapeMarkdown(evaled, {
+        bold: false,
+        italic: false,
+        underline: false,
+        strikethrough: false,
+        spoiler: false,
+      });
 
-        evaled = interaction.client.functions.md(evaled);
-
-        interaction.followUp({
-          embeds: [
-            interaction.client.functions
-              .embed(interaction)
-              .setDescription(
-                interaction.client.functions.reply(
-                  `Evaluated successfully:\n\`\`\`js\n${evaled}\`\`\``,
-                  ":white_check_mark:"
-                )
-              ),
-          ],
-          ephemeral: isEphemeral,
-        });
-      } catch (error) {
-        return interaction.followUp({
-          embeds: [
-            interaction.client.functions
-              .embed(interaction)
-              .setDescription(
-                interaction.client.functions.reply(
-                  `Evaluated with error:\n\`\`\`js\n${error?.stack}\`\`\``,
-                  ":x:"
-                )
-              ),
-          ],
-          ephemeral: isEphemeral,
-        });
-      }
+      interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(
+                `Evaluated successfully:\n\`\`\`js\n${evaled}\`\`\``,
+                ":white_check_mark:"
+              )
+            ),
+        ],
+        ephemeral: interaction.options.getBoolean("ephemeral"),
+      });
+    } catch (error) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(
+                `Evaluated with error:\n\`\`\`js\n${error?.stack}\`\`\``,
+                ":x:"
+              )
+            ),
+        ],
+        ephemeral: interaction.options.getBoolean("ephemeral"),
+      });
     }
   }
 }
