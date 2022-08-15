@@ -26,14 +26,15 @@ export default class EvalCommand extends SubCommand {
     });
   }
   async execute(interaction, l) {
+    await interaction.deferReply();
     if (!this.client.config.owners) {
-      return interaction.reply({
+      return interaction.followUp({
         embeds: [
           this.client.functions
             .embed(interaction)
             .setDescription(
               this.client.functions.reply(
-                l("functions:owner:empty_list"),
+                l("misc:owner:empty_list"),
                 ":x:"
               )
             ),
@@ -41,13 +42,13 @@ export default class EvalCommand extends SubCommand {
         ephemeral: true,
       });
     } else if (!this.client.config.owners.includes(interaction.user.id)) {
-      return interaction.reply({
+      return interaction.followUp({
         embeds: [
           this.client.functions
             .embed(interaction)
             .setDescription(
               this.client.functions.reply(
-                l("functions:owner:not_included"),
+                l("misc:owner:not_included"),
                 ":x:"
               )
             ),
@@ -57,7 +58,6 @@ export default class EvalCommand extends SubCommand {
     }
 
     try {
-      await interaction.deferReply();
       let evaled = await eval(interaction.options.getString("code"));
 
       evaled = inspect(evaled, {
@@ -81,7 +81,7 @@ export default class EvalCommand extends SubCommand {
         spoiler: false,
       });
 
-      interaction.followUp({
+      await interaction.followUp({
         embeds: [
           this.client.functions
             .embed(interaction)
