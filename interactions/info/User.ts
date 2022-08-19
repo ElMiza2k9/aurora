@@ -1,4 +1,8 @@
-import { ApplicationCommandOptionType, UserFlags } from "discord.js";
+import {
+  ApplicationCommandOptionType,
+  escapeMarkdown,
+  UserFlags,
+} from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
@@ -18,60 +22,57 @@ export default class UserCommand extends SubCommand {
       ],
     });
   }
-  async execute(interaction) {
+  async execute(interaction, l) {
     const user = interaction.options.getUser("user");
     const guildMember = interaction.guild.members.cache.get(user.id);
     const userFlags = await user.fetchFlags();
 
     if (userFlags.has(UserFlags.TeamPseudoUser)) {
       return interaction.reply({
-        content: interaction.client.functions.formatReply(
-          `Some genius at Discord thought that registering teams as pseudo-users would be a good idea.
-Why should we respect their stupid decisions?`,
-          interaction.client.config.emojis.cross_mark
+        content: this.client.functions.reply(
+          l("commands:info:user:pseudo_user"),
+          ":x:"
         ),
       });
     }
 
     interaction.reply({
-      content: interaction.client.functions.formatReply(
-        `Here's some info about **${interaction.client.functions.escapeMd(
-          user.tag
-        )}**:`,
-        interaction.client.config.emojis.check_mark
+      content: this.client.functions.reply(
+        l("commands:info:user:reply", {
+          user: `**${escapeMarkdown(user.tag)}**`,
+        }),
+        ":white_check_mark:"
       ),
       embeds: [
-        interaction.client.functions
-          .buildEmbed(interaction)
-          .setThumbnail(user.avatarURL({}))
+        this.client.functions
+          .embed(interaction)
+          .setThumbnail(user.avatarURL())
           .addFields([
             {
-              name: "Common info",
+              name: l("commands:info:user:fields:common_info:name"),
               value: `
-**Snowflake:** ${user.id}
-**Creation date:** ${interaction.client.functions.formatTime(
-                user.createdTimestamp,
-                "R"
-              )}
+${l("commands:info:user:fields:common_info:id", { id: `${user.id}` })}
+${l("commands:info:user:fields:common_info:created_at", {
+  timestamp: `${this.client.functions.formatTime(user.createdTimestamp, "R")}`,
+})}
         `,
             },
             {
-              name: "Server info",
+              name: l("commands:info:user:fields:server_info:name"),
               value: guildMember
                 ? `
-**Join date:** ${interaction.client.functions.formatTime(
-                    guildMember.joinedAt,
-                    "R"
-                  )}
-**Server nickname:** ${
-                    guildMember.nickname
-                      ? interaction.client.functions.escapeMd(
-                          guildMember.nickname
-                        )
-                      : "No nickname set"
-                  }
+${l("commands:info:user:fields:server_info:joined_at", {
+  timestamp: `${this.client.functions.formatTime(guildMember.joinedAt, "R")}`,
+})}
+${l("commands:info:user:fields:server_info:nickname", {
+  nickname: `${
+    guildMember.nickname
+      ? escapeMarkdown(guildMember.nickname)
+      : `${l("misc:no_server_nickname")}`
+  }`,
+})}
           `
-                : "This user didn't join this server.",
+                : l("misc:user_not_in_server"),
             },
           ])
           .setImage(

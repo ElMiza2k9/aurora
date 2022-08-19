@@ -9,13 +9,10 @@
     "client_id": "111111111111111111",
     "guild_id": "111111111111111111"
   },
-  "emojis": {
-    "check_mark": ":white_check_mark:",
-    "cross_mark": ":x:",
-    "play": ":arrow_forward:",
-    "pause": ":pause_button:",
-    "stop": ":stop_button:",
-    "skip": ":track_next:"
+  "presence": {
+    "name": "anything you want (type {VERSION} to insert bot's version)",
+    "type": 2,
+    "status": "online"
   },
   "embeds": {
     "hexColor": "7289da",

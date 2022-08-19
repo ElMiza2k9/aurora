@@ -1,3 +1,4 @@
+import { escapeMarkdown } from "discord.js";
 import { Queue, Song } from "distube";
 import { AuroraClient } from "../structures/AuroraClient";
 import { Event } from "../structures/Event";
@@ -7,44 +8,41 @@ export default class PlayerPlaySongEvent extends Event {
     super(client, "playSong", false, true);
   }
 
-  async execute(client: AuroraClient, _queue: Queue, song: Song<any>) {
+  async execute(client: AuroraClient, _queue: Queue, song: Song<any>, l) {
     song.metadata.i.followUp({
-      content: client.functions.formatReply(
-        `Started playing **${client.functions.escapeMd(song.name)}**.`,
-        client.config.emojis.play
+      content: client.functions.reply(
+        `Started playing **${escapeMarkdown(song.name as string)}**.`,
+        ":arrow_forward:"
       ),
       embeds: [
         song.metadata.i.client.functions
-          .buildEmbed(song.metadata.i)
-          .setTitle(song.metadata.i.client.functions.escapeMd(song.name))
+          .embed(song.metadata.i)
+          .setTitle(escapeMarkdown(song.name as string))
           .setURL(song.url)
           .setThumbnail(song.thumbnail)
           .addFields([
             {
               name: "Common info",
               value: `
-**Duration:** ${song.duration != 0 ? song.formattedDuration : "Unknown"}
+**Duration:** ${song.duration != 0 ? song.formattedDuration : l("misc:unknown")}
 **Requested by:** ${song.user}
 **Uploaded by:** ${
                 song.uploader.name
-                  ? song.metadata.i.client.functions.escapeMd(
-                      song.uploader.name
-                    )
-                  : "Unknown"
+                  ? escapeMarkdown(song.uploader.name)
+                  : l("misc:unknown")
               }`,
               inline: true,
             },
             {
               name: "Details",
               value: `
-**Likes:** ${song.source === "youtube" ? song.likes : "Not a YouTube video"}
-**Views:** ${song.views != 0 ? song.views : "Unknown"}
-**Live stream:** ${song.isLive ? "Yes" : "No"}
+**Views:** ${song.views != 0 ? song.views : l("misc:unknown")}
+**Live stream:** ${song.isLive ? l("misc:true") : l("misc:false")}
 **Playlist:** ${
                 song.playlist
-                  ? `${song.metadata.i.client.functions.escapeMd(
-                      song.playlist.name
-                    )} (${song.playlist.songs.length} songs)`
+                  ? `${escapeMarkdown(song.playlist.name)} (${
+                      song.playlist.songs.length
+                    } songs)`
                   : "No playlist"
               }
                   `,

@@ -23,11 +23,11 @@ export default class StopCommand extends SubCommand {
       interaction.reply({
         embeds: [
           interaction.client.functions
-            .buildEmbed(interaction)
+            .embed(interaction)
             .setDescription(
-              interaction.client.functions.formatReply(
+              interaction.client.functions.reply(
                 "Cleared the queue and destroyed the voice connection.",
-                interaction.client.config.emojis.stop
+                ":stop_button:"
               )
             ),
         ],

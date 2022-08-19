@@ -25,13 +25,13 @@ export default class SkipCommand extends SubCommand {
       interaction.reply({
         embeds: [
           interaction.client.functions
-            .buildEmbed(interaction)
+            .embed(interaction)
             .setDescription(
-              interaction.client.functions.formatReply(
-                `Skipped **${interaction.client.functions.escapeMd(
+              interaction.client.functions.reply(
+                `Skipped **${interaction.client.functions.md(
                   queue.songs[0].name
                 )}**.`,
-                interaction.client.config.emojis.skip
+                ":track_next:"
               )
             ),
         ],

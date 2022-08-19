@@ -1,6 +1,7 @@
 import {
   EmbedBuilder,
   escapeMarkdown,
+  EscapeMarkdownOptions,
   TimestampStylesString,
 } from "discord.js";
 import { AuroraClient } from "./AuroraClient";
@@ -17,9 +18,9 @@ export class Functions {
    * Returns a pre-formatted embed
    * @param {Interaction} interaction Your interaction (aka slash command)
    */
-  buildEmbed(interaction: any) {
+  embed(interaction: any) {
     if (!interaction) {
-      throw Error("Expected interaction to be provided (buildEmbed)");
+      throw Error("Expected interaction to be provided (embed)");
     }
 
     return new EmbedBuilder()
@@ -44,19 +45,21 @@ export class Functions {
    * @param {string} replyContent Reply content you would like to format
    * @param {string} emoji Emoji you would like to add
    */
-  formatReply(replyContent: string, emoji: string) {
+  reply(replyContent: string, emoji: string) {
     return `${emoji} | ${replyContent}`;
   }
 
   /**
    * Performs voice channel checks; useful for commands
    * @param {Interaction} interaction Your interaction (aka slash command)
+   * @param {any} t Locale
    * @param {boolean} checkIfConnected Whether to check voice connection
    * @param {boolean} checkIfQueueExists Whether to check if queue exists
    * @param {boolean} checkIfLastSong Whether to check queue size
    */
-  async checkVoice(
+  async voice(
     interaction: any,
+    t: any,
     checkIfConnected: boolean,
     checkIfQueueExists: boolean,
     checkIfLastSong: boolean
@@ -64,11 +67,8 @@ export class Functions {
     if (!interaction.member.voice.channel) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            this.formatReply(
-              "You're not in a voice channel.",
-              this.client.config.emojis.cross_mark
-            )
+          this.embed(interaction).setDescription(
+            this.reply(t("functions:voice:not_in_voice"), ":x:")
           ),
         ],
         ephemeral: true,
@@ -79,11 +79,8 @@ export class Functions {
     ) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            this.formatReply(
-              "You're in AFK channel.",
-              this.client.config.emojis.cross_mark
-            )
+          this.embed(interaction).setDescription(
+            this.reply(t("functions:voice:in_afk"), ":x:")
           ),
         ],
         ephemeral: true,
@@ -91,11 +88,8 @@ export class Functions {
     } else if (interaction.member.voice.selfDeaf) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            this.formatReply(
-              "You've deafened yourself.",
-              this.client.config.emojis.cross_mark
-            )
+          this.embed(interaction).setDescription(
+            this.reply(t("functions:voice:self_deaf"), ":x:")
           ),
         ],
         ephemeral: true,
@@ -103,11 +97,8 @@ export class Functions {
     } else if (interaction.member.voice.serverDeaf) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            this.formatReply(
-              "You're deafened server-wide.",
-              this.client.config.emojis.cross_mark
-            )
+          this.embed(interaction).setDescription(
+            this.reply(t("functions:voice:server_deaf"), ":x:")
           ),
         ],
         ephemeral: true,
@@ -119,11 +110,8 @@ export class Functions {
     ) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            this.formatReply(
-              "You're not in the same voice channel as me.",
-              this.client.config.emojis.cross_mark
-            )
+          this.embed(interaction).setDescription(
+            this.reply(t("functions:voice:not_same_channel"), ":x:")
           ),
         ],
         ephemeral: true,
@@ -137,11 +125,8 @@ export class Functions {
       if (!connection) {
         return interaction.reply({
           embeds: [
-            this.buildEmbed(interaction).setDescription(
-              this.formatReply(
-                "There's no voice connection in this server.",
-                this.client.config.emojis.cross_mark
-              )
+            this.embed(interaction).setDescription(
+              this.reply(t("functions:voice:no_connection"), ":x:")
             ),
           ],
           ephemeral: true,
@@ -157,11 +142,8 @@ export class Functions {
       if (!queue) {
         return interaction.reply({
           embeds: [
-            this.buildEmbed(interaction).setDescription(
-              this.formatReply(
-                "The queue is empty.",
-                this.client.config.emojis.cross_mark
-              )
+            this.embed(interaction).setDescription(
+              this.reply(t("functions:voice:no_queue"), ":x:")
             ),
           ],
           ephemeral: true,
@@ -173,10 +155,10 @@ export class Functions {
       if (!queue || queue.songs.length === 1) {
         return interaction.reply({
           embeds: [
-            this.buildEmbed(interaction).setDescription(
-              this.formatReply(
-                "The current track is the last one in the queue.\nIf you want to destroy the voice connection, use `/stop` instead.",
-                this.client.config.emojis.cross_mark
+            this.embed(interaction).setDescription(
+              this.reply(
+                t("functions:voice:last_song", { cmd: `/music stop` }),
+                ":x:"
               )
             ),
           ],
@@ -191,15 +173,16 @@ export class Functions {
   /**
    * Checks if the command author is a bot owner
    * @param {Interaction} interaction Your interaction (aka slash command)
+   * @param {any} t Locale
    */
-  checkOwner(interaction: any) {
+  owner(interaction: any, t: any) {
     if (!interaction.client.config.owners) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            interaction.client.functions.formatReply(
-              "Owners list is empty, please check your config file.",
-              interaction.client.config.emojis.cross_mark
+          this.embed(interaction).setDescription(
+            interaction.client.functions.reply(
+              t("functions:owner:empty_list"),
+              ":x:"
             )
           ),
         ],
@@ -210,10 +193,10 @@ export class Functions {
     ) {
       return interaction.reply({
         embeds: [
-          this.buildEmbed(interaction).setDescription(
-            interaction.client.functions.formatReply(
-              "You're not included in owners list.",
-              interaction.client.config.emojis.cross_mark
+          this.embed(interaction).setDescription(
+            interaction.client.functions.reply(
+              t("functions:owner:not_included"),
+              ":x:"
             )
           ),
         ],
@@ -251,25 +234,20 @@ export class Functions {
   /**
    * Formats a given string to escape any markdown symbols
    * @param {any} str String to format
+   * @param {EscapeMarkdownOptions} options Escaping options
    */
-  escapeMd(str: any) {
-    return escapeMarkdown(str, {
-      codeBlock: true,
-      spoiler: true,
-      inlineCode: true,
-      inlineCodeContent: true,
-      codeBlockContent: true,
-    });
+  md(str: any, options?: EscapeMarkdownOptions) {
+    return escapeMarkdown(str, options);
   }
 
-  async addUser(userId: string, guildId: string | undefined, data?: any) {
-    if (!guildId) return null;
+  async addUser(userId: string, guild_id: string | undefined, data?: any) {
+    if (!guild_id) return null;
 
     try {
       const user = await this.client.db.user.create({
         data: {
           user_id: userId,
-          guild_id: guildId,
+          guild_id: guild_id,
           ...data,
         },
       });
@@ -282,19 +260,19 @@ export class Functions {
 
   async updateUser(
     userId: string,
-    guildId: string | undefined,
+    guild_id: string | undefined,
     data: Partial<Prisma.UserUpdateManyArgs["data"]>
   ) {
     try {
-      const user = await this.getUser(userId, guildId);
+      const user = await this.getUser(userId, guild_id);
 
       if (!user) {
-        this.addUser(userId, guildId, data);
+        this.addUser(userId, guild_id, data);
         return;
       }
 
       await this.client.db.user.updateMany({
-        where: { user_id: userId, guild_id: guildId },
+        where: { user_id: userId, guild_id: guild_id },
         data,
       });
     } catch (error) {
@@ -302,24 +280,24 @@ export class Functions {
     }
   }
 
-  async removeUser(userId: string, guildId: string) {
+  async removeUser(userId: string, guild_id: string) {
     try {
       await this.client.db.user.deleteMany({
-        where: { user_id: userId, guild_id: guildId },
+        where: { user_id: userId, guild_id: guild_id },
       });
     } catch (error) {
       console.log(error);
     }
   }
 
-  async getGuild(guildId: string | undefined | null) {
-    if (!guildId) return null;
+  async getGuild(guild_id: string | undefined | null) {
+    if (!guild_id) return null;
 
     try {
       const guild =
         (await this.client.db.guild.findFirst({
-          where: { guild_id: guildId },
-        })) ?? (await this.addGuild(guildId));
+          where: { guild_id: guild_id },
+        })) ?? (await this.addGuild(guild_id));
 
       return guild;
     } catch (error) {
@@ -327,14 +305,14 @@ export class Functions {
     }
   }
 
-  async getUser(userId: string, guildId: string | undefined) {
-    if (!guildId) return null;
+  async getUser(userId: string, guild_id: string | undefined) {
+    if (!guild_id) return null;
 
     try {
       const user =
         (await this.client.db.user.findFirst({
-          where: { user_id: userId, guild_id: guildId },
-        })) ?? (await this.addUser(userId, guildId));
+          where: { user_id: userId, guild_id: guild_id },
+        })) ?? (await this.addUser(userId, guild_id));
 
       return user;
     } catch (error) {
@@ -342,13 +320,13 @@ export class Functions {
     }
   }
 
-  async addGuild(guildId: string | undefined) {
-    if (!guildId) return null;
+  async addGuild(guild_id: string | undefined) {
+    if (!guild_id) return null;
 
     try {
       const guild = await this.client.db.guild.create({
         data: {
-          guild_id: guildId,
+          guild_id: guild_id,
         },
       });
 
@@ -359,20 +337,20 @@ export class Functions {
   }
 
   async updateGuild(
-    guildId: string | undefined,
+    guild_id: string | undefined,
     data: Partial<Prisma.GuildUpdateInput>
   ) {
-    if (!guildId) return;
+    if (!guild_id) return;
 
     try {
-      const guild = await this.getGuild(guildId);
+      const guild = await this.getGuild(guild_id);
 
       if (!guild) {
-        await this.addGuild(guildId);
+        await this.addGuild(guild_id);
       }
 
       await this.client.db.guild.updateMany({
-        where: { guild_id: guildId },
+        where: { guild_id: guild_id },
         data,
       });
     } catch (error) {
@@ -380,9 +358,9 @@ export class Functions {
     }
   }
 
-  async deleteGuild(guildId: string): Promise<void> {
+  async deleteGuild(guild_id: string): Promise<void> {
     try {
-      await this.client.db.guild.deleteMany({ where: { guild_id: guildId } });
+      await this.client.db.guild.deleteMany({ where: { guild_id: guild_id } });
     } catch (error) {
       console.log(error);
     }

@@ -9,9 +9,9 @@ export default class PlayerAddListEvent extends Event {
 
   async execute(client: AuroraClient, queue: Queue) {
     queue.textChannel?.send({
-      content: client.functions.formatReply(
+      content: client.functions.reply(
         "Cleared the queue and destroyed the voice connection due to inactivity.",
-        client.config.emojis.stop
+        ":stop_button:"
       ),
     });
   }

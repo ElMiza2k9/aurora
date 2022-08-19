@@ -1,12 +1,11 @@
 import { ApplicationCommandOptionType, escapeMarkdown } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
-import { inspect } from "node:util";
 
-export default class EvalCommand extends SubCommand {
+export default class ShellCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
-      name: "eval",
+      name: "shell",
       topName: "dev",
       description: "Evaluate something. Proceed with caution.",
       options: [
@@ -57,15 +56,17 @@ export default class EvalCommand extends SubCommand {
       });
     }
 
-    try {
-      let evaled = await eval(interaction.options.getString("code"));
+    const code = interaction.options.getString("code");
+    const isEphemeral = interaction.options.getBoolean("ephemeral");
 
-      evaled = inspect(evaled, {
-        depth: 0,
-        maxArrayLength: null,
-      });
+    try {
+      let evaled = await require("child_process")
+        .execSync(code)
+        .toString("utf8")
+        .split(2000);
 
       evaled = evaled
+        .toString()
         .replaceAll(this.client.token, "CLIENT_TOKEN")
         .replaceAll(process.env["CLIENT_TOKEN"], "CLIENT_TOKEN")
         .replaceAll(process.env["DATABASE_URL"], "DATABASE_URL")
@@ -87,12 +88,14 @@ export default class EvalCommand extends SubCommand {
             .embed(interaction)
             .setDescription(
               this.client.functions.reply(
-                `Evaluated successfully:\n\`\`\`js\n${evaled}\`\`\``,
+                `Evaluated successfully:\n\`\`\`sh\n${
+                  evaled != "" ? evaled : "No response"
+                }\`\`\``,
                 ":white_check_mark:"
               )
             ),
         ],
-        ephemeral: interaction.options.getBoolean("ephemeral"),
+        ephemeral: isEphemeral,
       });
     } catch (error) {
       return interaction.followUp({
@@ -101,12 +104,12 @@ export default class EvalCommand extends SubCommand {
             .embed(interaction)
             .setDescription(
               this.client.functions.reply(
-                `Evaluated with error:\n\`\`\`js\n${error?.stack}\`\`\``,
+                `Evaluated with error:\n\`\`\`sh\n${error?.stack}\`\`\``,
                 ":x:"
               )
             ),
         ],
-        ephemeral: interaction.options.getBoolean("ephemeral"),
+        ephemeral: isEphemeral,
       });
     }
   }

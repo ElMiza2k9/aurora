@@ -1,3 +1,4 @@
+import { escapeMarkdown } from "discord.js";
 import { Playlist, Queue } from "distube";
 import { AuroraClient } from "../structures/AuroraClient";
 import { Event } from "../structures/Event";
@@ -7,27 +8,34 @@ export default class PlayerAddListEvent extends Event {
     super(client, "addList", false, true);
   }
 
-  async execute(client: AuroraClient, _queue: Queue, playlist: Playlist<any>) {
+  async execute(
+    client: AuroraClient,
+    _queue: Queue,
+    playlist: Playlist<any>,
+    l
+  ) {
     playlist.metadata.i.followUp({
-      content: client.functions.formatReply(
-        `Added **${client.functions.escapeMd(playlist.name)}** (${
+      content: client.functions.reply(
+        `Added **${escapeMarkdown(playlist.name as string)}** (${
           playlist.songs.length
         } songs) to the queue.`,
-        client.config.emojis.check_mark
+        ":white_check_mark:"
       ),
       embeds: [
         playlist.metadata.i.client.functions
-          .buildEmbed(playlist.metadata.i)
-          .setTitle(
-            playlist.metadata.i.client.functions.escapeMd(playlist.name)
-          )
+          .embed(playlist.metadata.i)
+          .setTitle(escapeMarkdown(playlist.name))
           .setURL(playlist.url)
           .setThumbnail(playlist.thumbnail)
           .addFields([
             {
               name: "Common info",
               value: `
-**Duration:** ${playlist.duration != 0 ? playlist.formattedDuration : "Unknown"}
+**Duration:** ${
+                playlist.duration != 0
+                  ? playlist.formattedDuration
+                  : l("misc:unknown")
+              }
 **Requested by:** ${playlist.user}`,
               inline: true,
             },
@@ -39,8 +47,8 @@ export default class PlayerAddListEvent extends Event {
               })`,
               value: playlist.songs
                 .map((song, pos) => {
-                  return `#${pos + 1}. **${client.functions.escapeMd(
-                    song.name
+                  return `#${pos + 1}. **${escapeMarkdown(
+                    song.name as string
                   )}** \`[${song.formattedDuration}]\``;
                 })
                 .slice(0, 10)

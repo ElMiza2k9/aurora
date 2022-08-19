@@ -9,11 +9,29 @@ generator client {
 
 model Guild {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
-  guild_id String @unique @map("guild_id")
+  guild_id String @unique
+  locale   String @default("en-US")
+
+  @@map("guilds")
 }
 
 model User {
   id       String @id @default(auto()) @map("_id") @db.ObjectId
   guild_id String
   user_id  String
+
+  @@map("users")
+}
+
+model TempVoice {
+  id                 String  @id @default(auto()) @map("_id") @db.ObjectId
+  guild_id           String
+  channel_id         String  @unique
+  category_id        String
+  delete_if_empty    Boolean
+  delete_if_no_owner Boolean
+  member_limit       Int
+  bitrate            Int
+
+  @@map("tempvoices")
 }

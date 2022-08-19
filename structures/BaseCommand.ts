@@ -26,5 +26,8 @@ export abstract class BaseCommand<
     return this._options;
   }
 
-  abstract execute(interaction: DJS.CommandInteraction): Promise<unknown>;
+  abstract execute(
+    interaction: DJS.CommandInteraction,
+    locale: any
+  ): Promise<unknown>;
 }

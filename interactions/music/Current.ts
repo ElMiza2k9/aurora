@@ -9,9 +9,10 @@ export default class CurrentCommand extends SubCommand {
       description: "Shows the current track, if there's any",
     });
   }
-  async execute(interaction) {
-    const isChecked = await interaction.client.functions.checkVoice(
+  async execute(interaction, l) {
+    const isChecked = await interaction.client.functions.voice(
       interaction,
+      l,
       true,
       true
     );
@@ -23,38 +24,41 @@ export default class CurrentCommand extends SubCommand {
       const song = queue.songs[0];
 
       interaction.reply({
-        content: interaction.client.functions.formatReply(
+        content: interaction.client.functions.reply(
           "Here's some info about the current song:",
-          interaction.client.config.emojis.check_mark
+          ":white_check_mark:"
         ),
         embeds: [
           interaction.client.functions
-            .buildEmbed(interaction)
-            .setTitle(interaction.client.functions.escapeMd(song.name))
+            .embed(interaction)
+            .setTitle(interaction.client.functions.md(song.name))
             .setURL(song.url)
             .setThumbnail(song.thumbnail)
             .addFields([
               {
                 name: "Common info",
                 value: `
-**Duration:** ${song.duration != 0 ? song.formattedDuration : "Unknown"}
+**Duration:** ${
+                  song.source === "youtube"
+                    ? song.formattedDuration
+                    : l("misc:unknown")
+                }
 **Requested by:** ${song.user}
 **Uploaded by:** ${
                   song.uploader.name
-                    ? interaction.client.functions.escapeMd(song.uploader.name)
-                    : "Unknown"
+                    ? interaction.client.functions.md(song.uploader.name)
+                    : l("misc:unknown")
                 }`,
                 inline: true,
               },
               {
                 name: "Details",
                 value: `
-**Likes:** ${song.source === "youtube" ? song.likes : "Not a YouTube video"}
-**Views:** ${song.views != 0 ? song.views : "Unknown"}
-**Live stream:** ${song.isLive ? "Yes" : "No"}
+**Views:** ${song.source === "youtube" ? song.views : l("misc:unknown")}
+**Live stream:** ${song.isLive ? l("misc:true") : l("misc:false")}
 **Playlist:** ${
                   song.playlist
-                    ? `${interaction.client.functions.escapeMd(
+                    ? `${interaction.client.functions.md(
                         song.playlist.name
                       )} (${song.playlist.songs.length} songs)`
                     : "No playlist"

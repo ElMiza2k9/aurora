@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType } from "discord.js";
+import { ApplicationCommandOptionType, escapeMarkdown } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
@@ -54,7 +54,7 @@ export default class AvatarCommand extends SubCommand {
       ],
     });
   }
-  async execute(interaction) {
+  async execute(interaction, l) {
     const user = interaction.options.getUser("user") ?? interaction.user;
     const size = interaction.options.getInteger("size") ?? 512;
     const extension = interaction.options.getString("format") ?? "png";
@@ -67,14 +67,14 @@ export default class AvatarCommand extends SubCommand {
 
     interaction.reply({
       embeds: [
-        interaction.client.functions
-          .buildEmbed(interaction)
+        this.client.functions
+          .embed(interaction)
           .setDescription(
-            interaction.client.functions.formatReply(
-              `${interaction.client.functions.escapeMd(
-                user.username
-              )}'s avatar:`,
-              interaction.client.config.emojis.check_mark
+            this.client.functions.reply(
+              l("commands:info:avatar:reply", {
+                user: `${escapeMarkdown(user.username)}`,
+              }),
+              ":white_check_mark:"
             )
           )
           .setImage(avatar),

@@ -14,9 +14,9 @@ export default class PlayerErrorEvent extends Event {
     error: DisTubeError<string>
   ) {
     channel.send({
-      content: client.functions.formatReply(
+      content: client.functions.reply(
         `An unknown ${error.name} happened during playback. Please check the logs for details.`,
-        client.config.emojis.cross_mark
+        ":x:"
       ),
     });
     console.log(`[error] ${error?.stack}`);

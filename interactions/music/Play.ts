@@ -18,10 +18,8 @@ export default class PlayCommand extends SubCommand {
       ],
     });
   }
-  async execute(interaction) {
-    const isChecked = await interaction.client.functions.checkVoice(
-      interaction
-    );
+  async execute(interaction, l) {
+    const isChecked = await interaction.client.functions.voice(interaction);
     const query = await interaction.options.getString("query");
 
     if (isChecked === true) {
@@ -33,7 +31,9 @@ export default class PlayCommand extends SubCommand {
         });
         interaction.deferReply();
       } catch (error) {
-        interaction.followUp({ content: error });
+        interaction.followUp({
+          content: l("misc:error", { error: error.name }),
+        });
       }
     }
   }
