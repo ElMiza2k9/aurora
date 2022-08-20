@@ -8,7 +8,7 @@ export default class InteractionCreateEvent extends Event {
     super(client, "interactionCreate");
   }
 
-  async execute(client: AuroraClient, interaction: DJS.Interaction) {
+  async execute(client: AuroraClient, interaction: DJS.ChatInputCommandInteraction<"cached" | "raw">) {
     if (!interaction) return;
     if (interaction.type !== DJS.InteractionType.ApplicationCommand) return;
     if (interaction.commandType !== DJS.ApplicationCommandType.ChatInput)
