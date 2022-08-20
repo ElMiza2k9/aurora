@@ -35,7 +35,6 @@ export default class InteractionCreateEvent extends Event {
           locale("misc:error", { error: `${error.name}` }),
           ":x:"
         ),
-        ephemeral: true,
       });
       console.log(`[error] ${error?.stack}`);
     }

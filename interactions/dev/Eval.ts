@@ -16,12 +16,6 @@ export default class EvalCommand extends SubCommand {
           description: "The code you want to evaluate",
           required: true,
         },
-        {
-          type: ApplicationCommandOptionType.Boolean,
-          name: "ephemeral",
-          description: "Whether to send the result as an ephemeral message",
-          required: true,
-        },
       ],
     });
   }
@@ -36,7 +30,6 @@ export default class EvalCommand extends SubCommand {
               this.client.functions.reply(l("misc:owner:empty_list"), ":x:")
             ),
         ],
-        ephemeral: true,
       });
     } else if (!this.client.config.owners.includes(interaction.user.id)) {
       return interaction.followUp({
@@ -47,7 +40,6 @@ export default class EvalCommand extends SubCommand {
               this.client.functions.reply(l("misc:owner:not_included"), ":x:")
             ),
         ],
-        ephemeral: true,
       });
     }
 
@@ -86,7 +78,6 @@ export default class EvalCommand extends SubCommand {
               )
             ),
         ],
-        ephemeral: interaction.options.getBoolean("ephemeral"),
       });
     } catch (error) {
       return interaction.followUp({
@@ -100,7 +91,6 @@ export default class EvalCommand extends SubCommand {
               )
             ),
         ],
-        ephemeral: interaction.options.getBoolean("ephemeral"),
       });
     }
   }

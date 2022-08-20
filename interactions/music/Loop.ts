@@ -41,7 +41,6 @@ export default class LoopCommand extends SubCommand {
               this.client.functions.reply(l("misc:voice:not_in_voice"), ":x:")
             ),
         ],
-        ephemeral: true,
       });
     } else if (
       interaction.guild.afkChannel &&
@@ -55,7 +54,6 @@ export default class LoopCommand extends SubCommand {
               this.client.functions.reply(l("misc:voice:in_afk"), ":x:")
             ),
         ],
-        ephemeral: true,
       });
     } else if (interaction.member.voice.selfDeaf) {
       return interaction.followUp({
@@ -66,7 +64,6 @@ export default class LoopCommand extends SubCommand {
               this.client.functions.reply(l("misc:voice:self_deaf"), ":x:")
             ),
         ],
-        ephemeral: true,
       });
     } else if (interaction.member.voice.serverDeaf) {
       return interaction.followUp({
@@ -77,7 +74,6 @@ export default class LoopCommand extends SubCommand {
               this.client.functions.reply(l("misc:voice:server_deaf"), ":x:")
             ),
         ],
-        ephemeral: true,
       });
     } else if (
       interaction.client.voice.channel &&
@@ -95,7 +91,6 @@ export default class LoopCommand extends SubCommand {
               )
             ),
         ],
-        ephemeral: true,
       });
     }
 
@@ -108,7 +103,6 @@ export default class LoopCommand extends SubCommand {
               this.client.functions.reply(l("misc:voice:no_connection"), ":x:")
             ),
         ],
-        ephemeral: true,
       });
     }
 
@@ -121,7 +115,6 @@ export default class LoopCommand extends SubCommand {
               this.client.functions.reply(l("misc:voice:no_queue"), ":x:")
             ),
         ],
-        ephemeral: true,
       });
     }
 

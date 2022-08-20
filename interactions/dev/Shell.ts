@@ -15,12 +15,6 @@ export default class ShellCommand extends SubCommand {
           description: "The code you want to evaluate",
           required: true,
         },
-        {
-          type: ApplicationCommandOptionType.Boolean,
-          name: "ephemeral",
-          description: "Whether to send the result as an ephemeral message",
-          required: true,
-        },
       ],
     });
   }
@@ -35,7 +29,6 @@ export default class ShellCommand extends SubCommand {
               this.client.functions.reply(l("misc:owner:empty_list"), ":x:")
             ),
         ],
-        ephemeral: true,
       });
     } else if (!this.client.config.owners.includes(interaction.user.id)) {
       return interaction.followUp({
@@ -46,12 +39,10 @@ export default class ShellCommand extends SubCommand {
               this.client.functions.reply(l("misc:owner:not_included"), ":x:")
             ),
         ],
-        ephemeral: true,
       });
     }
 
     const code = interaction.options.getString("code");
-    const isEphemeral = interaction.options.getBoolean("ephemeral");
 
     try {
       let evaled = await require("child_process")
@@ -89,7 +80,6 @@ export default class ShellCommand extends SubCommand {
               )
             ),
         ],
-        ephemeral: isEphemeral,
       });
     } catch (error) {
       return interaction.followUp({
@@ -103,7 +93,6 @@ export default class ShellCommand extends SubCommand {
               )
             ),
         ],
-        ephemeral: isEphemeral,
       });
     }
   }
