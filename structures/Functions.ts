@@ -1,9 +1,4 @@
-import {
-  EmbedBuilder,
-  escapeMarkdown,
-  EscapeMarkdownOptions,
-  TimestampStylesString,
-} from "discord.js";
+import { EmbedBuilder, TimestampStylesString } from "discord.js";
 import { AuroraClient } from "./AuroraClient";
 import { Prisma } from "@prisma/client";
 
@@ -25,19 +20,15 @@ export class Functions {
 
     return new EmbedBuilder()
       .setFooter({
-        text: interaction.client.config.embeds.showAuthor
+        text: this.client.config.embeds.showAuthor
           ? interaction.user?.tag
           : null,
-        iconURL: interaction.client.config.embeds.showAuthor
+        iconURL: this.client.config.embeds.showAuthor
           ? interaction.user?.displayAvatarURL()
           : null,
       })
-      .setColor(
-        parseInt(interaction.client.config.embeds.hexColor, 16) ?? "#7289da"
-      )
-      .setTimestamp(
-        interaction.client.config.embeds.setTimestamp ? Date.now() : null
-      );
+      .setColor(parseInt(this.client.config.embeds.hexColor, 16) ?? "#7289da")
+      .setTimestamp(this.client.config.embeds.setTimestamp ? Date.now() : null);
   }
 
   /**
@@ -47,164 +38,6 @@ export class Functions {
    */
   reply(replyContent: string, emoji: string) {
     return `${emoji} | ${replyContent}`;
-  }
-
-  /**
-   * Performs voice channel checks; useful for commands
-   * @param {Interaction} interaction Your interaction (aka slash command)
-   * @param {any} t Locale
-   * @param {boolean} checkIfConnected Whether to check voice connection
-   * @param {boolean} checkIfQueueExists Whether to check if queue exists
-   * @param {boolean} checkIfLastSong Whether to check queue size
-   */
-  async voice(
-    interaction: any,
-    t: any,
-    checkIfConnected: boolean,
-    checkIfQueueExists: boolean,
-    checkIfLastSong: boolean
-  ) {
-    if (!interaction.member.voice.channel) {
-      return interaction.reply({
-        embeds: [
-          this.embed(interaction).setDescription(
-            this.reply(t("functions:voice:not_in_voice"), ":x:")
-          ),
-        ],
-        ephemeral: true,
-      });
-    } else if (
-      interaction.guild.afkChannel &&
-      interaction.member.voice.channel.id === interaction.guild.afkChannel.id
-    ) {
-      return interaction.reply({
-        embeds: [
-          this.embed(interaction).setDescription(
-            this.reply(t("functions:voice:in_afk"), ":x:")
-          ),
-        ],
-        ephemeral: true,
-      });
-    } else if (interaction.member.voice.selfDeaf) {
-      return interaction.reply({
-        embeds: [
-          this.embed(interaction).setDescription(
-            this.reply(t("functions:voice:self_deaf"), ":x:")
-          ),
-        ],
-        ephemeral: true,
-      });
-    } else if (interaction.member.voice.serverDeaf) {
-      return interaction.reply({
-        embeds: [
-          this.embed(interaction).setDescription(
-            this.reply(t("functions:voice:server_deaf"), ":x:")
-          ),
-        ],
-        ephemeral: true,
-      });
-    } else if (
-      interaction.client.voice.channel &&
-      interaction.client.voice.channel.id !==
-        interaction.member.voice.channel.id
-    ) {
-      return interaction.reply({
-        embeds: [
-          this.embed(interaction).setDescription(
-            this.reply(t("functions:voice:not_same_channel"), ":x:")
-          ),
-        ],
-        ephemeral: true,
-      });
-    }
-
-    if (checkIfConnected) {
-      const connection = await interaction.client.player.voices.get(
-        interaction.guild.id
-      );
-      if (!connection) {
-        return interaction.reply({
-          embeds: [
-            this.embed(interaction).setDescription(
-              this.reply(t("functions:voice:no_connection"), ":x:")
-            ),
-          ],
-          ephemeral: true,
-        });
-      }
-    }
-
-    const queue = await interaction.client.player.queues.get(
-      interaction.guild.id
-    );
-
-    if (checkIfQueueExists) {
-      if (!queue) {
-        return interaction.reply({
-          embeds: [
-            this.embed(interaction).setDescription(
-              this.reply(t("functions:voice:no_queue"), ":x:")
-            ),
-          ],
-          ephemeral: true,
-        });
-      }
-    }
-
-    if (checkIfLastSong) {
-      if (!queue || queue.songs.length === 1) {
-        return interaction.reply({
-          embeds: [
-            this.embed(interaction).setDescription(
-              this.reply(
-                t("functions:voice:last_song", { cmd: `/music stop` }),
-                ":x:"
-              )
-            ),
-          ],
-          ephemeral: true,
-        });
-      }
-    }
-
-    return true;
-  }
-
-  /**
-   * Checks if the command author is a bot owner
-   * @param {Interaction} interaction Your interaction (aka slash command)
-   * @param {any} t Locale
-   */
-  owner(interaction: any, t: any) {
-    if (!interaction.client.config.owners) {
-      return interaction.reply({
-        embeds: [
-          this.embed(interaction).setDescription(
-            interaction.client.functions.reply(
-              t("functions:owner:empty_list"),
-              ":x:"
-            )
-          ),
-        ],
-        ephemeral: true,
-      });
-    } else if (
-      !interaction.client.config.owners.includes(interaction.user.id)
-    ) {
-      return interaction.reply({
-        embeds: [
-          this.embed(interaction).setDescription(
-            interaction.client.functions.reply(
-              t("functions:owner:not_included"),
-              ":x:"
-            )
-          ),
-        ],
-        ephemeral: true,
-      });
-    }
-
-    return true;
   }
 
   /**
@@ -223,30 +56,13 @@ export class Functions {
     return `<t:${parseInt(parsed.toString())}:${type ?? "F"}>`;
   }
 
-  /**
-   * Formats a given string so that the first letter is capital
-   * @param {string} str String to format
-   */
-  toCapitalize(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
-
-  /**
-   * Formats a given string to escape any markdown symbols
-   * @param {any} str String to format
-   * @param {EscapeMarkdownOptions} options Escaping options
-   */
-  md(str: any, options?: EscapeMarkdownOptions) {
-    return escapeMarkdown(str, options);
-  }
-
-  async addUser(userId: string, guild_id: string | undefined, data?: any) {
+  async addUser(user_id: string, guild_id: string | undefined, data?: any) {
     if (!guild_id) return null;
 
     try {
       const user = await this.client.db.user.create({
         data: {
-          user_id: userId,
+          user_id: user_id,
           guild_id: guild_id,
           ...data,
         },
@@ -259,20 +75,20 @@ export class Functions {
   }
 
   async updateUser(
-    userId: string,
+    user_id: string,
     guild_id: string | undefined,
     data: Partial<Prisma.UserUpdateManyArgs["data"]>
   ) {
     try {
-      const user = await this.getUser(userId, guild_id);
+      const user = await this.getUser(user_id, guild_id);
 
       if (!user) {
-        this.addUser(userId, guild_id, data);
+        this.addUser(user_id, guild_id, data);
         return;
       }
 
       await this.client.db.user.updateMany({
-        where: { user_id: userId, guild_id: guild_id },
+        where: { user_id: user_id, guild_id: guild_id },
         data,
       });
     } catch (error) {
@@ -280,10 +96,10 @@ export class Functions {
     }
   }
 
-  async removeUser(userId: string, guild_id: string) {
+  async removeUser(user_id: string, guild_id: string) {
     try {
       await this.client.db.user.deleteMany({
-        where: { user_id: userId, guild_id: guild_id },
+        where: { user_id: user_id, guild_id: guild_id },
       });
     } catch (error) {
       console.log(error);
@@ -305,14 +121,14 @@ export class Functions {
     }
   }
 
-  async getUser(userId: string, guild_id: string | undefined) {
+  async getUser(user_id: string, guild_id: string | undefined) {
     if (!guild_id) return null;
 
     try {
       const user =
         (await this.client.db.user.findFirst({
-          where: { user_id: userId, guild_id: guild_id },
-        })) ?? (await this.addUser(userId, guild_id));
+          where: { user_id: user_id, guild_id: guild_id },
+        })) ?? (await this.addUser(user_id, guild_id));
 
       return user;
     } catch (error) {
