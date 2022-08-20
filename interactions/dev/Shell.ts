@@ -32,10 +32,7 @@ export default class ShellCommand extends SubCommand {
           this.client.functions
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(
-                l("misc:owner:empty_list"),
-                ":x:"
-              )
+              this.client.functions.reply(l("misc:owner:empty_list"), ":x:")
             ),
         ],
         ephemeral: true,
@@ -46,10 +43,7 @@ export default class ShellCommand extends SubCommand {
           this.client.functions
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(
-                l("misc:owner:not_included"),
-                ":x:"
-              )
+              this.client.functions.reply(l("misc:owner:not_included"), ":x:")
             ),
         ],
         ephemeral: true,
