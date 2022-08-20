@@ -14,6 +14,7 @@ export default class ReadyEvent extends Event {
       status: "dnd",
     });
 
+    await client.tempvoices.init();
     await new AuroraInteractionManager(client).init();
 
     console.log(

@@ -41,7 +41,6 @@ export class AuroraClient extends Client<true> {
   }
 
   init() {
-    this.tempvoices.init();
     this.locales.init();
     new AuroraEventManager(this).init();
 
