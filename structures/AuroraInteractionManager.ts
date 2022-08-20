@@ -55,6 +55,7 @@ export class AuroraInteractionManager {
             type: DJS.ApplicationCommandType.ChatInput,
             name: interaction.name,
             description: interaction.options.description ?? "Empty description",
+            defaultMemberPermissions: interaction.user_perms,
             options: interaction.options.options ?? [],
           };
 
@@ -91,6 +92,7 @@ export class AuroraInteractionManager {
           type: DJS.ApplicationCommandOptionType.SubcommandGroup,
           name: groupName,
           description: `${groupName} sub commands`,
+          defaultMemberPermissions: cmds.map((c) => c.user_perms),
           options: cmds.map((v) => v.options),
         };
 
