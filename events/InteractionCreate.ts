@@ -9,6 +9,7 @@ export default class InteractionCreateEvent extends Event {
   }
 
   async execute(client: AuroraClient, interaction: DJS.Interaction) {
+    if (!interaction) return;
     if (interaction.type !== DJS.InteractionType.ApplicationCommand) return;
     if (interaction.commandType !== DJS.ApplicationCommandType.ChatInput)
       return;
@@ -17,8 +18,14 @@ export default class InteractionCreateEvent extends Event {
     const command = client.interactions.get(this.getCommand(interaction));
     if (!command) return;
 
-    const dbGuild = await client.functions.getGuild(interaction?.guild?.id);
-    let locale = (global.l = i18next.getFixedT(dbGuild?.locale || "en-US"));
+    const dbGuild = await client.functions.getGuild(interaction.guild?.id);
+    const dbUser = await client.functions.getUser(
+      interaction.user?.id,
+      interaction.guild?.id
+    );
+    let locale = (global.l = i18next.getFixedT(
+      dbUser?.locale ?? `${dbGuild?.locale || "en-US"}`
+    ));
 
     try {
       await command.execute(interaction, locale);
