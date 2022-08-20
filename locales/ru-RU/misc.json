@@ -1,5 +1,5 @@
 {
-  "error": "При обработке команды произошла неизвестная ошибка {{error}}. Загляните в журнал за более подробной информацией.",
+  "error": "Произошла неизвестная ошибка {{error}}. Загляните в журнал за более подробной информацией.",
   "boost_levels": {
     "0": "нет уровня",
     "1": "уровень 1",
@@ -12,17 +12,17 @@
   "false": "Нет",
   "unknown": "Неизвестно",
   "voice": {
-    "not_in_voice": "You're not in a voice channel.",
-    "in_afk": "You're in AFK channel.",
-    "self_deaf": "You've deafened yourself.",
-    "server_deaf": "You're deafened server-wide.",
-    "not_same_channel": "You're not in the same voice channel as me.",
-    "no_connection": "There's no voice connection in this server.",
-    "no_queue": "The queue is empty.",
-    "last_song": "The current track is the last one in the queue.\nIf you want to destroy the voice connection, use {{cmd}} instead."
+    "not_in_voice": "Вы не находитесь в голосовом канале.",
+    "in_afk": "Вы находитесь в AFK-канале.",
+    "self_deaf": "Вы заглушили себя.",
+    "server_deaf": "Вас заглушили на всём сервере.",
+    "not_same_channel": "Вы находитесь не в том же канале, в котором и я.",
+    "no_connection": "На этом сервере нет голосового соединения.",
+    "no_queue": "Очередь пуста.",
+    "last_song": "Текущий трек - последний в очереди.\nЕсли вы хотите уничтожить голосовое соединение, используйте {{cmd}}."
   },
   "owner": {
-    "empty_list": "Owners list is empty, please check your config file.",
-    "not_included": "You're not included in owners list."
+    "empty_list": "Список владельцев пустой, проверьте файл конфигурации.",
+    "not_included": "Вы не включены в список владельцев."
   }
 }

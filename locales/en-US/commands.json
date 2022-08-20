@@ -1,4 +1,14 @@
 {
+  "dev": {
+    "eval": {
+      "reply": "Evaluated successfully:",
+      "error": "Evaluated with error:"
+    },
+    "shell": {
+      "reply": "Executed successfully:",
+      "error": "Executed with error:"
+    }
+  },
   "info": {
     "about": {
       "reply": "Here's some info about me:",
