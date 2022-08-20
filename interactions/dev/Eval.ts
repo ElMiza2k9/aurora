@@ -68,25 +68,28 @@ export default class EvalCommand extends SubCommand {
       });
 
       await interaction.followUp({
+        content: this.client.functions.reply(
+          l("commands:dev:eval:reply"),
+          ":white_check_mark:"
+        ),
         embeds: [
           this.client.functions
             .embed(interaction)
-            .setDescription(
-              this.client.functions.reply(
-                `Evaluated successfully:\n\`\`\`js\n${evaled}\`\`\``,
-                ":white_check_mark:"
-              )
-            ),
+            .setDescription(`\`\`\`js\n${evaled}\`\`\``),
         ],
       });
     } catch (error) {
       return interaction.followUp({
+        content: this.client.functions.reply(
+          l("commands:dev:eval:error"),
+          ":white_check_mark:"
+        ),
         embeds: [
           this.client.functions
             .embed(interaction)
             .setDescription(
               this.client.functions.reply(
-                `Evaluated with error:\n\`\`\`js\n${error?.stack}\`\`\``,
+                `\`\`\`js\n${error?.stack}\`\`\``,
                 ":x:"
               )
             ),

@@ -68,27 +68,30 @@ export default class ShellCommand extends SubCommand {
       });
 
       await interaction.followUp({
+        content: this.client.functions.reply(
+          l("commands:dev:shell:reply"),
+          ":white_check_mark:"
+        ),
         embeds: [
           this.client.functions
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(
-                `Evaluated successfully:\n\`\`\`sh\n${
-                  evaled != "" ? evaled : "No response"
-                }\`\`\``,
-                ":white_check_mark:"
-              )
+              `\`\`\`sh\n${evaled != "" ? evaled : "No response"}\`\`\``
             ),
         ],
       });
     } catch (error) {
       return interaction.followUp({
+        content: this.client.functions.reply(
+          l("commands:dev:shell:error"),
+          ":white_check_mark:"
+        ),
         embeds: [
           this.client.functions
             .embed(interaction)
             .setDescription(
               this.client.functions.reply(
-                `Evaluated with error:\n\`\`\`sh\n${error?.stack}\`\`\``,
+                `\`\`\`sh\n${error?.stack}\`\`\``,
                 ":x:"
               )
             ),
