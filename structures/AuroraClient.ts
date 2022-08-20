@@ -8,11 +8,11 @@ import { YtDlpPlugin } from "@distube/yt-dlp";
 import * as Config from "../config.json";
 import * as Package from "../package.json";
 import { Functions } from "./Functions";
-import { EventHandler } from "../handlers/EventHandler";
+import { AuroraEventManager } from "./AuroraEventManager";
 import { PrismaClient } from "@prisma/client";
 import { SubCommand } from "./SubCommand";
-import TempChannelsManager from "discord-temp-channels";
-import { LocaleHandler } from "../handlers/LocaleHandler";
+import { AuroraLocaleManager } from "./AuroraLocaleManager";
+import { AuroraTempManager } from "./AuroraTempManager";
 
 export class AuroraClient extends Client<true> {
   interactions: Collection<string, Command | SubCommand> = new Collection();
@@ -21,7 +21,8 @@ export class AuroraClient extends Client<true> {
   package: typeof Package;
   functions: Functions;
   db: PrismaClient;
-  tempvoice: TempChannelsManager;
+  tempvoices: AuroraTempManager;
+  locales: AuroraLocaleManager;
 
   constructor() {
     super(AuroraClientOptions);
@@ -35,12 +36,15 @@ export class AuroraClient extends Client<true> {
     this.config = Config;
     this.package = Package;
     this.functions = new Functions(this);
-    this.tempvoice = new TempChannelsManager(this);
+    this.tempvoices = new AuroraTempManager(this);
+    this.locales = new AuroraLocaleManager(this);
   }
 
   init() {
-    new EventHandler(this).init();
-    new LocaleHandler(this).init();
+    this.tempvoices.init();
+    this.locales.init();
+    new AuroraEventManager(this).init();
+
     this.db.$connect();
     this.login(process.env["CLIENT_TOKEN"]);
   }

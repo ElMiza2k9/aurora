@@ -1,10 +1,7 @@
-import * as DJS from "discord.js";
+import { ClientOptions, Partials } from "discord.js";
 
-export const AuroraClientOptions: DJS.ClientOptions = {
-  intents: [
-    DJS.GatewayIntentBits.Guilds,
-    DJS.GatewayIntentBits.GuildVoiceStates,
-  ],
-  partials: [DJS.Partials.GuildMember, DJS.Partials.User, DJS.Partials.Channel],
+export const AuroraClientOptions: ClientOptions = {
+  intents: ["Guilds", "GuildVoiceStates"],
+  partials: [Partials.GuildMember, Partials.User, Partials.Channel],
   allowedMentions: { parse: ["roles", "users"] },
 };

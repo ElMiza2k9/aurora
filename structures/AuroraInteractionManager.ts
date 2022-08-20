@@ -1,11 +1,11 @@
 import glob from "glob";
-import { resolveFile, validateFile } from "../structures/HandlerFunctions";
-import { Command } from "../structures/Command";
-import { SubCommand } from "../structures/SubCommand";
+import { resolveFile, validateFile } from "./HandlerFunctions";
+import { Command } from "./Command";
+import { SubCommand } from "./SubCommand";
 import * as DJS from "discord.js";
 import { AuroraClient } from "structures/AuroraClient";
 
-export class InteractionHandler {
+export class AuroraInteractionManager {
   client: AuroraClient;
 
   constructor(client: AuroraClient) {
@@ -15,7 +15,9 @@ export class InteractionHandler {
 
   async init() {
     try {
-      const files = glob.sync("./interactions/**/*.ts");
+      const files = process.env.BUILD_PATH
+        ? glob.sync("./dist/interactions/**/*.js")
+        : glob.sync("./interactions/**/*.ts");
 
       const subCommands: Record<string, SubCommand[]> = {};
       const commandGroups: Record<string, [string, SubCommand[]]> = {};
@@ -62,7 +64,7 @@ export class InteractionHandler {
         this.client.interactions.set(commandName, interaction);
 
         if (this.client.config.debug.handler_logs) {
-          console.log(`[debug] Loaded command ${commandName}`);
+          console.log(`[commands] Loaded command ${commandName}`);
         }
       }
 
@@ -72,7 +74,7 @@ export class InteractionHandler {
         const data: DJS.ApplicationCommandData = {
           type: DJS.ApplicationCommandType.ChatInput,
           name: topLevelName,
-          description: `"${topLevelName}" subcommand`,
+          description: `${topLevelName} commands`,
           // @ts-expect-error ignore
           options: cmds.map((v) => v.options),
         };
@@ -88,7 +90,7 @@ export class InteractionHandler {
         const groupData = {
           type: DJS.ApplicationCommandOptionType.SubcommandGroup,
           name: groupName,
-          description: `"${groupName}" subcommand group`,
+          description: `${groupName} sub commands`,
           options: cmds.map((v) => v.options),
         };
 
@@ -98,10 +100,7 @@ export class InteractionHandler {
           type: DJS.ApplicationCommandType.ChatInput,
           name: topLevelName,
           description: `${topLevelName} commands`,
-          options: [
-            ...groupCache,
-            ...subCommands[topLevelName].map((v) => v.options),
-          ],
+          options: [...groupCache],
         };
 
         await this.createCommand(data);

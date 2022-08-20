@@ -1,9 +1,10 @@
-import { AuroraClient } from "structures/AuroraClient";
+import { AuroraClient } from "./AuroraClient";
 import i18next from "i18next";
 import resourcesToBackend from "i18next-resources-to-backend";
 import { readdirSync } from "node:fs";
+import { Snowflake } from "discord.js";
 
-export class LocaleHandler {
+export class AuroraLocaleManager {
   client: AuroraClient;
 
   constructor(client: AuroraClient) {
@@ -43,5 +44,19 @@ export class LocaleHandler {
     } catch (error) {
       return console.error(`[locales] Error loading locales: ${error}`);
     }
+  }
+
+  async updateGuildLocale(guild_id: Snowflake, locale: string) {
+    await this.client.functions.updateGuild(guild_id, { locale: locale });
+  }
+
+  async updateUserLocale(
+    user_id: Snowflake,
+    guild_id: Snowflake,
+    locale: string
+  ) {
+    await this.client.functions.updateUser(user_id, guild_id, {
+      locale: locale,
+    });
   }
 }

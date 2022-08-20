@@ -1,9 +1,9 @@
 import glob from "glob";
-import { AuroraClient } from "../structures/AuroraClient";
-import { Event } from "../structures/Event";
-import { resolveFile, validateFile } from "../structures/HandlerFunctions";
+import { AuroraClient } from "./AuroraClient";
+import { Event } from "./Event";
+import { resolveFile, validateFile } from "./HandlerFunctions";
 
-export class EventHandler {
+export class AuroraEventManager {
   client: AuroraClient;
 
   constructor(client: AuroraClient) {
