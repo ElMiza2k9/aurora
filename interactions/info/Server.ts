@@ -11,10 +11,11 @@ export default class ServerCommand extends SubCommand {
     });
   }
   async execute(interaction, l) {
+    await interaction.deferReply();
     const guild = interaction.guild;
     const serverOwner = await guild.fetchOwner();
 
-    interaction.reply({
+    await interaction.followUp({
       content: this.client.functions.reply(
         l("commands:info:server:reply", {
           server: `**${escapeMarkdown(guild.name)}**`,

@@ -55,6 +55,7 @@ export default class AvatarCommand extends SubCommand {
     });
   }
   async execute(interaction, l) {
+    await interaction.deferReply();
     const user = interaction.options.getUser("user") ?? interaction.user;
     const size = interaction.options.getInteger("size") ?? 512;
     const extension = interaction.options.getString("format") ?? "png";
@@ -65,7 +66,7 @@ export default class AvatarCommand extends SubCommand {
       forceStatic: forceStatic,
     });
 
-    interaction.reply({
+    await interaction.followUp({
       embeds: [
         this.client.functions
           .embed(interaction)

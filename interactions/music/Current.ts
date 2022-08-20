@@ -1,3 +1,4 @@
+import { escapeMarkdown } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
@@ -10,65 +11,154 @@ export default class CurrentCommand extends SubCommand {
     });
   }
   async execute(interaction, l) {
-    const isChecked = await interaction.client.functions.voice(
-      interaction,
-      l,
-      true,
-      true
+    await interaction.deferReply();
+    const connection =
+      this.client.functions.client.player.voices.get(interaction.guild.id) ||
+      interaction.guild.members.me.voice;
+    const queue = await interaction.client.player.queues.get(
+      interaction.guild.id
     );
 
-    if (isChecked === true) {
-      const queue = await interaction.client.player.queues.get(
-        interaction.guild.id
-      );
-      const song = queue.songs[0];
-
-      interaction.reply({
-        content: interaction.client.functions.reply(
-          "Here's some info about the current song:",
-          ":white_check_mark:"
-        ),
+    if (!interaction.member.voice.channel) {
+      return interaction.followUp({
         embeds: [
-          interaction.client.functions
+          this.client.functions
             .embed(interaction)
-            .setTitle(interaction.client.functions.md(song.name))
-            .setURL(song.url)
-            .setThumbnail(song.thumbnail)
-            .addFields([
-              {
-                name: "Common info",
-                value: `
+            .setDescription(
+              this.client.functions.reply(l("misc:voice:not_in_voice"), ":x:")
+            ),
+        ],
+        ephemeral: true,
+      });
+    } else if (
+      interaction.guild.afkChannel &&
+      interaction.member.voice.channel.id === interaction.guild.afkChannel.id
+    ) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(l("misc:voice:in_afk"), ":x:")
+            ),
+        ],
+        ephemeral: true,
+      });
+    } else if (interaction.member.voice.selfDeaf) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(l("misc:voice:self_deaf"), ":x:")
+            ),
+        ],
+        ephemeral: true,
+      });
+    } else if (interaction.member.voice.serverDeaf) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(l("misc:voice:server_deaf"), ":x:")
+            ),
+        ],
+        ephemeral: true,
+      });
+    } else if (
+      interaction.client.voice.channel &&
+      interaction.client.voice.channel.id !==
+        interaction.member.voice.channel.id
+    ) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(
+                l("misc:voice:not_same_channel"),
+                ":x:"
+              )
+            ),
+        ],
+        ephemeral: true,
+      });
+    }
+
+    if (!connection) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(l("misc:voice:no_connection"), ":x:")
+            ),
+        ],
+        ephemeral: true,
+      });
+    }
+
+    if (!queue) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(l("misc:voice:no_queue"), ":x:")
+            ),
+        ],
+        ephemeral: true,
+      });
+    }
+
+    const song = queue.songs[0];
+
+    await interaction.followUp({
+      content: this.client.functions.reply(
+        "Here's some info about the current song:",
+        ":white_check_mark:"
+      ),
+      embeds: [
+        this.client.functions
+          .embed(interaction)
+          .setTitle(escapeMarkdown(song.name as string))
+          .setURL(song.url)
+          .setThumbnail(song.thumbnail ? song.thumbnail : null)
+          .addFields([
+            {
+              name: "Common info",
+              value: `
 **Duration:** ${
-                  song.source === "youtube"
-                    ? song.formattedDuration
-                    : l("misc:unknown")
-                }
+                song.source === "youtube"
+                  ? song.formattedDuration
+                  : l("misc:unknown")
+              }
 **Requested by:** ${song.user}
 **Uploaded by:** ${
-                  song.uploader.name
-                    ? interaction.client.functions.md(song.uploader.name)
-                    : l("misc:unknown")
-                }`,
-                inline: true,
-              },
-              {
-                name: "Details",
-                value: `
+                song.uploader.name
+                  ? escapeMarkdown(song.uploader.name)
+                  : l("misc:unknown")
+              }`,
+              inline: true,
+            },
+            {
+              name: "Details",
+              value: `
 **Views:** ${song.source === "youtube" ? song.views : l("misc:unknown")}
 **Live stream:** ${song.isLive ? l("misc:true") : l("misc:false")}
 **Playlist:** ${
-                  song.playlist
-                    ? `${interaction.client.functions.md(
-                        song.playlist.name
-                      )} (${song.playlist.songs.length} songs)`
-                    : "No playlist"
-                }
+                song.playlist
+                  ? `${escapeMarkdown(song.playlist.name)} (${
+                      song.playlist.songs.length
+                    } songs)`
+                  : "No playlist"
+              }
               `,
-                inline: true,
-              },
-            ]),
-        ],
-      });
-    }
+              inline: true,
+            },
+          ]),
+      ],
+    });
   }
 }

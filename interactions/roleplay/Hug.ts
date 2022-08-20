@@ -19,9 +19,8 @@ export default class ChannelCreateCommand extends SubCommand {
     });
   }
   async execute(interaction, l) {
-    const user = interaction.options.getUser("user");
-
     await interaction.deferReply();
+    const user = interaction.options.getUser("user");
 
     if (user.id === this.client.user.id || user.id === interaction.user.id) {
       return interaction.followUp({
@@ -34,7 +33,7 @@ export default class ChannelCreateCommand extends SubCommand {
       const gif = await fetch(`https://nekos.life/api/v2/img/hug`).then((res) =>
         res.json()
       );
-      interaction.followUp({
+      await interaction.followUp({
         content: this.client.functions.reply(
           l("commands:roleplay:hug:reply", {
             user: `${user}`,

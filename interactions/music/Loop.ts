@@ -23,12 +23,108 @@ export default class LoopCommand extends SubCommand {
       ],
     });
   }
-  async execute(interaction) {
-    const isChecked = await interaction.client.functions.checkVoice(
-      interaction,
-      true,
-      true
+  async execute(interaction, l) {
+    await interaction.deferReply();
+    const connection =
+      this.client.functions.client.player.voices.get(interaction.guild.id) ||
+      interaction.guild.members.me.voice;
+    const queue = await interaction.client.player.queues.get(
+      interaction.guild.id
     );
+
+    if (!interaction.member.voice.channel) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(l("misc:voice:not_in_voice"), ":x:")
+            ),
+        ],
+        ephemeral: true,
+      });
+    } else if (
+      interaction.guild.afkChannel &&
+      interaction.member.voice.channel.id === interaction.guild.afkChannel.id
+    ) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(l("misc:voice:in_afk"), ":x:")
+            ),
+        ],
+        ephemeral: true,
+      });
+    } else if (interaction.member.voice.selfDeaf) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(l("misc:voice:self_deaf"), ":x:")
+            ),
+        ],
+        ephemeral: true,
+      });
+    } else if (interaction.member.voice.serverDeaf) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(l("misc:voice:server_deaf"), ":x:")
+            ),
+        ],
+        ephemeral: true,
+      });
+    } else if (
+      interaction.client.voice.channel &&
+      interaction.client.voice.channel.id !==
+        interaction.member.voice.channel.id
+    ) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(
+                l("misc:voice:not_same_channel"),
+                ":x:"
+              )
+            ),
+        ],
+        ephemeral: true,
+      });
+    }
+
+    if (!connection) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(l("misc:voice:no_connection"), ":x:")
+            ),
+        ],
+        ephemeral: true,
+      });
+    }
+
+    if (!queue) {
+      return interaction.followUp({
+        embeds: [
+          this.client.functions
+            .embed(interaction)
+            .setDescription(
+              this.client.functions.reply(l("misc:voice:no_queue"), ":x:")
+            ),
+        ],
+        ephemeral: true,
+      });
+    }
+
     const mode = await interaction.options.get("mode");
     const modeNames = {
       0: "disabled",
@@ -36,25 +132,20 @@ export default class LoopCommand extends SubCommand {
       2: "entire queue",
     };
 
-    if (isChecked === true) {
-      const queue = await interaction.client.player.queues.get(
-        interaction.guild.id
-      );
-      queue.setRepeatMode(mode.value);
-      interaction.reply({
-        embeds: [
-          interaction.client.functions
-            .embed(interaction)
-            .setDescription(
-              interaction.client.functions.reply(
-                mode.value > 0
-                  ? `Loop mode set to **${modeNames[mode.value]}**.`
-                  : "Disabled player looping.",
-                ":white_check_mark:"
-              )
-            ),
-        ],
-      });
-    }
+    queue?.setRepeatMode(mode.value);
+    await interaction.followUp({
+      embeds: [
+        this.client.functions
+          .embed(interaction)
+          .setDescription(
+            this.client.functions.reply(
+              mode.value > 0
+                ? `Loop mode set to **${modeNames[mode.value]}**.`
+                : "Disabled player looping.",
+              ":white_check_mark:"
+            )
+          ),
+      ],
+    });
   }
 }

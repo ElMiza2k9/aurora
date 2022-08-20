@@ -9,29 +9,29 @@ export default class StopCommand extends SubCommand {
       description: "Stops music playback and destroys a voice connection",
     });
   }
-  async execute(interaction) {
-    const isChecked = await interaction.client.functions.checkVoice(
-      interaction,
-      true
-    );
-    const connection = await interaction.client.player.voices.get(
+  async execute(interaction, _l) {
+    await interaction.deferReply();
+    const distubeConnection = await this.client.player.voices.get(
       interaction.guild.id
     );
+    const voiceConnection = interaction.guild.members.me.voice;
 
-    if (isChecked === true) {
-      connection.leave();
-      interaction.reply({
-        embeds: [
-          interaction.client.functions
-            .embed(interaction)
-            .setDescription(
-              interaction.client.functions.reply(
-                "Cleared the queue and destroyed the voice connection.",
-                ":stop_button:"
-              )
-            ),
-        ],
-      });
+    if (distubeConnection) {
+      distubeConnection.leave();
+    } else {
+      voiceConnection.disconnect();
     }
+    await interaction.followUp({
+      embeds: [
+        this.client.functions
+          .embed(interaction)
+          .setDescription(
+            this.client.functions.reply(
+              "Cleared the queue and destroyed the voice connection.",
+              ":stop_button:"
+            )
+          ),
+      ],
+    });
   }
 }

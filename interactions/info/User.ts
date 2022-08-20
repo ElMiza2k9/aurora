@@ -23,12 +23,13 @@ export default class UserCommand extends SubCommand {
     });
   }
   async execute(interaction, l) {
+    await interaction.deferReply();
     const user = interaction.options.getUser("user");
     const guildMember = interaction.guild.members.cache.get(user.id);
     const userFlags = await user.fetchFlags();
 
     if (userFlags.has(UserFlags.TeamPseudoUser)) {
-      return interaction.reply({
+      return interaction.followUp({
         content: this.client.functions.reply(
           l("commands:info:user:pseudo_user"),
           ":x:"
@@ -36,7 +37,7 @@ export default class UserCommand extends SubCommand {
       });
     }
 
-    interaction.reply({
+    await interaction.followUp({
       content: this.client.functions.reply(
         l("commands:info:user:reply", {
           user: `**${escapeMarkdown(user.tag)}**`,

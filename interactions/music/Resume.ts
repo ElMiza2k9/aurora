@@ -9,29 +9,22 @@ export default class ResumeCommand extends SubCommand {
       description: "Resumes music playback",
     });
   }
-  async execute(interaction) {
-    const isChecked = await interaction.client.functions.checkVoice(
-      interaction,
-      true
-    );
-    const queue = await interaction.client.player.queues.get(
-      interaction.guild.id
-    );
+  async execute(interaction, _l) {
+    await interaction.deferReply();
+    const queue = await this.client.player.queues.get(interaction.guild.id);
 
-    if (isChecked === true) {
-      queue.resume();
-      interaction.reply({
-        embeds: [
-          interaction.client.functions
-            .embed(interaction)
-            .setDescription(
-              interaction.client.functions.reply(
-                "Resumed the playback.",
-                ":arrow_forward:"
-              )
-            ),
-        ],
-      });
-    }
+    queue?.resume();
+    await interaction.followUp({
+      embeds: [
+        this.client.functions
+          .embed(interaction)
+          .setDescription(
+            this.client.functions.reply(
+              "Resumed the playback.",
+              ":arrow_forward:"
+            )
+          ),
+      ],
+    });
   }
 }

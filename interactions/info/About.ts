@@ -11,10 +11,11 @@ export default class AboutCommand extends SubCommand {
     });
   }
   async execute(interaction, l) {
+    await interaction.deferReply();
     const baseURL =
       this.client.package.homepage ?? "https://github.com/chamln/aurora";
 
-    interaction.reply({
+    await interaction.followUp({
       content: this.client.functions.reply(
         l("commands:info:about:reply"),
         ":white_check_mark:"
