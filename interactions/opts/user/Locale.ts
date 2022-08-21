@@ -33,7 +33,7 @@ export default class OptsLocaleUserCommand extends SubCommand {
     );
 
     await interaction.followUp({
-      content: this.client.functions.reply(
+      content: this.client.reply(
         `Done - your personal locale is now ${interaction.options.getString(
           "locale"
         )}!`,

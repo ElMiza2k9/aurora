@@ -23,20 +23,20 @@ export default class ShellCommand extends SubCommand {
     if (!this.client.config.owners) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:owner:empty_list"), ":x:")
+              this.client.reply(l("misc:owner:empty_list"), ":x:")
             ),
         ],
       });
     } else if (!this.client.config.owners.includes(interaction.user.id)) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:owner:not_included"), ":x:")
+              this.client.reply(l("misc:owner:not_included"), ":x:")
             ),
         ],
       });
@@ -68,12 +68,12 @@ export default class ShellCommand extends SubCommand {
       });
 
       await interaction.followUp({
-        content: this.client.functions.reply(
+        content: this.client.reply(
           l("commands:dev:shell:reply"),
           ":white_check_mark:"
         ),
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
               `\`\`\`sh\n${evaled != "" ? evaled : "No response"}\`\`\``
@@ -82,18 +82,15 @@ export default class ShellCommand extends SubCommand {
       });
     } catch (error) {
       return interaction.followUp({
-        content: this.client.functions.reply(
+        content: this.client.reply(
           l("commands:dev:shell:error"),
           ":white_check_mark:"
         ),
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(
-                `\`\`\`sh\n${error?.stack}\`\`\``,
-                ":x:"
-              )
+              this.client.reply(`\`\`\`sh\n${error?.stack}\`\`\``, ":x:")
             ),
         ],
       });

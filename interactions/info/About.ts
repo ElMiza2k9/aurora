@@ -16,12 +16,12 @@ export default class AboutCommand extends SubCommand {
       this.client.package.homepage ?? "https://github.com/chamln/aurora";
 
     await interaction.followUp({
-      content: this.client.functions.reply(
+      content: this.client.reply(
         l("commands:info:about:reply"),
         ":white_check_mark:"
       ),
       embeds: [
-        this.client.functions
+        this.client
           .embed(interaction)
           .setThumbnail(this.client.user.avatarURL())
           .addFields(

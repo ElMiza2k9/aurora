@@ -9,6 +9,6 @@ export default class GuildCreateEvent extends Event {
 
   async execute(client: AuroraClient, guild: DJS.Guild) {
     if (!guild) return;
-    await client.functions.addGuild(guild.id);
+    await client.addGuild(guild.id);
   }
 }

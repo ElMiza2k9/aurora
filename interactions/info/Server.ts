@@ -16,14 +16,14 @@ export default class ServerCommand extends SubCommand {
     const serverOwner = await guild.fetchOwner();
 
     await interaction.followUp({
-      content: this.client.functions.reply(
+      content: this.client.reply(
         l("commands:info:server:reply", {
           server: `**${escapeMarkdown(guild.name)}**`,
         }),
         ":white_check_mark:"
       ),
       embeds: [
-        this.client.functions
+        this.client
           .embed(interaction)
           .setThumbnail(guild.iconURL())
           .addFields([
@@ -35,7 +35,7 @@ ${l("commands:info:server:fields:common_info:created_by", {
   user: `${serverOwner.user}`,
 })}
 ${l("commands:info:server:fields:common_info:created_at", {
-  timestamp: `${this.client.functions.formatTime(guild.createdTimestamp, "R")}
+  timestamp: `${this.client.formatTime(guild.createdTimestamp, "R")}
 ${l("commands:info:server:fields:common_info:boost_count", {
   boosts: `${guild.premiumSubscriptionCount}`,
   level: `${l(`misc:boost_levels:${guild.premiumTier}`)}`,

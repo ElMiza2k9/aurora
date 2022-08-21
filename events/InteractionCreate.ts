@@ -1,5 +1,4 @@
 import * as DJS from "discord.js";
-import i18next from "i18next";
 import { AuroraClient } from "../structures/AuroraClient";
 import { Event } from "../structures/Event";
 
@@ -8,8 +7,11 @@ export default class InteractionCreateEvent extends Event {
     super(client, "interactionCreate");
   }
 
-  async execute(client: AuroraClient, interaction: DJS.ChatInputCommandInteraction<"cached" | "raw">) {
-    if (!interaction) return;
+  async execute(
+    client: AuroraClient,
+    interaction: DJS.ChatInputCommandInteraction<"cached" | "raw">
+  ) {
+    if (!interaction || !interaction.guild) return;
     if (interaction.type !== DJS.InteractionType.ApplicationCommand) return;
     if (interaction.commandType !== DJS.ApplicationCommandType.ChatInput)
       return;
@@ -18,20 +20,16 @@ export default class InteractionCreateEvent extends Event {
     const command = client.interactions.get(this.getCommand(interaction));
     if (!command) return;
 
-    const dbGuild = await client.functions.getGuild(interaction.guild?.id);
-    const dbUser = await client.functions.getUser(
-      interaction.user?.id,
-      interaction.guild?.id
+    const locale = await client.locales.getLocale(
+      interaction.guild.id,
+      interaction.user.id
     );
-    let locale = (global.l = i18next.getFixedT(
-      dbUser?.locale ?? `${dbGuild?.locale || "en-US"}`
-    ));
 
     try {
       await command.execute(interaction, locale);
     } catch (error) {
       await interaction.followUp({
-        content: client.functions.reply(
+        content: client.reply(
           locale("misc:error", { error: `${error.name}` }),
           ":x:"
         ),

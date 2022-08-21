@@ -30,22 +30,19 @@ export default class UserCommand extends SubCommand {
 
     if (userFlags.has(UserFlags.TeamPseudoUser)) {
       return interaction.followUp({
-        content: this.client.functions.reply(
-          l("commands:info:user:pseudo_user"),
-          ":x:"
-        ),
+        content: this.client.reply(l("commands:info:user:pseudo_user"), ":x:"),
       });
     }
 
     await interaction.followUp({
-      content: this.client.functions.reply(
+      content: this.client.reply(
         l("commands:info:user:reply", {
           user: `**${escapeMarkdown(user.tag)}**`,
         }),
         ":white_check_mark:"
       ),
       embeds: [
-        this.client.functions
+        this.client
           .embed(interaction)
           .setThumbnail(user.avatarURL())
           .addFields([
@@ -54,7 +51,7 @@ export default class UserCommand extends SubCommand {
               value: `
 ${l("commands:info:user:fields:common_info:id", { id: `${user.id}` })}
 ${l("commands:info:user:fields:common_info:created_at", {
-  timestamp: `${this.client.functions.formatTime(user.createdTimestamp, "R")}`,
+  timestamp: `${this.client.formatTime(user.createdTimestamp, "R")}`,
 })}
         `,
             },
@@ -63,7 +60,7 @@ ${l("commands:info:user:fields:common_info:created_at", {
               value: guildMember
                 ? `
 ${l("commands:info:user:fields:server_info:joined_at", {
-  timestamp: `${this.client.functions.formatTime(guildMember.joinedAt, "R")}`,
+  timestamp: `${this.client.formatTime(guildMember.joinedAt, "R")}`,
 })}
 ${l("commands:info:user:fields:server_info:nickname", {
   nickname: `${

@@ -68,10 +68,10 @@ export default class AvatarCommand extends SubCommand {
 
     await interaction.followUp({
       embeds: [
-        this.client.functions
+        this.client
           .embed(interaction)
           .setDescription(
-            this.client.functions.reply(
+            this.client.reply(
               l("commands:info:avatar:reply", {
                 user: `${escapeMarkdown(user.username)}`,
               }),

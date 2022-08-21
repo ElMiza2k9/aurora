@@ -24,7 +24,7 @@ export default class ChannelCreateCommand extends SubCommand {
 
     if (user.id === this.client.user.id || user.id === interaction.user.id) {
       return interaction.followUp({
-        content: this.client.functions.reply(
+        content: this.client.reply(
           l("commands:roleplay:hug:checks:self"),
           ":angry:"
         ),
@@ -34,14 +34,14 @@ export default class ChannelCreateCommand extends SubCommand {
         res.json()
       );
       await interaction.followUp({
-        content: this.client.functions.reply(
+        content: this.client.reply(
           l("commands:roleplay:hug:reply", {
             user: `${user}`,
             author: `${interaction.user}`,
           }),
           ":hugging:"
         ),
-        embeds: [this.client.functions.embed(interaction).setImage(gif.url)],
+        embeds: [this.client.embed(interaction).setImage(gif.url)],
       });
     }
   }

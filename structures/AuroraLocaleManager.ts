@@ -46,8 +46,14 @@ export class AuroraLocaleManager {
     }
   }
 
+  async getLocale(guild_id: Snowflake, user_id: Snowflake) {
+    const dbGuild = await this.client.getGuild(guild_id);
+    const dbUser = await this.client.getUser(user_id, guild_id);
+    return i18next.getFixedT(dbUser?.locale ?? `${dbGuild?.locale || "en-US"}`);
+  }
+
   async updateGuildLocale(guild_id: Snowflake, locale: string) {
-    await this.client.functions.updateGuild(guild_id, { locale: locale });
+    await this.client.updateGuild(guild_id, { locale: locale });
   }
 
   async updateUserLocale(
@@ -55,7 +61,7 @@ export class AuroraLocaleManager {
     guild_id: Snowflake,
     locale: string
   ) {
-    await this.client.functions.updateUser(user_id, guild_id, {
+    await this.client.updateUser(user_id, guild_id, {
       locale: locale,
     });
   }
