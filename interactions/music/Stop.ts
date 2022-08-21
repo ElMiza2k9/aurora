@@ -9,7 +9,7 @@ export default class StopCommand extends SubCommand {
       description: "Stops music playback and destroys a voice connection",
     });
   }
-  async execute(interaction, _l) {
+  async execute(interaction, l) {
     await interaction.deferReply();
     const distubeConnection = await this.client.player.voices.get(
       interaction.guild.id
@@ -23,11 +23,11 @@ export default class StopCommand extends SubCommand {
     }
     await interaction.followUp({
       embeds: [
-        this.client.functions
+        this.client
           .embed(interaction)
           .setDescription(
-            this.client.functions.reply(
-              "Cleared the queue and destroyed the voice connection.",
+            this.client.reply(
+              l("commands:music:stop:stopped"),
               ":stop_button:"
             )
           ),

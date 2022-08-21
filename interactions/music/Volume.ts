@@ -21,7 +21,7 @@ export default class LoopCommand extends SubCommand {
     });
   }
   async execute(interaction) {
-    const isChecked = await interaction.client.functions.checkVoice(
+    const isChecked = await interaction.client.checkVoice(
       interaction,
       true,
       true
@@ -35,10 +35,10 @@ export default class LoopCommand extends SubCommand {
       queue.setVolume(volume);
       interaction.reply({
         embeds: [
-          interaction.client.functions
+          interaction.client
             .embed(interaction)
             .setDescription(
-              interaction.client.functions.reply(
+              interaction.client.reply(
                 `Set the volume to ${queue.volume}%.`,
                 ":white_check_mark:"
               )

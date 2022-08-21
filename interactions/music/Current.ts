@@ -13,7 +13,7 @@ export default class CurrentCommand extends SubCommand {
   async execute(interaction, l) {
     await interaction.deferReply();
     const connection =
-      this.client.functions.client.player.voices.get(interaction.guild.id) ||
+      this.client.player.voices.get(interaction.guild.id) ||
       interaction.guild.members.me.voice;
     const queue = await interaction.client.player.queues.get(
       interaction.guild.id
@@ -22,10 +22,10 @@ export default class CurrentCommand extends SubCommand {
     if (!interaction.member.voice.channel) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:not_in_voice"), ":x:")
+              this.client.reply(l("misc:voice:not_in_voice"), ":x:")
             ),
         ],
       });
@@ -35,30 +35,28 @@ export default class CurrentCommand extends SubCommand {
     ) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
-            .setDescription(
-              this.client.functions.reply(l("misc:voice:in_afk"), ":x:")
-            ),
+            .setDescription(this.client.reply(l("misc:voice:in_afk"), ":x:")),
         ],
       });
     } else if (interaction.member.voice.selfDeaf) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:self_deaf"), ":x:")
+              this.client.reply(l("misc:voice:self_deaf"), ":x:")
             ),
         ],
       });
     } else if (interaction.member.voice.serverDeaf) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:server_deaf"), ":x:")
+              this.client.reply(l("misc:voice:server_deaf"), ":x:")
             ),
         ],
       });
@@ -69,13 +67,10 @@ export default class CurrentCommand extends SubCommand {
     ) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(
-                l("misc:voice:not_same_channel"),
-                ":x:"
-              )
+              this.client.reply(l("misc:voice:not_same_channel"), ":x:")
             ),
         ],
       });
@@ -84,10 +79,10 @@ export default class CurrentCommand extends SubCommand {
     if (!connection) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:no_connection"), ":x:")
+              this.client.reply(l("misc:voice:no_connection"), ":x:")
             ),
         ],
       });
@@ -96,11 +91,9 @@ export default class CurrentCommand extends SubCommand {
     if (!queue) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
-            .setDescription(
-              this.client.functions.reply(l("misc:voice:no_queue"), ":x:")
-            ),
+            .setDescription(this.client.reply(l("misc:voice:no_queue"), ":x:")),
         ],
       });
     }
@@ -108,46 +101,39 @@ export default class CurrentCommand extends SubCommand {
     const song = queue.songs[0];
 
     await interaction.followUp({
-      content: this.client.functions.reply(
-        "Here's some info about the current song:",
-        ":white_check_mark:"
+      content: this.client.reply(
+        l("misc:music:now_playing", { song: escapeMarkdown(`${song.name}`) }),
+        queue.paused ? ":pause_button:" : ":arrow_forward:"
       ),
       embeds: [
-        this.client.functions
+        this.client
           .embed(interaction)
-          .setTitle(escapeMarkdown(song.name as string))
+          .setAuthor({
+            name: song.uploader.name ?? l("misc:unknown"),
+            url: `${song.uploader.url ?? null}`,
+            iconURL: `${song.thumbnail ?? null}`,
+          })
+          .setTitle(escapeMarkdown(`${song.name}`))
           .setURL(song.url)
-          .setThumbnail(song.thumbnail ? song.thumbnail : null)
+          .setThumbnail(`${song.thumbnail}`)
           .addFields([
             {
-              name: "Common info",
-              value: `
-**Duration:** ${
-                song.source === "youtube"
+              name: l("misc:music:duration"),
+              value: `${
+                song.formattedDuration !== "00:00"
                   ? song.formattedDuration
-                  : l("misc:unknown")
-              }
-**Requested by:** ${song.user}
-**Uploaded by:** ${
-                song.uploader.name
-                  ? escapeMarkdown(song.uploader.name)
                   : l("misc:unknown")
               }`,
               inline: true,
             },
             {
-              name: "Details",
-              value: `
-**Views:** ${song.source === "youtube" ? song.views : l("misc:unknown")}
-**Live stream:** ${song.isLive ? l("misc:true") : l("misc:false")}
-**Playlist:** ${
-                song.playlist
-                  ? `${escapeMarkdown(song.playlist.name)} (${
-                      song.playlist.songs.length
-                    } songs)`
-                  : "No playlist"
-              }
-              `,
+              name: l("misc:music:requested_by"),
+              value: `${song.user}`,
+              inline: true,
+            },
+            {
+              name: l("misc:music:volume"),
+              value: `${queue.volume}%`,
               inline: true,
             },
           ]),

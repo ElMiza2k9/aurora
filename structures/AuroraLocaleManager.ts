@@ -26,7 +26,7 @@ export class AuroraLocaleManager {
           })
         )
         .init({
-          ns: ["commands", "events", "misc", "permissions"],
+          ns: ["commands", "misc", "permissions"],
           defaultNS: "commands",
           preload: readdirSync("./locales"),
           fallbackLng: "en-US",

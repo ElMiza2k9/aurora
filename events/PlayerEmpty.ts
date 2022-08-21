@@ -7,12 +7,9 @@ export default class PlayerAddListEvent extends Event {
     super(client, "empty", false, true);
   }
 
-  async execute(client: AuroraClient, queue: Queue) {
+  async execute(client: AuroraClient, queue: Queue, l) {
     queue.textChannel?.send({
-      content: client.functions.reply(
-        "Cleared the queue and destroyed the voice connection due to inactivity.",
-        ":stop_button:"
-      ),
+      content: client.reply(l("misc:music:stopped"), ":stop_button:"),
     });
   }
 }

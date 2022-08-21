@@ -23,10 +23,10 @@ export default class PlayCommand extends SubCommand {
     if (!interaction.member.voice.channel) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:not_in_voice"), ":x:")
+              this.client.reply(l("misc:voice:not_in_voice"), ":x:")
             ),
         ],
       });
@@ -36,30 +36,28 @@ export default class PlayCommand extends SubCommand {
     ) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
-            .setDescription(
-              this.client.functions.reply(l("misc:voice:in_afk"), ":x:")
-            ),
+            .setDescription(this.client.reply(l("misc:voice:in_afk"), ":x:")),
         ],
       });
     } else if (interaction.member.voice.selfDeaf) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:self_deaf"), ":x:")
+              this.client.reply(l("misc:voice:self_deaf"), ":x:")
             ),
         ],
       });
     } else if (interaction.member.voice.serverDeaf) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:server_deaf"), ":x:")
+              this.client.reply(l("misc:voice:server_deaf"), ":x:")
             ),
         ],
       });
@@ -70,13 +68,10 @@ export default class PlayCommand extends SubCommand {
     ) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(
-                l("misc:voice:not_same_channel"),
-                ":x:"
-              )
+              this.client.reply(l("misc:voice:not_same_channel"), ":x:")
             ),
         ],
       });

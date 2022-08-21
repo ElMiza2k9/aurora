@@ -12,7 +12,7 @@ export default class PauseCommand extends SubCommand {
   async execute(interaction, l) {
     await interaction.deferReply();
     const connection =
-      this.client.functions.client.player.voices.get(interaction.guild.id) ||
+      this.client.player.voices.get(interaction.guild.id) ||
       interaction.guild.members.me.voice;
     const queue = await interaction.client.player.queues.get(
       interaction.guild.id
@@ -21,10 +21,10 @@ export default class PauseCommand extends SubCommand {
     if (!interaction.member.voice.channel) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:not_in_voice"), ":x:")
+              this.client.reply(l("misc:voice:not_in_voice"), ":x:")
             ),
         ],
       });
@@ -34,30 +34,28 @@ export default class PauseCommand extends SubCommand {
     ) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
-            .setDescription(
-              this.client.functions.reply(l("misc:voice:in_afk"), ":x:")
-            ),
+            .setDescription(this.client.reply(l("misc:voice:in_afk"), ":x:")),
         ],
       });
     } else if (interaction.member.voice.selfDeaf) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:self_deaf"), ":x:")
+              this.client.reply(l("misc:voice:self_deaf"), ":x:")
             ),
         ],
       });
     } else if (interaction.member.voice.serverDeaf) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:server_deaf"), ":x:")
+              this.client.reply(l("misc:voice:server_deaf"), ":x:")
             ),
         ],
       });
@@ -68,13 +66,10 @@ export default class PauseCommand extends SubCommand {
     ) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(
-                l("misc:voice:not_same_channel"),
-                ":x:"
-              )
+              this.client.reply(l("misc:voice:not_same_channel"), ":x:")
             ),
         ],
       });
@@ -83,10 +78,10 @@ export default class PauseCommand extends SubCommand {
     if (!connection) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:no_connection"), ":x:")
+              this.client.reply(l("misc:voice:no_connection"), ":x:")
             ),
         ],
       });
@@ -95,11 +90,9 @@ export default class PauseCommand extends SubCommand {
     if (!queue) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
-            .setDescription(
-              this.client.functions.reply(l("misc:voice:no_queue"), ":x:")
-            ),
+            .setDescription(this.client.reply(l("misc:voice:no_queue"), ":x:")),
         ],
       });
     }
@@ -107,11 +100,9 @@ export default class PauseCommand extends SubCommand {
     queue?.pause();
     await interaction.followUp({
       embeds: [
-        this.client.functions
+        this.client
           .embed(interaction)
-          .setDescription(
-            this.client.functions.reply(l("misc:true"), ":pause_button:")
-          ),
+          .setDescription(this.client.reply(l("commands:music:pause:paused"), ":pause_button:")),
       ],
     });
   }

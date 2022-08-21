@@ -13,7 +13,7 @@ export default class QueueCommand extends SubCommand {
   async execute(interaction, l) {
     await interaction.deferReply();
     const connection =
-      this.client.functions.client.player.voices.get(interaction.guild.id) ||
+      this.client.player.voices.get(interaction.guild.id) ||
       interaction.guild.members.me.voice;
     const queue = await interaction.client.player.queues.get(
       interaction.guild.id
@@ -22,10 +22,10 @@ export default class QueueCommand extends SubCommand {
     if (!interaction.member.voice.channel) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:not_in_voice"), ":x:")
+              this.client.reply(l("misc:voice:not_in_voice"), ":x:")
             ),
         ],
       });
@@ -35,30 +35,28 @@ export default class QueueCommand extends SubCommand {
     ) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
-            .setDescription(
-              this.client.functions.reply(l("misc:voice:in_afk"), ":x:")
-            ),
+            .setDescription(this.client.reply(l("misc:voice:in_afk"), ":x:")),
         ],
       });
     } else if (interaction.member.voice.selfDeaf) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:self_deaf"), ":x:")
+              this.client.reply(l("misc:voice:self_deaf"), ":x:")
             ),
         ],
       });
     } else if (interaction.member.voice.serverDeaf) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:server_deaf"), ":x:")
+              this.client.reply(l("misc:voice:server_deaf"), ":x:")
             ),
         ],
       });
@@ -69,13 +67,10 @@ export default class QueueCommand extends SubCommand {
     ) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(
-                l("misc:voice:not_same_channel"),
-                ":x:"
-              )
+              this.client.reply(l("misc:voice:not_same_channel"), ":x:")
             ),
         ],
       });
@@ -84,10 +79,10 @@ export default class QueueCommand extends SubCommand {
     if (!connection) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
             .setDescription(
-              this.client.functions.reply(l("misc:voice:no_connection"), ":x:")
+              this.client.reply(l("misc:voice:no_connection"), ":x:")
             ),
         ],
       });
@@ -96,23 +91,15 @@ export default class QueueCommand extends SubCommand {
     if (!queue) {
       return interaction.followUp({
         embeds: [
-          this.client.functions
+          this.client
             .embed(interaction)
-            .setDescription(
-              this.client.functions.reply(l("misc:voice:no_queue"), ":x:")
-            ),
+            .setDescription(this.client.reply(l("misc:voice:no_queue"), ":x:")),
         ],
       });
     }
 
-    const loopModes = {
-      0: "Disabled",
-      1: "Current song",
-      2: "Entire queue",
-    };
-
     await interaction.followUp({
-      content: `${this.client.functions.reply(
+      content: `${this.client.reply(
         `Here's the queue for **${escapeMarkdown(interaction.guild.name)}** (${
           queue.songs.length > 11
             ? `1-10/${queue.songs.length}`
@@ -121,37 +108,38 @@ export default class QueueCommand extends SubCommand {
         queue.paused ? ":pause_button:" : ":arrow_forward:"
       )}`,
       embeds: [
-        this.client.functions.embed(interaction).addFields([
+        this.client.embed(interaction).addFields([
           {
-            name: "Now playing",
-            value: `**[${escapeMarkdown(queue.songs[0].name as string)}](${
+            name: l("commands:music:queue:fields:now_playing"),
+            value: `**[${escapeMarkdown(`${queue.songs[0].name}`)}](${
               queue.songs[0].url
             })** \`[${queue.songs[0].formattedDuration}]\``,
           },
           {
-            name: "Up next",
+            name: l("commands:music:queue:fields:up_next:name"),
             value:
               queue.songs.length > 1
                 ? queue.songs
                     .slice(1)
                     .map((song, pos) => {
                       return `#${pos + 1}. **[${escapeMarkdown(
-                        song.name as string
+                        `${song.name}`
                       )}](${song.url})** \`[${song.formattedDuration}]\``;
                     })
                     .slice(0, 10)
                     .join("\n")
-                : "Nothing yet...",
+                : l("commands:music:queue:fields:up_next:nothing"),
           },
           {
-            name: "Queue length",
+            name: l("commands:music:queue:fields:queue_length"),
             value: queue.formattedDuration,
             inline: true,
           },
-          { name: "Volume", value: `${queue.volume}%`, inline: true },
+          {             name: l("commands:music:queue:fields:volume"),
+          value: `${queue.volume}%`, inline: true },
           {
-            name: "Loop mode",
-            value: loopModes[queue.repeatMode],
+            name: l("commands:music:queue:fields:loop_mode"),
+            value: l(`misc:loop_modes:${queue.repeatMode}`),
             inline: true,
           },
         ]),

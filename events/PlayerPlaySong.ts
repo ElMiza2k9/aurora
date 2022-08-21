@@ -8,44 +8,46 @@ export default class PlayerPlaySongEvent extends Event {
     super(client, "playSong", false, true);
   }
 
-  async execute(client: AuroraClient, _queue: Queue, song: Song<any>, l) {
+  async execute(client: AuroraClient, queue: Queue, song: Song<any>) {
+    const l = await client.locales.getLocale(
+      song.metadata.i.guild.id,
+      song.metadata.i.user.id
+    );
+
     song.metadata.i.followUp({
-      content: client.functions.reply(
-        `Started playing **${escapeMarkdown(song.name as string)}**.`,
+      content: client.reply(
+        l("misc:music:now_playing", { song: escapeMarkdown(`${song.name}`) }),
         ":arrow_forward:"
       ),
       embeds: [
-        song.metadata.i.client.functions
+        client
           .embed(song.metadata.i)
-          .setTitle(escapeMarkdown(song.name as string))
+          .setAuthor({
+            name: song.uploader.name ?? l("misc:unknown"),
+            url: `${song.uploader.url ?? null}`,
+            iconURL: `${song.thumbnail ?? null}`,
+          })
+          .setTitle(escapeMarkdown(`${song.name}`))
           .setURL(song.url)
-          .setThumbnail(song.thumbnail)
+          .setThumbnail(`${song.thumbnail}`)
           .addFields([
             {
-              name: "Common info",
-              value: `
-**Duration:** ${song.duration != 0 ? song.formattedDuration : l("misc:unknown")}
-**Requested by:** ${song.user}
-**Uploaded by:** ${
-                song.uploader.name
-                  ? escapeMarkdown(song.uploader.name)
+              name: l("misc:music:duration"),
+              value: `${
+                song.formattedDuration !== "00:00"
+                  ? song.formattedDuration
                   : l("misc:unknown")
               }`,
               inline: true,
             },
             {
-              name: "Details",
-              value: `
-**Views:** ${song.views != 0 ? song.views : l("misc:unknown")}
-**Live stream:** ${song.isLive ? l("misc:true") : l("misc:false")}
-**Playlist:** ${
-                song.playlist
-                  ? `${escapeMarkdown(song.playlist.name)} (${
-                      song.playlist.songs.length
-                    } songs)`
-                  : "No playlist"
-              }
-                  `,
+              name: l("misc:music:requested_by"),
+              value: `${song.user}`,
+              inline: true,
+            },
+            {
+              name: l("misc:music:volume"),
+              value: `${queue.volume}%`,
               inline: true,
             },
           ]),
