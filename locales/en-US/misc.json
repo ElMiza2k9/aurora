@@ -24,5 +24,10 @@
   "owner": {
     "empty_list": "Owners list is empty, please check your config file.",
     "not_included": "You're not included in owners list."
+  },
+  "loop_modes": {
+    "0": "Disabled",
+    "1": "Current song",
+    "2": "Entire queue"
   }
 }
