@@ -19,10 +19,7 @@ export default class PlayerErrorEvent extends Event {
       queue!.songs[0].user!.id
     );
     channel.send({
-      content: client.reply(
-        l("misc:error", { error: `${error.name}` }),
-        ":x:"
-      ),
+      content: client.reply(l("misc:error", { error: `${error.name}` }), ":x:"),
     });
     console.log(`[error] ${error?.stack}`);
   }

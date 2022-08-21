@@ -217,4 +217,75 @@ export class AuroraClient extends Client<true> {
       console.log(error);
     }
   }
+
+  async vc(
+    interaction: any,
+    locale: any,
+    checkConnection?: boolean,
+    checkQueue?: boolean,
+    checkLast?: boolean
+  ) {
+    const connection =
+      this.player.voices.get(interaction.guild.id) ||
+      interaction.guild.members.me!.voice;
+    const queue = await interaction.client.player.queues.get(
+      interaction.guild.id
+    );
+
+    if (!interaction.member.voice.channel) {
+      return interaction.followUp({
+        content: this.reply(locale("misc:voice:not_in_voice"), ":x:"),
+      });
+    } else if (
+      interaction.guild.afkChannel &&
+      interaction.member.voice.channel.id === interaction.guild.afkChannel.id
+    ) {
+      return interaction.followUp({
+        content: this.reply(locale("misc:voice:in_afk"), ":x:"),
+      });
+    } else if (interaction.member.voice.selfDeaf) {
+      return interaction.followUp({
+        content: this.reply(locale("misc:voice:self_deaf"), ":x:"),
+      });
+    } else if (interaction.member.voice.serverDeaf) {
+      return interaction.followUp({
+        content: this.reply(locale("misc:voice:server_deaf"), ":x:"),
+      });
+    } else if (
+      interaction.client.voice.channel &&
+      interaction.client.voice.channel.id !==
+        interaction.member.voice.channel.id
+    ) {
+      return interaction.followUp({
+        content: this.reply(locale("misc:voice:not_same_channel"), ":x:"),
+      });
+    }
+
+    if (checkConnection) {
+      if (!connection) {
+        return interaction.followUp({
+          content: this.reply(locale("misc:voice:no_connection"), ":x:"),
+        });
+      }
+    }
+    if (checkQueue) {
+      if (!queue) {
+        return interaction.followUp({
+          content: this.reply(locale("misc:voice:no_queue"), ":x:"),
+        });
+      }
+
+      if (checkLast) {
+        if (!queue || queue.songs.length === 1) {
+          return interaction.followUp({
+            content: this.reply(
+              locale("misc:voice:last_song", { cmd: `/music stop` }),
+              ":x:"
+            ),
+          });
+        }
+      }
+      return true;
+    }
+  }
 }

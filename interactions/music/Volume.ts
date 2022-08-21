@@ -20,30 +20,20 @@ export default class LoopCommand extends SubCommand {
       ],
     });
   }
-  async execute(interaction) {
-    const isChecked = await interaction.client.checkVoice(
-      interaction,
-      true,
-      true
-    );
+  async execute(interaction, l) {
+    const checked = await this.client.vc(interaction, l, true, true);
 
-    if (isChecked === true) {
+    if (checked === true) {
       const queue = await interaction.client.player.queues.get(
         interaction.guild.id
       );
       const volume = await interaction.options.getInteger("volume");
       queue.setVolume(volume);
       interaction.reply({
-        embeds: [
-          interaction.client
-            .embed(interaction)
-            .setDescription(
-              interaction.client.reply(
-                `Set the volume to ${queue.volume}%.`,
-                ":white_check_mark:"
-              )
-            ),
-        ],
+        content: interaction.client.reply(
+          l("commands:music:volume:changed", { volume: `${queue.volume}%` }),
+          ":white_check_mark:"
+        ),
       });
     }
   }
