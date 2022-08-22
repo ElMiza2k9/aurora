@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType } from "discord.js";
+import { ApplicationCommandOptionType, PermissionFlagsBits } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
@@ -8,6 +8,7 @@ export default class PlayCommand extends SubCommand {
       name: "play",
       topName: "music",
       description: "Play a song",
+      client_perms: [PermissionFlagsBits.Connect, PermissionFlagsBits.Speak],
       options: [
         {
           description: "The URL or query to the song",
