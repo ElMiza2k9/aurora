@@ -18,7 +18,7 @@ export default class AboutCommand extends SubCommand {
     await interaction.followUp({
       content: this.client.reply(
         l("commands:info:about:reply"),
-        ":white_check_mark:"
+        ":information_source:"
       ),
       embeds: [
         this.client

@@ -75,7 +75,7 @@ export default class AvatarCommand extends SubCommand {
               l("commands:info:avatar:reply", {
                 user: `${escapeMarkdown(user.username)}`,
               }),
-              ":white_check_mark:"
+              ":frame_photo:"
             )
           )
           .setImage(avatar),

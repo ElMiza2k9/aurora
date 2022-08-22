@@ -39,7 +39,7 @@ export default class UserCommand extends SubCommand {
         l("commands:info:user:reply", {
           user: `**${escapeMarkdown(user.tag)}**`,
         }),
-        ":white_check_mark:"
+        ":bust_in_silhouette:"
       ),
       embeds: [
         this.client

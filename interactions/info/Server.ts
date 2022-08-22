@@ -20,7 +20,7 @@ export default class ServerCommand extends SubCommand {
         l("commands:info:server:reply", {
           server: `**${escapeMarkdown(guild.name)}**`,
         }),
-        ":white_check_mark:"
+        ":busts_in_silhouette:"
       ),
       embeds: [
         this.client
