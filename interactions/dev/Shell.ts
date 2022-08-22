@@ -89,9 +89,7 @@ export default class ShellCommand extends SubCommand {
         embeds: [
           this.client
             .embed(interaction)
-            .setDescription(
-              this.client.reply(`\`\`\`sh\n${error?.stack}\`\`\``, ":x:")
-            ),
+            .setDescription(`\`\`\`sh\n${error?.stack}\`\`\``)
         ],
       });
     }

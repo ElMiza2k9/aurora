@@ -87,9 +87,7 @@ export default class EvalCommand extends SubCommand {
         embeds: [
           this.client
             .embed(interaction)
-            .setDescription(
-              this.client.reply(`\`\`\`js\n${error?.stack}\`\`\``, ":x:")
-            ),
+            .setDescription(`\`\`\`js\n${error?.stack}\`\`\``)
         ],
       });
     }
