@@ -16,7 +16,9 @@ export default class PlayerPlaySongEvent extends Event {
 
     song.metadata.i.followUp({
       content: client.reply(
-        l("misc:music:now_playing", { song: escapeMarkdown(`${song.name}`) }),
+        l("misc:music:now_playing", {
+          song: `**${escapeMarkdown(`${song.name}`)}**`,
+        }),
         ":arrow_forward:"
       ),
       embeds: [

@@ -17,7 +17,7 @@ export default class PlayerAddListEvent extends Event {
     playlist.metadata.i.followUp({
       content: client.reply(
         l("misc:music:playlist_added", {
-          playlist: escapeMarkdown(`${playlist.name}`),
+          playlist: `**${escapeMarkdown(`${playlist.name}`)}`,
           songs: `${playlist.songs.length}`,
         }),
         ":white_check_mark:"

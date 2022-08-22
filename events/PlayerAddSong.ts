@@ -16,7 +16,9 @@ export default class PlayerAddSongEvent extends Event {
 
     song.metadata.i.followUp({
       content: client.reply(
-        l("misc:music:song_added", { song: escapeMarkdown(`${song.name}`) }),
+        l("misc:music:song_added", {
+          song: `**${escapeMarkdown(`${song.name}`)}**`,
+        }),
         ":white_check_mark:"
       ),
       embeds: [
