@@ -285,7 +285,7 @@ export class AuroraClient extends Client<true> {
         if (!queue || queue.songs.length === 1) {
           return interaction.followUp({
             content: this.reply(
-              locale("misc:voice:last_song", { cmd: `/music stop` }),
+              locale("misc:voice:last_song", { cmd: `\`/music stop\`` }),
               ":x:"
             ),
           });

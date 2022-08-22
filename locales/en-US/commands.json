@@ -73,6 +73,60 @@
       }
     }
   },
+  "music": {
+    "loop": {
+      "enabled": "Loop mode set to {{mode}}.",
+      "disabled": "Disabled player looping."
+    },
+    "pause": {
+      "paused": "Paused the playback."
+    },
+    "queue": {
+      "reply": "Here's the queue of {{server}}:",
+      "fields": {
+        "now_playing": "Now playing",
+        "up_next": {
+          "name": "Up next",
+          "nothing": "Nothing yet..."
+        },
+        "queue_length": "Queue length",
+        "volume": "Volume",
+        "loop_mode": "Loop mode"
+      }
+    },
+    "resume": {
+      "resumed": "Resumed the playback."
+    },
+    "skip": {
+      "skipped": "Skipped {{song}}."
+    },
+    "stop": {
+      "stopped": "Stopped music playback and destroyed the voice connection."
+    },
+    "volume": {
+      "changed": "Set the player volume to {{volume}}."
+    }
+  },
+  "opts": {
+    "locale": {
+      "server": {
+        "reply": "Done - the new locale on this server is {{locale}}."
+      },
+      "user": {
+        "reply": "Done - your new personal locale is {{locale}}."
+      }
+    },
+    "tempvoice": {
+      "create": {
+        "already_trigger": "{{channel}} already has a trigger. A voice channel can't have more than one trigger attached to it.",
+        "created": "Successfully created a voice trigger for {{channel}}."
+      },
+      "delete": {
+        "no_trigger": "{{channel}} has no trigger. If you want to attach one, use {{cmd}} first.",
+        "deleted": "Successfully removed a trigger from {{channel}}."
+      }
+    }
+  },
   "roleplay": {
     "hug": {
       "checks": {

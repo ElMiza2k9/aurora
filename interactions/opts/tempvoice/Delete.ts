@@ -36,6 +36,7 @@ export default class OptsTempvoiceDeleteCommand extends SubCommand {
         content: this.client.reply(
           l("commands:opts:tempvoice:delete:no_trigger", {
             channel: `${channel}`,
+            cmd: `\`/opts tempvoice create\``
           }),
           ":x:"
         ),
