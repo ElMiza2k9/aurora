@@ -27,7 +27,7 @@ export class AuroraTempManager extends TempChannelsManager {
     const tempvoices = await this.client.db.tempVoice.findMany();
 
     tempvoices.forEach((t) => {
-      if (!this.client.channels.cache.get(t.channel_id)) return;
+      if (!this.client.channels.fetch(t.channel_id)) return this.delete(t.channel_id);
       this.registerChannel(t.channel_id, {
         childCategory: t.category_id,
         childAutoDeleteIfEmpty: t.delete_if_empty,
