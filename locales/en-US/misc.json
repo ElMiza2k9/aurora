@@ -31,5 +31,13 @@
     "2": "Entire queue"
   },
   "client_need_perms": "I'm missing permissions to execute this command:\n{{perms}}",
-  "user_need_perms": "You're missing permissions to execute this command:\n{{perms}}"
+  "user_need_perms": "You're missing permissions to execute this command:\n{{perms}}",
+  "music": {
+    "duration": "Duration",
+    "now_playing": "Now playing {{song}}.",
+    "playlist_added": "Added {{playlist}} ({{songs}} songs) to the queue.",
+    "requested_by": "Requested by",
+    "song_added": "Added {{song}} to the queue.",
+    "volume": "Volume"
+  }
 }
