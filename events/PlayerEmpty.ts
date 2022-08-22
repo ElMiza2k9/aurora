@@ -9,7 +9,7 @@ export default class PlayerAddListEvent extends Event {
 
   async execute(client: AuroraClient, queue: Queue, l) {
     queue.textChannel?.send({
-      content: client.reply(l("misc:music:stopped"), ":stop_button:"),
+      content: client.reply(l("misc:music:stopped"), ":pensive:"),
     });
   }
 }
