@@ -38,6 +38,7 @@
     "playlist_added": "Added {{playlist}} ({{songs}} songs) to the queue.",
     "requested_by": "Requested by",
     "song_added": "Added {{song}} to the queue.",
+    "stopped": "Destroyed the voice connection because I was left all alone.",
     "volume": "Volume"
   }
 }
