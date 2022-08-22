@@ -10,6 +10,7 @@ export default class ResumeCommand extends SubCommand {
     });
   }
   async execute(interaction, l) {
+    await interaction.deferReply();
     const checked = await this.client.vc(interaction, l, true, true);
 
     if (checked === true) {
