@@ -31,11 +31,13 @@ export default class OptsTempvoiceDeleteCommand extends SubCommand {
 
     const dbChannel = await this.client.tempvoices.find(channel.id);
 
-    if(!dbChannel) { 
+    if (dbChannel.length === 0) {
       return interaction.followUp({
         content: this.client.reply(
-          l("commands:opts:tempvoice:delete:no_trigger", { channel: `${channel}` }),
-          ":white_check_mark:"
+          l("commands:opts:tempvoice:delete:no_trigger", {
+            channel: `${channel}`,
+          }),
+          ":x:"
         ),
       });
     }

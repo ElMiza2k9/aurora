@@ -75,15 +75,16 @@ export default class OptsTempvoiceCreateCommand extends SubCommand {
 
     const dbChannel = await this.client.tempvoices.find(channel.id);
 
-    if(!dbChannel) { 
+    if (dbChannel.length > 0) {
       return interaction.followUp({
         content: this.client.reply(
-          l("commands:opts:tempvoice:create:already_trigger", { channel: `${channel}` }),
-          ":white_check_mark:"
+          l("commands:opts:tempvoice:create:already_trigger", {
+            channel: `${channel}`,
+          }),
+          ":x:"
         ),
       });
     }
-
 
     await this.client.tempvoices.create({
       guild_id: interaction.guild.id,
