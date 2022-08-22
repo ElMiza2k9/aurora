@@ -80,10 +80,7 @@ export default class EvalCommand extends SubCommand {
       });
     } catch (error) {
       return interaction.followUp({
-        content: this.client.reply(
-          l("commands:dev:eval:error"),
-          ":x:"
-        ),
+        content: this.client.reply(l("commands:dev:eval:error"), ":x:"),
         embeds: [
           this.client
             .embed(interaction)

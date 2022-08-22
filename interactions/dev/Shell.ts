@@ -82,10 +82,7 @@ export default class ShellCommand extends SubCommand {
       });
     } catch (error) {
       return interaction.followUp({
-        content: this.client.reply(
-          l("commands:dev:shell:error"),
-          ":x:"
-        ),
+        content: this.client.reply(l("commands:dev:shell:error"), ":x:"),
         embeds: [
           this.client
             .embed(interaction)
