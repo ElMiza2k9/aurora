@@ -1,4 +1,10 @@
-import { Client, Collection } from "discord.js";
+import {
+  Client,
+  Collection,
+  CommandInteraction,
+  PermissionFlagsBits,
+  TextChannel,
+} from "discord.js";
 import DistubePlayer from "distube";
 import { AuroraClientOptions } from "./AuroraClientOptions";
 import { Command } from "./Command";
@@ -286,6 +292,75 @@ export class AuroraClient extends Client<true> {
         }
       }
       return true;
+    }
+  }
+
+  clientPerms(
+    permissions: bigint[],
+    interaction: CommandInteraction,
+    locale: any
+  ) {
+    const neededPerms: bigint[] = [];
+
+    permissions.forEach((perm) => {
+      if (
+        !(interaction.channel as TextChannel)
+          .permissionsFor(interaction.guild!.members.me!)
+          .has(perm)
+      ) {
+        neededPerms.push(perm);
+      }
+    });
+    if (neededPerms.length > 0) {
+      return locale("misc:member_need_perms", {
+        perms: neededPerms
+          .map((p) => {
+            const perms: string[] = [];
+            Object.keys(PermissionFlagsBits).map((key) => {
+              if (PermissionFlagsBits[key] === p) {
+                perms.push(`* ${locale(`permissions:${key}`)}`);
+              }
+            });
+
+            return perms;
+          })
+          .join("\n"),
+      });
+    }
+  }
+
+  userPerms(
+    permissions: bigint[],
+    interaction: CommandInteraction,
+    locale: any
+  ) {
+    const neededPerms: bigint[] = [];
+
+    permissions.forEach((perm) => {
+      if (
+        !(interaction.channel as TextChannel)
+          .permissionsFor(interaction.member as any)
+          .has(perm)
+      ) {
+        neededPerms.push(perm);
+      }
+    });
+
+    if (neededPerms.length > 0) {
+      return locale("misc:user_need_perms", {
+        perms: neededPerms
+          .map((p) => {
+            const perms: string[] = [];
+            Object.keys(PermissionFlagsBits).map((key) => {
+              if (PermissionFlagsBits[key] === p) {
+                perms.push(`* ${locale(`permissions:${key}`)}`);
+              }
+            });
+
+            return perms;
+          })
+          .join("\n"),
+      });
     }
   }
 }

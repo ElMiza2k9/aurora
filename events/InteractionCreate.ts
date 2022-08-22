@@ -25,6 +25,34 @@ export default class InteractionCreateEvent extends Event {
       interaction.user.id
     );
 
+    if (command.options.client_perms) {
+      const clientPerms = this.client.clientPerms(
+        command.options.client_perms,
+        interaction,
+        locale
+      );
+
+      if (clientPerms) {
+        return interaction.reply({
+          content: this.client.reply(clientPerms, ":x:"),
+        });
+      }
+    }
+
+    if (command.options.user_perms) {
+      const userPerms = this.client.userPerms(
+        command.options.user_perms,
+        interaction,
+        locale
+      );
+
+      if (userPerms) {
+        return interaction.reply({
+          content: this.client.reply(userPerms, ":x:"),
+        });
+      }
+    }
+
     try {
       await command.execute(interaction, locale);
     } catch (error) {

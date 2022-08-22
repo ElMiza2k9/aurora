@@ -4,8 +4,8 @@ import { AuroraClient } from "./AuroraClient";
 export interface CommandOptions {
   name: string;
   description: string;
-  client_perms?: Array<DJS.PermissionsString>;
-  user_perms?: Array<DJS.PermissionsString>;
+  client_perms?: bigint[];
+  user_perms?: bigint[];
   options?: DJS.ApplicationCommandOptionData[];
 }
 
@@ -14,8 +14,8 @@ export abstract class Command<
 > {
   protected _options: TOptions;
   name: string;
-  client_perms?: Array<DJS.PermissionsString>;
-  user_perms?: Array<DJS.PermissionsString>;
+  client_perms?: bigint[];
+  user_perms?: bigint[];
   client: AuroraClient;
 
   constructor(client: AuroraClient, options: TOptions) {

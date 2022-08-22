@@ -29,5 +29,7 @@
     "0": "Disabled",
     "1": "Current song",
     "2": "Entire queue"
-  }
+  },
+  "client_need_perms": "I'm missing permissions to execute this command:\n{{perms}}",
+  "user_need_perms": "You're missing permissions to execute this command:\n{{perms}}"
 }

@@ -49,6 +49,9 @@ export class AuroraLocaleManager {
   async getLocale(guild_id: Snowflake, user_id: Snowflake) {
     const dbGuild = await this.client.getGuild(guild_id);
     const dbUser = await this.client.getUser(user_id, guild_id);
+    if (!dbUser) {
+      this.client.addUser(user_id, guild_id);
+    }
     return i18next.getFixedT(dbUser?.locale ?? `${dbGuild?.locale || "en-US"}`);
   }
 

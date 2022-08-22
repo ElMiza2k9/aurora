@@ -1,14 +1,15 @@
-import { ApplicationCommandOptionType } from "discord.js";
+import { ApplicationCommandOptionType, PermissionFlagsBits } from "discord.js";
 import { AuroraClient } from "../../../structures/AuroraClient";
 import { SubCommand } from "../../../structures/SubCommand";
 
 export default class OptsLocaleUserCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
-      name: "locale",
-      groupName: "user",
+      name: "server",
+      groupName: "locale",
       topName: "opts",
-      description: "Manage your personal locale",
+      description: "Manage this server's locale",
+      user_perms: [PermissionFlagsBits.ManageGuild],
       options: [
         {
           name: "locale",
@@ -23,20 +24,19 @@ export default class OptsLocaleUserCommand extends SubCommand {
       ],
     });
   }
-  async execute(interaction) {
+  async execute(interaction, l) {
     await interaction.deferReply();
 
-    await this.client.locales.updateUserLocale(
-      interaction.user.id,
+    await this.client.locales.updateGuildLocale(
       interaction.guild.id,
       interaction.options.getString("locale")
     );
 
     await interaction.followUp({
       content: this.client.reply(
-        `Done - your personal locale is now ${interaction.options.getString(
-          "locale"
-        )}!`,
+        l("commands:opts:locale:server:reply", {
+          locale: `${interaction.options.getString("locale")}`,
+        }),
         ":globe_with_meridians:"
       ),
     });
