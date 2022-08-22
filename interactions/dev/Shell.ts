@@ -84,7 +84,7 @@ export default class ShellCommand extends SubCommand {
       return interaction.followUp({
         content: this.client.reply(
           l("commands:dev:shell:error"),
-          ":white_check_mark:"
+          ":x:"
         ),
         embeds: [
           this.client

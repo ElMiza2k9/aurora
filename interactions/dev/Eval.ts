@@ -82,7 +82,7 @@ export default class EvalCommand extends SubCommand {
       return interaction.followUp({
         content: this.client.reply(
           l("commands:dev:eval:error"),
-          ":white_check_mark:"
+          ":x:"
         ),
         embeds: [
           this.client
