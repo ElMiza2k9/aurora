@@ -65,6 +65,12 @@ export class AuroraTempManager extends TempChannelsManager {
     });
   }
 
+  async find(channel_id: Snowflake) {
+    return this.client.db.tempVoice.findMany({
+      where: { channel_id: channel_id },
+    });
+  }
+
   async delete(channel_id: Snowflake) {
     await this.client.tempvoices.unregisterChannel(channel_id);
     await this.client.db.tempVoice.deleteMany({
