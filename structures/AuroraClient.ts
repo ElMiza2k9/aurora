@@ -269,28 +269,29 @@ export class AuroraClient extends Client<true> {
         return interaction.followUp({
           content: this.reply(locale("misc:voice:no_connection"), ":x:"),
         });
-      } else return true;
+      }
     }
 
+    const queue = await interaction.client.player.queues.get(
+      interaction.guild.id
+    );
+
     if (checkQueue) {
-      const queue = await interaction.client.player.queues.get(
-        interaction.guild.id
-      );
       if (!queue) {
         return interaction.followUp({
           content: this.reply(locale("misc:voice:no_queue"), ":x:"),
         });
       }
+    }
 
-      if (checkLast) {
-        if (!queue || queue.songs.length === 1) {
-          return interaction.followUp({
-            content: this.reply(
-              locale("misc:voice:last_song", { cmd: `\`/music stop\`` }),
-              ":x:"
-            ),
-          });
-        }
+    if (checkLast) {
+      if (!queue || queue.songs.length === 1) {
+        return interaction.followUp({
+          content: this.reply(
+            locale("misc:voice:last_song", { cmd: `\`/music stop\`` }),
+            ":x:"
+          ),
+        });
       }
     }
     return true;
