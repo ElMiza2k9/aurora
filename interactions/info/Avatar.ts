@@ -67,18 +67,16 @@ export default class AvatarCommand extends SubCommand {
     });
 
     await interaction.followUp({
+      content: this.client.reply(
+        l("commands:info:avatar:reply", {
+          user: `**${escapeMarkdown(user.tag)}**`,
+        }),
+        ":frame_photo:"
+      ),
       embeds: [
         this.client
           .embed(interaction)
-          .setDescription(
-            this.client.reply(
-              l("commands:info:avatar:reply", {
-                user: `${escapeMarkdown(user.username)}`,
-              }),
-              ":frame_photo:"
-            )
-          )
-          .setImage(avatar),
+          .setImage(avatar)
       ],
     });
   }
