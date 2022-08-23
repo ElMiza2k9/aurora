@@ -50,7 +50,7 @@ export default class QueueCommand extends SubCommand {
                           song.duration !== 0
                             ? song.formattedDuration
                             : l("misc:unknown")
-                        } / ${song.user}}`;
+                        } / ${song.user}`;
                       })
                       .slice(0, 10)
                       .join("\n")
@@ -58,7 +58,11 @@ export default class QueueCommand extends SubCommand {
             },
             {
               name: l("commands:music:queue:fields:queue_length"),
-              value: queue.formattedDuration,
+              value: `${
+                queue.duration !== 0
+                  ? queue.formattedDuration
+                  : l("misc:unknown")
+              }`,
               inline: true,
             },
             {
