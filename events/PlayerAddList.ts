@@ -27,12 +27,12 @@ export default class PlayerAddListEvent extends Event {
           .embed(playlist.metadata.i)
           .setTitle(escapeMarkdown(playlist.name))
           .setURL(`${playlist.url}`)
-          .setThumbnail(`${playlist.thumbnail}`)
+          .setThumbnail(playlist.thumbnail ?? null)
           .addFields([
             {
               name: "Duration",
               value:
-                playlist.duration != 0
+                playlist.duration !== 0
                   ? playlist.formattedDuration
                   : l("misc:unknown"),
               inline: true,

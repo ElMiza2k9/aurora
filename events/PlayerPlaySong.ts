@@ -31,14 +31,12 @@ export default class PlayerPlaySongEvent extends Event {
           })
           .setTitle(escapeMarkdown(`${song.name}`))
           .setURL(song.url)
-          .setThumbnail(`${song.thumbnail}`)
+          .setThumbnail(song.thumbnail ?? null)
           .addFields([
             {
               name: l("misc:music:duration"),
               value: `${
-                song.formattedDuration !== "00:00"
-                  ? song.formattedDuration
-                  : l("misc:unknown")
+                song.duration !== 0 ? song.formattedDuration : l("misc:unknown")
               }`,
               inline: true,
             },
