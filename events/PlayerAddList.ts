@@ -17,7 +17,7 @@ export default class PlayerAddListEvent extends Event {
     playlist.metadata.i.followUp({
       content: client.reply(
         l("misc:music:playlist_added", {
-          playlist: `**${escapeMarkdown(`${playlist.name}`)}`,
+          playlist: `**${escapeMarkdown(`${playlist.name}`)}**`,
           songs: `${playlist.songs.length}`,
         }),
         ":white_check_mark:"
@@ -48,7 +48,7 @@ export default class PlayerAddListEvent extends Event {
                 .map((song, pos) => {
                   return `#${pos + 1}. **${escapeMarkdown(
                     `${song.name}`
-                  )}** \`[${song.formattedDuration}]\``;
+                  )}** / ${song.formattedDuration}`;
                 })
                 .slice(0, 10)
                 .join("\n"),
