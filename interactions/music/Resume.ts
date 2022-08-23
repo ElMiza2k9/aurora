@@ -17,6 +17,13 @@ export default class ResumeCommand extends SubCommand {
       const queue = await interaction.client.player.queues.get(
         interaction.guild.id
       );
+
+      if(!queue.paused) {
+        return interaction.followUp({content: this.client.reply(
+          l("commands:music:resume:not_paused"),
+          ":pause_button:"
+        )})
+      };
       queue?.resume();
       await interaction.followUp({
         content: this.client.reply(
