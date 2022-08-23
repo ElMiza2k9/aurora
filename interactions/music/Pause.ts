@@ -17,6 +17,13 @@ export default class PauseCommand extends SubCommand {
       const queue = await interaction.client.player.queues.get(
         interaction.guild.id
       );
+
+      if(queue.paused) {
+        return interaction.followUp({content: this.client.reply(
+          l("commands:music:pause:already_paused"),
+          ":pause_button:"
+        )})
+      };
       queue?.pause();
       await interaction.followUp({
         content: this.client.reply(
