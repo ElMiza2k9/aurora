@@ -79,6 +79,7 @@
       "disabled": "Disabled player looping."
     },
     "pause": {
+      "already_paused": "The player is already paused.",
       "paused": "Paused the playback."
     },
     "queue": {
@@ -95,6 +96,7 @@
       }
     },
     "resume": {
+      "not_paused": "The player is not paused.",
       "resumed": "Resumed the playback."
     },
     "skip": {
