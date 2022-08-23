@@ -34,7 +34,10 @@ export default class PlayCommand extends SubCommand {
         });
       } catch (error) {
         interaction.followUp({
-          content: l("misc:error", { error: error.name }),
+          content: this.client.reply(
+            l("misc:error", { error: error.name }),
+            ":x:"
+          ),
         });
       }
     }
