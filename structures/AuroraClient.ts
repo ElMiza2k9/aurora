@@ -38,7 +38,8 @@ export class AuroraClient extends Client<true> {
       nsfw: false,
       emitNewSongOnly: true,
       plugins: [new YtDlpPlugin(), new SpotifyPlugin(), new SoundCloudPlugin()],
-      emitAddSongWhenCreatingQueue: false
+      emitAddSongWhenCreatingQueue: false,
+      joinNewVoiceChannel: false
     });
     this.config = Config;
     this.package = Package;
