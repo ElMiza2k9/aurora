@@ -46,9 +46,9 @@ export default class PlayerAddListEvent extends Event {
               })`,
               value: playlist.songs
                 .map((song, pos) => {
-                  return `#${pos + 1}. **[${escapeMarkdown(
-                    `${song.name}`
-                  )}](${song.url})** / ${song.formattedDuration}`;
+                  return `#${pos + 1}. **[${escapeMarkdown(`${song.name}`)}](${
+                    song.url
+                  })** / ${song.formattedDuration}`;
                 })
                 .slice(0, 10)
                 .join("\n"),
