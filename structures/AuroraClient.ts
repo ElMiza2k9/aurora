@@ -261,13 +261,15 @@ export class AuroraClient extends Client<true> {
     }
 
     if (checkConnection) {
-      const connection = await this.player.voices.get(interaction.guild.id);
-      if (!connection) {
+      const distubeConnection = await this.player.voices.get(interaction.guild.id);
+      const voiceConnection = interaction.guild.members.me.voice;
+      if (!distubeConnection && !voiceConnection) {
         return interaction.followUp({
           content: this.reply(locale("misc:voice:no_connection"), ":x:"),
         });
-      }
+      } else return true;
     }
+    
     if (checkQueue) {
       const queue = await interaction.client.player.queues.get(
         interaction.guild.id
@@ -288,8 +290,8 @@ export class AuroraClient extends Client<true> {
           });
         }
       }
-      return true;
     }
+    return true;
   }
 
   clientPerms(
