@@ -23,7 +23,9 @@ export default class CurrentCommand extends SubCommand {
 
       await interaction.followUp({
         content: this.client.reply(
-          l("misc:music:now_playing", { song: escapeMarkdown(`${song.name}`) }),
+          l("misc:music:now_playing", {
+            song: `**${escapeMarkdown(`${song.name}`)}**`,
+          }),
           queue.paused ? ":pause_button:" : ":arrow_forward:"
         ),
         embeds: [
@@ -36,7 +38,7 @@ export default class CurrentCommand extends SubCommand {
             })
             .setTitle(escapeMarkdown(`${song.name}`))
             .setURL(song.url)
-            .setThumbnail(`${song.thumbnail}`)
+            .setThumbnail(song.thumbnail ?? null)
             .addFields([
               {
                 name: l("misc:music:duration"),
