@@ -31,7 +31,11 @@ export default class QueueCommand extends SubCommand {
               name: l("commands:music:queue:fields:now_playing"),
               value: `**[${escapeMarkdown(`${queue.songs[0].name}`)}](${
                 queue.songs[0].url
-              })** \`[${queue.songs[0].formattedDuration}]\``,
+              })** / ${
+                queue.songs[0].duration !== 0
+                  ? queue.songs[0].formattedDuration
+                  : l("misc:unknown")
+              } / ${queue.songs[0].user}`,
             },
             {
               name: l("commands:music:queue:fields:up_next:name"),
@@ -42,7 +46,11 @@ export default class QueueCommand extends SubCommand {
                       .map((song, pos) => {
                         return `#${pos + 1}. **[${escapeMarkdown(
                           `${song.name}`
-                        )}](${song.url})** \`[${song.formattedDuration}]\``;
+                        )}](${song.url})** / ${
+                          song.duration !== 0
+                            ? song.formattedDuration
+                            : l("misc:unknown")
+                        } / ${song.user}}`;
                       })
                       .slice(0, 10)
                       .join("\n")
