@@ -25,7 +25,7 @@ export default class StopCommand extends SubCommand {
         voiceConnection.disconnect();
       }
       await interaction.followUp({
-        contet: this.client.reply(
+        content: this.client.reply(
           l("commands:music:stop:stopped"),
           ":stop_button:"
         ),
