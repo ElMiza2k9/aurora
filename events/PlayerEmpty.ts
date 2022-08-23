@@ -8,7 +8,7 @@ export default class PlayerEmptyEvent extends Event {
   }
 
   async execute(client: AuroraClient, queue: Queue) {
-    const l = await client.locales.getLocale(queue.id, queue.songs[0].user!.id);
+    const l = await client.locales.getLocale(queue.id);
     queue.textChannel?.send({
       content: client.reply(l("misc:music:stopped"), ":pensive:"),
     });
