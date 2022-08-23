@@ -22,7 +22,7 @@ export default class SkipCommand extends SubCommand {
       await interaction.followUp({
         content: this.client.reply(
           l("commands:music:skip:skipped", {
-            song: escapeMarkdown(`${queue.songs[0].name}`),
+            song: `**${escapeMarkdown(`${queue.songs[0].name}`)}**`,
           }),
           ":track_next:"
         ),
