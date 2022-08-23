@@ -231,13 +231,6 @@ export class AuroraClient extends Client<true> {
     checkQueue?: boolean,
     checkLast?: boolean
   ) {
-    const connection =
-      this.player.voices.get(interaction.guild.id) ||
-      interaction.guild.members.me!.voice;
-    const queue = await interaction.client.player.queues.get(
-      interaction.guild.id
-    );
-
     if (!interaction.member.voice.channel) {
       return interaction.followUp({
         content: this.reply(locale("misc:voice:not_in_voice"), ":x:"),
@@ -258,8 +251,8 @@ export class AuroraClient extends Client<true> {
         content: this.reply(locale("misc:voice:server_deaf"), ":x:"),
       });
     } else if (
-      interaction.client.voice.channel &&
-      interaction.client.voice.channel.id !==
+      interaction.guild.members.me.voice.channel &&
+      interaction.guild.members.me.voice.channel.id !==
         interaction.member.voice.channel.id
     ) {
       return interaction.followUp({
@@ -268,6 +261,7 @@ export class AuroraClient extends Client<true> {
     }
 
     if (checkConnection) {
+      const connection = await this.player.voices.get(interaction.guild.id);
       if (!connection) {
         return interaction.followUp({
           content: this.reply(locale("misc:voice:no_connection"), ":x:"),
@@ -275,6 +269,9 @@ export class AuroraClient extends Client<true> {
       }
     }
     if (checkQueue) {
+      const queue = await interaction.client.player.queues.get(
+        interaction.guild.id
+      );
       if (!queue) {
         return interaction.followUp({
           content: this.reply(locale("misc:voice:no_queue"), ":x:"),
