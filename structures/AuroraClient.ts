@@ -261,7 +261,9 @@ export class AuroraClient extends Client<true> {
     }
 
     if (checkConnection) {
-      const distubeConnection = await this.player.voices.get(interaction.guild.id);
+      const distubeConnection = await this.player.voices.get(
+        interaction.guild.id
+      );
       const voiceConnection = interaction.guild.members.me.voice;
       if (!distubeConnection && !voiceConnection) {
         return interaction.followUp({
@@ -269,7 +271,7 @@ export class AuroraClient extends Client<true> {
         });
       } else return true;
     }
-    
+
     if (checkQueue) {
       const queue = await interaction.client.player.queues.get(
         interaction.guild.id

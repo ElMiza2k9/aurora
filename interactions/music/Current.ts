@@ -33,8 +33,8 @@ export default class CurrentCommand extends SubCommand {
             .embed(interaction)
             .setAuthor({
               name: song.uploader.name ?? l("misc:unknown"),
-              url: `${song.uploader.url ?? null}`,
-              iconURL: `${song.thumbnail ?? null}`,
+              url: song.uploader?.url,
+              iconURL: song?.thumbnail,
             })
             .setTitle(escapeMarkdown(`${song.name}`))
             .setURL(song.url)
@@ -43,7 +43,7 @@ export default class CurrentCommand extends SubCommand {
               {
                 name: l("misc:music:duration"),
                 value: `${
-                  song.formattedDuration !== "00:00"
+                  song.duration !== 0
                     ? song.formattedDuration
                     : l("misc:unknown")
                 }`,

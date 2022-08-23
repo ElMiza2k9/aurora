@@ -24,6 +24,11 @@ export default class PlayerAddSongEvent extends Event {
       embeds: [
         client
           .embed(song.metadata.i)
+          .setAuthor({
+            name: song.uploader.name ?? l("misc:unknown"),
+            url: song.uploader?.url,
+            iconURL: song?.thumbnail,
+          })
           .setTitle(escapeMarkdown(`${song.name}`))
           .setURL(song.url)
           .setThumbnail(song.thumbnail ?? null)
