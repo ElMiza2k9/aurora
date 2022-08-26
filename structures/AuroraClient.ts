@@ -1,7 +1,7 @@
 import {
+  ChatInputCommandInteraction,
   Client,
   Collection,
-  CommandInteraction,
   PermissionFlagsBits,
   TextChannel,
 } from "discord.js";
@@ -57,23 +57,22 @@ export class AuroraClient extends Client<true> {
 
   /**
    * Returns a pre-formatted embed
-   * @param {Interaction} interaction Your interaction (aka slash command)
+   * @param {ChatInputCommandInteraction} interaction Your interaction (aka slash command)
    */
-  embed(interaction: any) {
+  embed(interaction: ChatInputCommandInteraction<"cached" | "raw">) {
     if (!interaction) {
       throw Error("Expected interaction to be provided (embed)");
     }
 
     return new EmbedBuilder()
       .setFooter({
-        text: this.config.embeds.showAuthor ? interaction.user?.tag : null,
-        iconURL: this.config.embeds.showAuthor
-          ? interaction.user?.displayAvatarURL()
-          : null,
+        text: interaction.user?.tag,
+        iconURL: interaction.user?.displayAvatarURL(),
       })
-      .setColor(parseInt(this.config.embeds.hexColor, 16) ?? "#7289da")
-      .setTimestamp(this.config.embeds.setTimestamp ? Date.now() : null);
+      .setColor("#7289da")
+      .setTimestamp();
   }
+
 
   /**
    * Returns a formatted reply
@@ -100,7 +99,7 @@ export class AuroraClient extends Client<true> {
     return `<t:${parseInt(parsed.toString())}:${type ?? "F"}>`;
   }
 
-  async addUser(user_id: string, guild_id: string | undefined, data?: any) {
+  async addUser(user_id: string, guild_id: string, data?: any) {
     if (!guild_id) return null;
 
     try {
@@ -120,7 +119,7 @@ export class AuroraClient extends Client<true> {
 
   async updateUser(
     user_id: string,
-    guild_id: string | undefined,
+    guild_id: string,
     data: Partial<Prisma.UserUpdateManyArgs["data"]>
   ) {
     try {
@@ -150,9 +149,7 @@ export class AuroraClient extends Client<true> {
     }
   }
 
-  async getGuild(guild_id: string | undefined | null) {
-    if (!guild_id) return null;
-
+  async getGuild(guild_id: string) {
     try {
       const guild =
         (await this.db.guild.findFirst({
@@ -165,8 +162,7 @@ export class AuroraClient extends Client<true> {
     }
   }
 
-  async getUser(user_id: string, guild_id: string | undefined) {
-    if (!guild_id) return null;
+  async getUser(user_id: string, guild_id: string) {
 
     try {
       const user =
@@ -180,9 +176,7 @@ export class AuroraClient extends Client<true> {
     }
   }
 
-  async addGuild(guild_id: string | undefined) {
-    if (!guild_id) return null;
-
+  async addGuild(guild_id: string) {
     try {
       const guild = await this.db.guild.create({
         data: {
@@ -197,11 +191,9 @@ export class AuroraClient extends Client<true> {
   }
 
   async updateGuild(
-    guild_id: string | undefined,
+    guild_id: string,
     data: Partial<Prisma.GuildUpdateInput>
   ) {
-    if (!guild_id) return;
-
     try {
       const guild = await this.getGuild(guild_id);
 
@@ -233,6 +225,10 @@ export class AuroraClient extends Client<true> {
     checkQueue?: boolean,
     checkLast?: boolean
   ) {
+    if (!interaction) {
+      throw Error("Expected interaction to be provided (vc)");
+    }
+
     if (!interaction.member.voice.channel) {
       return interaction.followUp({
         content: this.reply(locale("misc:voice:not_in_voice"), ":x:"),
@@ -301,7 +297,7 @@ export class AuroraClient extends Client<true> {
 
   clientPerms(
     permissions: bigint[],
-    interaction: CommandInteraction,
+    interaction: ChatInputCommandInteraction<"cached" | "raw">,
     locale: any
   ) {
     const neededPerms: bigint[] = [];
@@ -335,7 +331,7 @@ export class AuroraClient extends Client<true> {
 
   userPerms(
     permissions: bigint[],
-    interaction: CommandInteraction,
+    interaction: ChatInputCommandInteraction<"cached" | "raw">,
     locale: any
   ) {
     const neededPerms: bigint[] = [];
