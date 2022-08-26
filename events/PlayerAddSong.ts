@@ -25,7 +25,7 @@ export default class PlayerAddSongEvent extends Event {
         client
           .embed(song.metadata.i)
           .setAuthor({
-            name: song.uploader.name ?? l("misc:unknown"),
+            name: song.uploader.name ?? l("misc:music:unknown_author"),
             url: song.uploader?.url,
             iconURL: song?.thumbnail,
           })

@@ -39,6 +39,7 @@
     "requested_by": "Requested by",
     "song_added": "Added {{song}} to the queue.",
     "stopped": "Destroyed the voice connection because I was left all alone.",
+    "unknown_author": "Неизвестный автор",
     "volume": "Volume"
   }
 }
