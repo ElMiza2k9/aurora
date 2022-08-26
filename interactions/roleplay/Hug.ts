@@ -26,7 +26,7 @@ export default class ChannelCreateCommand extends SubCommand {
       return interaction.followUp({
         content: this.client.reply(
           l("commands:roleplay:hug:checks:self"),
-          ":angry:"
+          ":face_with_raised_eyebrow:"
         ),
       });
     } else {
