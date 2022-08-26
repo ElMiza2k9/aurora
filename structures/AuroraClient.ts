@@ -99,8 +99,6 @@ export class AuroraClient extends Client<true> {
   }
 
   async addUser(user_id: string, guild_id: string, data?: any) {
-    if (!guild_id) return null;
-
     try {
       const user = await this.db.user.create({
         data: {
@@ -148,7 +146,9 @@ export class AuroraClient extends Client<true> {
     }
   }
 
-  async getGuild(guild_id: string) {
+  async getGuild(guild_id: string | undefined) {
+    if (!guild_id) return null;
+
     try {
       const guild =
         (await this.db.guild.findFirst({
