@@ -1,4 +1,10 @@
-import { ApplicationCommandOptionType, escapeMarkdown } from "discord.js";
+import {
+  ActionRowBuilder,
+  ApplicationCommandOptionType,
+  ButtonBuilder,
+  ButtonStyle,
+  escapeMarkdown,
+} from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
@@ -32,25 +38,6 @@ export default class AvatarCommand extends SubCommand {
             { name: "4096px", value: 4096 },
           ],
         },
-        {
-          type: ApplicationCommandOptionType.String,
-          name: "extension",
-          description: "Avatar extension (default: PNG)",
-          required: false,
-          choices: [
-            { name: "JPG", value: "jpg" },
-            { name: "PNG", value: "png" },
-            { name: "WebP", value: "webp" },
-            { name: "JPEG", value: "jpeg" },
-          ],
-        },
-        {
-          type: ApplicationCommandOptionType.Boolean,
-          name: "static",
-          description:
-            "Whether to return static image (even if the avatar is animated) (default: no)",
-          required: false,
-        },
       ],
     });
   }
@@ -58,12 +45,8 @@ export default class AvatarCommand extends SubCommand {
     await interaction.deferReply();
     const user = interaction.options.getUser("user") ?? interaction.user;
     const size = interaction.options.getInteger("size") ?? 512;
-    const extension = interaction.options.getString("format") ?? "png";
-    const forceStatic = interaction.options.getBoolean("static") ?? false;
     const avatar = user.displayAvatarURL({
-      extension: extension,
       size: size,
-      forceStatic: forceStatic,
     });
 
     await interaction.followUp({
@@ -73,10 +56,37 @@ export default class AvatarCommand extends SubCommand {
         }),
         ":frame_photo:"
       ),
-      embeds: [
-        this.client
-          .embed(interaction)
-          .setImage(avatar)
+      embeds: [this.client.embed(interaction).setImage(avatar)],
+      components: [
+        new ActionRowBuilder().addComponents([
+          new ButtonBuilder()
+            .setLabel("PNG")
+            .setStyle(ButtonStyle.Link)
+            .setURL(
+              user.displayAvatarURL({
+                size: size,
+                extension: "png",
+              })
+            ),
+          new ButtonBuilder()
+            .setLabel("JPG")
+            .setStyle(ButtonStyle.Link)
+            .setURL(
+              user.displayAvatarURL({
+                size: size,
+                extension: "jpg",
+              })
+            ),
+          new ButtonBuilder()
+            .setLabel("WebP")
+            .setStyle(ButtonStyle.Link)
+            .setURL(
+              user.displayAvatarURL({
+                size: size,
+                extension: "webp",
+              })
+            ),
+        ]),
       ],
     });
   }
