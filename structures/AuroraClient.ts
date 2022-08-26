@@ -71,7 +71,7 @@ export class AuroraClient extends Client<true> {
           ? interaction.user?.displayAvatarURL()
           : null,
       })
-      .setColor(parseInt("7289da", 16) ?? "#7289da") // that's temporary!
+      .setColor(parseInt(this.config.embeds.hexColor, 16) ?? "#7289da")
       .setTimestamp(this.config.embeds.setTimestamp ? Date.now() : null);
   }
 
@@ -150,6 +150,21 @@ export class AuroraClient extends Client<true> {
     }
   }
 
+  async getGuild(guild_id: string | undefined | null) {
+    if (!guild_id) return null;
+
+    try {
+      const guild =
+        (await this.db.guild.findFirst({
+          where: { guild_id: guild_id },
+        })) ?? (await this.addGuild(guild_id));
+
+      return guild;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async getUser(user_id: string, guild_id: string | undefined) {
     if (!guild_id) return null;
 
@@ -160,6 +175,52 @@ export class AuroraClient extends Client<true> {
         })) ?? (await this.addUser(user_id, guild_id));
 
       return user;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async addGuild(guild_id: string | undefined) {
+    if (!guild_id) return null;
+
+    try {
+      const guild = await this.db.guild.create({
+        data: {
+          guild_id: guild_id,
+        },
+      });
+
+      return guild;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async updateGuild(
+    guild_id: string | undefined,
+    data: Partial<Prisma.GuildUpdateInput>
+  ) {
+    if (!guild_id) return;
+
+    try {
+      const guild = await this.getGuild(guild_id);
+
+      if (!guild) {
+        await this.addGuild(guild_id);
+      }
+
+      await this.db.guild.updateMany({
+        where: { guild_id: guild_id },
+        data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async deleteGuild(guild_id: string): Promise<void> {
+    try {
+      await this.db.guild.deleteMany({ where: { guild_id: guild_id } });
     } catch (error) {
       console.log(error);
     }
