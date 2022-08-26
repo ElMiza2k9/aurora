@@ -13,10 +13,5 @@
     "name": "anything you want (type {VERSION} to insert bot's version)",
     "type": 2,
     "status": "online"
-  },
-  "embeds": {
-    "hexColor": "7289da",
-    "showAuthor": true,
-    "setTimestamp": true
   }
 }
