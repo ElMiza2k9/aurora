@@ -9,6 +9,6 @@ export default class GuildDeleteEvent extends Event {
 
   async execute(client: AuroraClient, guild: DJS.Guild) {
     if (!guild) return;
-    await client.deleteGuild(guild.id);
+    await client.db.guild.deleteMany({ where: { guild_id: guild.id } });
   }
 }
