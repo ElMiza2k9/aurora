@@ -18,12 +18,14 @@ export default class PauseCommand extends SubCommand {
         interaction.guild.id
       );
 
-      if(queue.paused) {
-        return interaction.followUp({content: this.client.reply(
-          l("commands:music:pause:already_paused"),
-          ":pause_button:"
-        )})
-      };
+      if (queue.paused) {
+        return interaction.followUp({
+          content: this.client.reply(
+            l("commands:music:pause:already_paused"),
+            ":pause_button:"
+          ),
+        });
+      }
       queue?.pause();
       await interaction.followUp({
         content: this.client.reply(

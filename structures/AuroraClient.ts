@@ -73,7 +73,6 @@ export class AuroraClient extends Client<true> {
       .setTimestamp();
   }
 
-
   /**
    * Returns a formatted reply
    * @param {string} replyContent Reply content you would like to format
@@ -163,7 +162,6 @@ export class AuroraClient extends Client<true> {
   }
 
   async getUser(user_id: string, guild_id: string) {
-
     try {
       const user =
         (await this.db.user.findFirst({
@@ -190,10 +188,7 @@ export class AuroraClient extends Client<true> {
     }
   }
 
-  async updateGuild(
-    guild_id: string,
-    data: Partial<Prisma.GuildUpdateInput>
-  ) {
+  async updateGuild(guild_id: string, data: Partial<Prisma.GuildUpdateInput>) {
     try {
       const guild = await this.getGuild(guild_id);
 
