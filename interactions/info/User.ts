@@ -6,7 +6,7 @@ import {
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
-export default class UserCommand extends SubCommand {
+export default class InfoUserCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "user",

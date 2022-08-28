@@ -2,7 +2,7 @@ import { ChannelType, escapeMarkdown } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
-export default class ServerCommand extends SubCommand {
+export default class InfoServerCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "server",

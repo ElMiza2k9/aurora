@@ -2,7 +2,7 @@ import { escapeMarkdown } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
-export default class SkipCommand extends SubCommand {
+export default class MusicSkipCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "skip",

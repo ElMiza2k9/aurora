@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
-export default class ChannelCreateCommand extends SubCommand {
+export default class RoleplayKissCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "kiss",

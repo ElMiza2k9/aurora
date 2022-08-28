@@ -3,7 +3,7 @@ import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 import { inspect } from "node:util";
 
-export default class EvalCommand extends SubCommand {
+export default class DevEvalCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "eval",

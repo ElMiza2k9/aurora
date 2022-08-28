@@ -2,7 +2,7 @@ import { escapeMarkdown } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
-export default class QueueCommand extends SubCommand {
+export default class MusicQueueCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "queue",

@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType, PermissionFlagsBits } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
-export default class PlayCommand extends SubCommand {
+export default class MusicPlayCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "play",

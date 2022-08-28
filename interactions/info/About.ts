@@ -2,7 +2,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
-export default class AboutCommand extends SubCommand {
+export default class InfoAboutCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "about",

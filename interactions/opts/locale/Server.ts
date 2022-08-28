@@ -2,7 +2,7 @@ import { ApplicationCommandOptionType, PermissionFlagsBits } from "discord.js";
 import { AuroraClient } from "../../../structures/AuroraClient";
 import { SubCommand } from "../../../structures/SubCommand";
 
-export default class OptsLocaleUserCommand extends SubCommand {
+export default class OptsLocaleServerCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "server",

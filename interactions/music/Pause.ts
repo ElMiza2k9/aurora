@@ -1,7 +1,7 @@
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
-export default class PauseCommand extends SubCommand {
+export default class MusicPauseCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "pause",
