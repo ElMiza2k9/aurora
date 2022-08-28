@@ -18,12 +18,14 @@ export default class ResumeCommand extends SubCommand {
         interaction.guild.id
       );
 
-      if(!queue.paused) {
-        return interaction.followUp({content: this.client.reply(
-          l("commands:music:resume:not_paused"),
-          ":pause_button:"
-        )})
-      };
+      if (!queue.paused) {
+        return interaction.followUp({
+          content: this.client.reply(
+            l("commands:music:resume:not_paused"),
+            ":pause_button:"
+          ),
+        });
+      }
       queue?.resume();
       await interaction.followUp({
         content: this.client.reply(

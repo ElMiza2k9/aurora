@@ -73,11 +73,7 @@ export default class AvatarCommand extends SubCommand {
         }),
         ":frame_photo:"
       ),
-      embeds: [
-        this.client
-          .embed(interaction)
-          .setImage(avatar)
-      ],
+      embeds: [this.client.embed(interaction).setImage(avatar)],
     });
   }
 }
