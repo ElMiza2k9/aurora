@@ -1,6 +1,6 @@
 {
   "name": "aurora",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "An in-house moderation & entertainment solution for Adwaita.",
   "main": "index.ts",
   "scripts": {
@@ -32,7 +32,7 @@
     "@distube/ytdl-core": "^4.11.4",
     "@prisma/client": "^4.2.1",
     "bluebird": "^3.7.2",
-    "discord-temp-channels": "github:chamln/discord-temp-channels",
+    "discord-temp-channels": "github:chamln/discord-temp-channels#eslint-migration",
     "discord.js": "^14.3.0",
     "distube": "^4.0.3",
     "dotenv": "^16.0.1",
