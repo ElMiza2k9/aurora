@@ -3,7 +3,6 @@ import {
   Client,
   Collection,
   PermissionFlagsBits,
-  TextChannel,
 } from "discord.js";
 import DistubePlayer from "distube";
 import { AuroraClientOptions } from "./AuroraClientOptions";
@@ -299,15 +298,15 @@ export class AuroraClient extends Client<true> {
 
     permissions.forEach((perm) => {
       if (
-        !(interaction.channel as TextChannel)
-          .permissionsFor(interaction.guild!.members.me!)
-          .has(perm)
+        !(interaction.guild as Guild).members
+          .resolve(interaction.member as any)
+          .permissions.has(perm)
       ) {
         neededPerms.push(perm);
       }
     });
     if (neededPerms.length > 0) {
-      return locale("misc:member_need_perms", {
+      return locale("misc:client_need_perms", {
         perms: neededPerms
           .map((p) => {
             const perms: string[] = [];
@@ -333,9 +332,9 @@ export class AuroraClient extends Client<true> {
 
     permissions.forEach((perm) => {
       if (
-        !(interaction.channel as TextChannel)
-          .permissionsFor(interaction.member as any)
-          .has(perm)
+        !(interaction.guild as Guild).members
+          .resolve(interaction.member as any)
+          .permissions.has(perm)
       ) {
         neededPerms.push(perm);
       }
