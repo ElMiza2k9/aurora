@@ -2,6 +2,7 @@ import {
   ChatInputCommandInteraction,
   Client,
   Collection,
+  Guild,
   PermissionFlagsBits,
 } from "discord.js";
 import DistubePlayer from "distube";
@@ -97,12 +98,11 @@ export class AuroraClient extends Client<true> {
     return `<t:${parseInt(parsed.toString())}:${type ?? "F"}>`;
   }
 
-  async addUser(user_id: string, guild_id: string, data?: any) {
+  async addUser(user_id: string, data?: any) {
     try {
       const user = await this.db.user.create({
         data: {
           user_id: user_id,
-          guild_id: guild_id,
           ...data,
         },
       });
@@ -115,19 +115,18 @@ export class AuroraClient extends Client<true> {
 
   async updateUser(
     user_id: string,
-    guild_id: string,
     data: Partial<Prisma.UserUpdateManyArgs["data"]>
   ) {
     try {
-      const user = await this.getUser(user_id, guild_id);
+      const user = await this.getUser(user_id);
 
       if (!user) {
-        this.addUser(user_id, guild_id, data);
+        this.addUser(user_id, data);
         return;
       }
 
       await this.db.user.updateMany({
-        where: { user_id: user_id, guild_id: guild_id },
+        where: { user_id: user_id },
         data,
       });
     } catch (error) {
@@ -135,10 +134,10 @@ export class AuroraClient extends Client<true> {
     }
   }
 
-  async removeUser(user_id: string, guild_id: string) {
+  async removeUser(user_id: string) {
     try {
       await this.db.user.deleteMany({
-        where: { user_id: user_id, guild_id: guild_id },
+        where: { user_id: user_id },
       });
     } catch (error) {
       console.log(error);
@@ -160,12 +159,12 @@ export class AuroraClient extends Client<true> {
     }
   }
 
-  async getUser(user_id: string, guild_id: string) {
+  async getUser(user_id: string) {
     try {
       const user =
         (await this.db.user.findFirst({
-          where: { user_id: user_id, guild_id: guild_id },
-        })) ?? (await this.addUser(user_id, guild_id));
+          where: { user_id: user_id },
+        })) ?? (await this.addUser(user_id));
 
       return user;
     } catch (error) {

@@ -28,7 +28,6 @@ export default class OptsLocaleUserCommand extends SubCommand {
 
     await this.client.locales.updateUserLocale(
       interaction.user.id,
-      interaction.guild.id,
       interaction.options.getString("locale")
     );
 
