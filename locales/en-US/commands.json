@@ -135,6 +135,22 @@
         "self": "Go hug your pillow!"
       },
       "reply": "{{user}}, you've been hugged by {{author}}!"
+    },
+    "kiss": {
+      "checks": {
+        "self": "I don't even know what to say, but I do know that it'd be a bad idea."
+      },
+      "reply": "{{user}}, you've been kissed by {{author}}!"
+    },
+    "pat": {
+      "reply": "{{user}}, you've been patted by {{author}}!",
+      "reply_self": "*It's acceptable...*"
+    },
+    "slap": {
+      "checks": {
+        "self": "It'll hurt probably..."
+      },
+      "reply": "{{user}}, you've been slapped by {{author}}!"
     }
   }
 }
