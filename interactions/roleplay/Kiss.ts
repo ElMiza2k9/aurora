@@ -39,7 +39,7 @@ export default class RoleplayKissCommand extends SubCommand {
             user: `${user}`,
             author: `${interaction.user}`,
           }),
-          ":hugging:"
+          ":kissing_closed_eyes:"
         ),
         embeds: [this.client.embed(interaction).setImage(gif.url)],
       });

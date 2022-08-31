@@ -39,7 +39,7 @@ export default class RoleplaySlapCommand extends SubCommand {
             user: `${user}`,
             author: `${interaction.user}`,
           }),
-          ":hugging:"
+          ":flushed:"
         ),
         embeds: [this.client.embed(interaction).setImage(gif.url)],
       });
