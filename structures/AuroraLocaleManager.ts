@@ -60,10 +60,7 @@ export class AuroraLocaleManager {
     await this.client.updateGuild(guild_id, { locale: locale });
   }
 
-  async updateUserLocale(
-    user_id: Snowflake,
-    locale: string
-  ) {
+  async updateUserLocale(user_id: Snowflake, locale: string) {
     await this.client.updateUser(user_id, {
       locale: locale,
     });
