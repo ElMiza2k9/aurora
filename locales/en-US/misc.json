@@ -41,9 +41,5 @@
     "stopped": "Destroyed the voice connection because I was left all alone.",
     "unknown_author": "Unknown author",
     "volume": "Volume"
-  },
-  "moderation": {
-    "banned_dm": "You were banned in {{guild}} for the following reason:\n{{reason}}",
-    "banned_dm_no_reason": "You were banned in {{guild}}, but a reason wasn't provided."
   }
 }
