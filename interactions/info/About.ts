@@ -21,8 +21,8 @@ export default class InfoAboutCommand extends SubCommand {
         ":information_source:"
       ),
       embeds: [
-        this.client
-          .embed(interaction)
+        (await this.client
+          .embed(interaction))
           .setThumbnail(this.client.user.avatarURL())
           .addFields(
             {
@@ -74,15 +74,15 @@ export default class InfoAboutCommand extends SubCommand {
       components: [
         new ActionRowBuilder().addComponents([
           new ButtonBuilder()
-            .setLabel(l("commands:info:about:buttons:0"))
+            .setLabel(l("commands:info:about:buttons:source"))
             .setStyle(ButtonStyle.Link)
             .setURL(baseURL),
           new ButtonBuilder()
-            .setLabel(l("commands:info:about:buttons:1"))
+            .setLabel(l("commands:info:about:buttons:issues"))
             .setStyle(ButtonStyle.Link)
             .setURL(`${baseURL}/issues`),
           new ButtonBuilder()
-            .setLabel(l("commands:info:about:buttons:2"))
+            .setLabel(l("commands:info:about:buttons:discord"))
             .setStyle(ButtonStyle.Link)
             .setURL("https://discord.gg/ctKs8WRQR5"),
         ]),
