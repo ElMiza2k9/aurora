@@ -2,7 +2,6 @@ import {
   ChatInputCommandInteraction,
   Client,
   Collection,
-  ColorResolvable,
   Guild,
   PermissionFlagsBits,
 } from "discord.js";
@@ -72,7 +71,7 @@ export class AuroraClient extends Client<true> {
         text: `${dbGuild?.embed.show_author ? interaction.user?.tag : null}`,
         iconURL: `${dbGuild?.embed.show_author ? interaction.user?.displayAvatarURL() : null}`,
       })
-      .setColor(dbGuild?.embed.color as ColorResolvable ?? "#7289da")
+      .setColor(dbGuild?.embed.color ? `#${dbGuild?.embed.color}` : "#7289da")
       .setTimestamp(dbGuild?.embed.show_timestamp ? Date.now() : null);
   }
 
