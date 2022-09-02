@@ -22,9 +22,9 @@
       },
       "footer": "© 2022 {{author}}. Licensed under {{license}}.",
       "buttons": {
-        "0": "Source code",
-        "1": "Issue tracker",
-        "2": "Discord server"
+        "source": "Source code",
+        "issues": "Issue tracker",
+        "discord": "Discord server"
       }
     },
     "avatar": {
@@ -144,7 +144,7 @@
     },
     "pat": {
       "reply": "{{user}}, you've been patted by {{author}}!",
-      "reply_self": "*It's acceptable...*"
+      "reply_self": "*Well okay...*"
     },
     "slap": {
       "checks": {

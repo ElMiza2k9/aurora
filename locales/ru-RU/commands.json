@@ -1,12 +1,12 @@
 {
   "dev": {
     "eval": {
-      "reply": "Evaluated successfully:",
-      "error": "Evaluated with error:"
+      "reply": "Успешно выполнено:",
+      "error": "Выполнено с ошибкой:"
     },
     "shell": {
-      "reply": "Executed successfully:",
-      "error": "Executed with error:"
+      "reply": "Успешно выполнено:",
+      "error": "Выполнено с ошибкой:"
     }
   },
   "info": {
@@ -22,9 +22,9 @@
       },
       "footer": "© 2022 {{author}}. Лицензировано под {{license}}.",
       "buttons": {
-        "0": "Исходный код",
-        "1": "Трекер проблем",
-        "2": "Discord-сервер"
+        "source": "Исходный код",
+        "issues": "Трекер проблем",
+        "discord": "Discord-сервер"
       }
     },
     "avatar": {
@@ -144,7 +144,7 @@
     },
     "pat": {
       "reply": "{{user}}, тебя погладил {{author}}!",
-      "reply_self": "*Допустимо...*"
+      "reply_self": "*Ну ладно...*"
     },
     "slap": {
       "checks": {
