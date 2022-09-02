@@ -56,7 +56,7 @@ export default class InfoAvatarCommand extends SubCommand {
         }),
         ":frame_photo:"
       ),
-      embeds: [this.client.embed(interaction).setImage(avatar)],
+      embeds: [(await this.client.embed(interaction)).setImage(avatar)],
       components: [
         new ActionRowBuilder().addComponents([
           new ButtonBuilder()

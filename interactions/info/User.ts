@@ -42,8 +42,8 @@ export default class InfoUserCommand extends SubCommand {
         ":bust_in_silhouette:"
       ),
       embeds: [
-        this.client
-          .embed(interaction)
+        (await this.client
+          .embed(interaction))
           .setThumbnail(user.avatarURL())
           .addFields([
             {

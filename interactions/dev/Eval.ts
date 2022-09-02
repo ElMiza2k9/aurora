@@ -24,8 +24,8 @@ export default class DevEvalCommand extends SubCommand {
     if (!this.client.config.owners) {
       return interaction.followUp({
         embeds: [
-          this.client
-            .embed(interaction)
+          (await this.client
+            .embed(interaction))
             .setDescription(
               this.client.reply(l("misc:owner:empty_list"), ":x:")
             ),
@@ -34,8 +34,8 @@ export default class DevEvalCommand extends SubCommand {
     } else if (!this.client.config.owners.includes(interaction.user.id)) {
       return interaction.followUp({
         embeds: [
-          this.client
-            .embed(interaction)
+          (await this.client
+            .embed(interaction))
             .setDescription(
               this.client.reply(l("misc:owner:not_included"), ":x:")
             ),
@@ -73,8 +73,8 @@ export default class DevEvalCommand extends SubCommand {
           ":white_check_mark:"
         ),
         embeds: [
-          this.client
-            .embed(interaction)
+          (await this.client
+            .embed(interaction))
             .setDescription(`\`\`\`js\n${evaled}\`\`\``),
         ],
       });
@@ -82,8 +82,8 @@ export default class DevEvalCommand extends SubCommand {
       return interaction.followUp({
         content: this.client.reply(l("commands:dev:eval:error"), ":x:"),
         embeds: [
-          this.client
-            .embed(interaction)
+          (await this.client
+            .embed(interaction))
             .setDescription(`\`\`\`js\n${error?.stack}\`\`\``),
         ],
       });

@@ -41,7 +41,7 @@ export default class RoleplayKissCommand extends SubCommand {
           }),
           ":kissing_closed_eyes:"
         ),
-        embeds: [this.client.embed(interaction).setImage(gif.url)],
+        embeds: [(await this.client.embed(interaction)).setImage(gif.url)],
       });
     }
   }

@@ -2,6 +2,7 @@ import {
   ChatInputCommandInteraction,
   Client,
   Collection,
+  ColorResolvable,
   Guild,
   PermissionFlagsBits,
 } from "discord.js";
@@ -59,18 +60,20 @@ export class AuroraClient extends Client<true> {
    * Returns a pre-formatted embed
    * @param {ChatInputCommandInteraction} interaction Your interaction (aka slash command)
    */
-  embed(interaction: ChatInputCommandInteraction<"cached" | "raw">) {
+  async embed(interaction: ChatInputCommandInteraction<"cached" | "raw">) {
     if (!interaction) {
       throw Error("Expected interaction to be provided (embed)");
     }
 
+    const dbGuild = await this.getGuild(interaction.guild?.id);
+
     return new EmbedBuilder()
       .setFooter({
-        text: interaction.user?.tag,
-        iconURL: interaction.user?.displayAvatarURL(),
+        text: `${dbGuild?.embed.show_author ? interaction.user?.tag : null}`,
+        iconURL: `${dbGuild?.embed.show_author ? interaction.user?.displayAvatarURL() : null}`,
       })
-      .setColor("#7289da")
-      .setTimestamp();
+      .setColor(dbGuild?.embed.color as ColorResolvable ?? "#7289da")
+      .setTimestamp(dbGuild?.embed.show_timestamp ? Date.now() : null);
   }
 
   /**
@@ -177,6 +180,8 @@ export class AuroraClient extends Client<true> {
       const guild = await this.db.guild.create({
         data: {
           guild_id: guild_id,
+          embed: {},
+          music: {}
         },
       });
 

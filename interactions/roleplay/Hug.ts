@@ -41,7 +41,7 @@ export default class RoleplayHugCommand extends SubCommand {
           }),
           ":hugging:"
         ),
-        embeds: [this.client.embed(interaction).setImage(gif.url)],
+        embeds: [(await this.client.embed(interaction)).setImage(gif.url)],
       });
     }
   }

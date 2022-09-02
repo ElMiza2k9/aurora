@@ -23,8 +23,8 @@ export default class InfoServerCommand extends SubCommand {
         ":busts_in_silhouette:"
       ),
       embeds: [
-        this.client
-          .embed(interaction)
+        (await this.client
+          .embed(interaction))
           .setThumbnail(guild.iconURL())
           .addFields([
             {

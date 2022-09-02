@@ -34,7 +34,7 @@ export default class RoleplayPatCommand extends SubCommand {
           }),
           ":blush:"
         ),
-        embeds: [this.client.embed(interaction).setImage(gif.url)],
+        embeds: [(await this.client.embed(interaction)).setImage(gif.url)],
       });
     } else {
       await interaction.followUp({
@@ -45,7 +45,7 @@ export default class RoleplayPatCommand extends SubCommand {
           }),
           ":blush:"
         ),
-        embeds: [this.client.embed(interaction).setImage(gif.url)],
+        embeds: [(await this.client.embed(interaction)).setImage(gif.url)],
       });
     }
   }

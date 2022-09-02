@@ -41,7 +41,7 @@ export default class RoleplaySlapCommand extends SubCommand {
           }),
           ":flushed:"
         ),
-        embeds: [this.client.embed(interaction).setImage(gif.url)],
+        embeds: [(await this.client.embed(interaction)).setImage(gif.url)],
       });
     }
   }

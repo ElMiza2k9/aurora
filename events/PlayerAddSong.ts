@@ -22,8 +22,8 @@ export default class PlayerAddSongEvent extends Event {
         ":white_check_mark:"
       ),
       embeds: [
-        client
-          .embed(song.metadata.i)
+        (await client
+          .embed(song.metadata.i))
           .setAuthor({
             name: song.uploader.name ?? l("misc:music:unknown_author"),
             url: song.uploader?.url,
