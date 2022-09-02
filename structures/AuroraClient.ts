@@ -81,7 +81,7 @@ export class AuroraClient extends Client<true> {
    * @param {string} emoji Emoji you would like to add
    */
   reply(replyContent: string, emoji: string) {
-    return `${emoji} | ${replyContent}`;
+    return `${emoji} ${replyContent}`;
   }
 
   /**
