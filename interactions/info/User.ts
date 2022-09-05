@@ -27,10 +27,25 @@ export default class InfoUserCommand extends SubCommand {
     const user = interaction.options.getUser("user");
     const guildMember = interaction.guild.members.cache.get(user.id);
     const userFlags = await user.fetchFlags();
+    const date = new Date(Date.now());
 
     if (userFlags.has(UserFlags.TeamPseudoUser)) {
       return interaction.followUp({
         content: this.client.reply(l("commands:info:user:pseudo_user"), ":x:"),
+      });
+    }
+
+    // You've found an easter egg!
+    if (
+      date.getUTCDate() === 6 &&
+      date.getUTCMonth() + 1 === 11 &&
+      user.id === "718457540878532650"
+    ) {
+      return interaction.followUp({
+        content: this.client.reply(
+          l("misc:easter_eggs:emil_cake_day"),
+          ":cake:"
+        ),
       });
     }
 
@@ -42,8 +57,9 @@ export default class InfoUserCommand extends SubCommand {
         ":bust_in_silhouette:"
       ),
       embeds: [
-        (await this.client
-          .embed(interaction))
+        (
+          await this.client.embed(interaction)
+        )
           .setThumbnail(user.avatarURL())
           .addFields([
             {
