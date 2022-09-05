@@ -23,21 +23,17 @@ export default class DevShellCommand extends SubCommand {
     if (!this.client.config.owners) {
       return interaction.followUp({
         embeds: [
-          (await this.client
-            .embed(interaction))
-            .setDescription(
-              this.client.reply(l("misc:owner:empty_list"), ":x:")
-            ),
+          (await this.client.embed(interaction)).setDescription(
+            this.client.reply(l("misc:owner:empty_list"), ":x:")
+          ),
         ],
       });
     } else if (!this.client.config.owners.includes(interaction.user.id)) {
       return interaction.followUp({
         embeds: [
-          (await this.client
-            .embed(interaction))
-            .setDescription(
-              this.client.reply(l("misc:owner:not_included"), ":x:")
-            ),
+          (await this.client.embed(interaction)).setDescription(
+            this.client.reply(l("misc:owner:not_included"), ":x:")
+          ),
         ],
       });
     }
@@ -73,20 +69,20 @@ export default class DevShellCommand extends SubCommand {
           ":white_check_mark:"
         ),
         embeds: [
-          (await this.client
-            .embed(interaction))
-            .setDescription(
-              `\`\`\`sh\n${evaled != "" ? evaled : "No response"}\`\`\``
-            ),
+          (
+            await this.client.embed(interaction)
+          ).setDescription(
+            `\`\`\`sh\n${evaled != "" ? evaled : "No response"}\`\`\``
+          ),
         ],
       });
     } catch (error) {
       return interaction.followUp({
         content: this.client.reply(l("commands:dev:shell:error"), ":x:"),
         embeds: [
-          (await this.client
-            .embed(interaction))
-            .setDescription(`\`\`\`sh\n${error?.stack}\`\`\``),
+          (await this.client.embed(interaction)).setDescription(
+            `\`\`\`sh\n${error?.stack}\`\`\``
+          ),
         ],
       });
     }

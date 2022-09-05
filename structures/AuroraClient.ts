@@ -69,7 +69,11 @@ export class AuroraClient extends Client<true> {
     return new EmbedBuilder()
       .setFooter({
         text: `${dbGuild?.embed.show_author ? interaction.user?.tag : null}`,
-        iconURL: `${dbGuild?.embed.show_author ? interaction.user?.displayAvatarURL() : null}`,
+        iconURL: `${
+          dbGuild?.embed.show_author
+            ? interaction.user?.displayAvatarURL()
+            : null
+        }`,
       })
       .setColor(dbGuild?.embed.color ? `#${dbGuild?.embed.color}` : "#7289da")
       .setTimestamp(dbGuild?.embed.show_timestamp ? Date.now() : null);
@@ -180,7 +184,7 @@ export class AuroraClient extends Client<true> {
         data: {
           guild_id: guild_id,
           embed: {},
-          music: {}
+          music: {},
         },
       });
 

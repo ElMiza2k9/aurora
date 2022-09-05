@@ -23,8 +23,7 @@ export default class PlayerAddListEvent extends Event {
         ":white_check_mark:"
       ),
       embeds: [
-        (await this.client
-          .embed(playlist.metadata.i))
+        (await this.client.embed(playlist.metadata.i))
           .setTitle(escapeMarkdown(playlist.name))
           .setURL(`${playlist.url}`)
           .setThumbnail(playlist.thumbnail ?? null)

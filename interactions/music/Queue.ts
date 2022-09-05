@@ -26,7 +26,9 @@ export default class MusicQueueCommand extends SubCommand {
           queue.paused ? ":pause_button:" : ":arrow_forward:"
         ),
         embeds: [
-          (await this.client.embed(interaction)).addFields([
+          (
+            await this.client.embed(interaction)
+          ).addFields([
             {
               name: l("commands:music:queue:fields:now_playing"),
               value: `**[${escapeMarkdown(`${queue.songs[0].name}`)}](${

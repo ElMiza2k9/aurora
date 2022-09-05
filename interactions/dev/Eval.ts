@@ -24,21 +24,17 @@ export default class DevEvalCommand extends SubCommand {
     if (!this.client.config.owners) {
       return interaction.followUp({
         embeds: [
-          (await this.client
-            .embed(interaction))
-            .setDescription(
-              this.client.reply(l("misc:owner:empty_list"), ":x:")
-            ),
+          (await this.client.embed(interaction)).setDescription(
+            this.client.reply(l("misc:owner:empty_list"), ":x:")
+          ),
         ],
       });
     } else if (!this.client.config.owners.includes(interaction.user.id)) {
       return interaction.followUp({
         embeds: [
-          (await this.client
-            .embed(interaction))
-            .setDescription(
-              this.client.reply(l("misc:owner:not_included"), ":x:")
-            ),
+          (await this.client.embed(interaction)).setDescription(
+            this.client.reply(l("misc:owner:not_included"), ":x:")
+          ),
         ],
       });
     }
@@ -73,18 +69,18 @@ export default class DevEvalCommand extends SubCommand {
           ":white_check_mark:"
         ),
         embeds: [
-          (await this.client
-            .embed(interaction))
-            .setDescription(`\`\`\`js\n${evaled}\`\`\``),
+          (
+            await this.client.embed(interaction)
+          ).setDescription(`\`\`\`js\n${evaled}\`\`\``),
         ],
       });
     } catch (error) {
       return interaction.followUp({
         content: this.client.reply(l("commands:dev:eval:error"), ":x:"),
         embeds: [
-          (await this.client
-            .embed(interaction))
-            .setDescription(`\`\`\`js\n${error?.stack}\`\`\``),
+          (await this.client.embed(interaction)).setDescription(
+            `\`\`\`js\n${error?.stack}\`\`\``
+          ),
         ],
       });
     }

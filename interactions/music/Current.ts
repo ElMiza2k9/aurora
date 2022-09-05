@@ -29,8 +29,9 @@ export default class MusicCurrentCommand extends SubCommand {
           queue.paused ? ":pause_button:" : ":arrow_forward:"
         ),
         embeds: [
-          (await this.client
-            .embed(interaction))
+          (
+            await this.client.embed(interaction)
+          )
             .setAuthor({
               name: song.uploader.name ?? l("misc:unknown"),
               url: song.uploader?.url,

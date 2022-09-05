@@ -21,8 +21,9 @@ export default class InfoAboutCommand extends SubCommand {
         ":information_source:"
       ),
       embeds: [
-        (await this.client
-          .embed(interaction))
+        (
+          await this.client.embed(interaction)
+        )
           .setThumbnail(this.client.user.avatarURL())
           .addFields(
             {
