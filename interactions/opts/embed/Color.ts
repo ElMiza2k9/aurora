@@ -23,9 +23,7 @@ export default class OptsEmbedColorCommand extends SubCommand {
     await interaction.deferReply();
     const color = interaction.options.getString("color");
 
-    const hexRegEx = /^#?([0-9a-f]{6})$/i;
-
-    if (!hexRegEx.test(color)) {
+    if (!/^#?([0-9a-f]{6})$/i.test(color)) {
       return interaction.followUp({
         content: this.client.reply(
           l("commands:opts:embed:color:invalid_color"),
@@ -33,6 +31,7 @@ export default class OptsEmbedColorCommand extends SubCommand {
         ),
       });
     }
+    
     await this.client.updateGuild(interaction.guild.id, {
       embed: { color: color.replace("#", "") },
     });
