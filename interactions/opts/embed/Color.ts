@@ -31,7 +31,7 @@ export default class OptsEmbedColorCommand extends SubCommand {
         ),
       });
     }
-    
+
     await this.client.updateGuild(interaction.guild.id, {
       embed: { color: color.replace("#", "") },
     });
