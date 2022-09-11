@@ -1,7 +1,7 @@
 {
   "name": "aurora",
   "version": "0.6.2",
-  "description": "An in-house moderation & entertainment solution for Adwaita.",
+  "description": "A simple yet powerful entertainment solution for Discord servers of any size",
   "main": "index.ts",
   "scripts": {
     "prod": "ts-node index.ts",
