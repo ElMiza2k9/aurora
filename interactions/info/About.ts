@@ -85,7 +85,7 @@ export default class InfoAboutCommand extends SubCommand {
           new ButtonBuilder()
             .setLabel(l("commands:info:about:buttons:discord"))
             .setStyle(ButtonStyle.Link)
-            .setURL("https://discord.gg/ctKs8WRQR5"),
+            .setURL("https://discord.gg/jXHCfU92xQ"),
         ]),
       ],
     });
