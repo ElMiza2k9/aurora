@@ -8,7 +8,7 @@ export default class OptsEmbedColorCommand extends SubCommand {
       name: "color",
       groupName: "embed",
       topName: "opts",
-      description: "Edit the embeds color for this server",
+      description: "Edit server embed settings",
       options: [
         {
           name: "color",
