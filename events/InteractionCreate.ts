@@ -20,10 +20,7 @@ export default class InteractionCreateEvent extends Event {
     const command = client.interactions.get(this.getCommand(interaction));
     if (!command) return;
 
-    const locale = await client.locales.getLocale(
-      interaction.guild.id,
-      interaction.user.id
-    );
+    const locale = await client.locales.getLocale(interaction.guild.id);
 
     if (command.options.client_perms) {
       const clientPerms = this.client.clientPerms(
