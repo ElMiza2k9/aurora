@@ -16,7 +16,7 @@
     "in_afk": "You're in AFK channel.",
     "self_deaf": "You've deafened yourself.",
     "server_deaf": "You're deafened server-wide.",
-    "not_same_channel": "You're not in the same voice channel as me.",
+    "different_channel": "Please join {{channel}} first.",
     "no_connection": "There's no voice connection in this server.",
     "no_queue": "The queue is empty.",
     "last_song": "The current track is the last one in the queue.\nIf you want to destroy the voice connection, use {{cmd}} instead."
