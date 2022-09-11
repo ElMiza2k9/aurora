@@ -3,6 +3,7 @@ import {
   Client,
   Collection,
   Guild,
+  GuildChannel,
   PermissionFlagsBits,
 } from "discord.js";
 import DistubePlayer from "distube";
@@ -68,7 +69,7 @@ export class AuroraClient extends Client<true> {
 
     return new EmbedBuilder()
       .setFooter({
-        text: `${dbGuild?.embed.show_author ? interaction.user?.tag : null}`,
+        text: dbGuild?.embed.show_author ? interaction.user?.tag : "",
         iconURL: `${
           dbGuild?.embed.show_author
             ? interaction.user?.displayAvatarURL()
@@ -104,52 +105,6 @@ export class AuroraClient extends Client<true> {
     return `<t:${parseInt(parsed.toString())}:${type ?? "F"}>`;
   }
 
-  async addUser(user_id: string, data?: any) {
-    try {
-      const user = await this.db.user.create({
-        data: {
-          user_id: user_id,
-          ...data,
-        },
-      });
-
-      return user;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async updateUser(
-    user_id: string,
-    data: Partial<Prisma.UserUpdateManyArgs["data"]>
-  ) {
-    try {
-      const user = await this.getUser(user_id);
-
-      if (!user) {
-        this.addUser(user_id, data);
-        return;
-      }
-
-      await this.db.user.updateMany({
-        where: { user_id: user_id },
-        data,
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async removeUser(user_id: string) {
-    try {
-      await this.db.user.deleteMany({
-        where: { user_id: user_id },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   async getGuild(guild_id: string | undefined) {
     if (!guild_id) return null;
 
@@ -160,19 +115,6 @@ export class AuroraClient extends Client<true> {
         })) ?? (await this.addGuild(guild_id));
 
       return guild;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async getUser(user_id: string) {
-    try {
-      const user =
-        (await this.db.user.findFirst({
-          where: { user_id: user_id },
-        })) ?? (await this.addUser(user_id));
-
-      return user;
     } catch (error) {
       console.log(error);
     }
@@ -307,7 +249,10 @@ export class AuroraClient extends Client<true> {
       if (
         !(interaction.guild as Guild).members
           .resolve(interaction.member as any)
-          .permissions.has(perm)
+          .permissions.has(perm) ||
+        !(interaction.channel as GuildChannel)
+          .permissionsFor(interaction.guild!.members.me!)
+          .has(perm)
       ) {
         neededPerms.push(perm);
       }
@@ -341,7 +286,10 @@ export class AuroraClient extends Client<true> {
       if (
         !(interaction.guild as Guild).members
           .resolve(interaction.member as any)
-          .permissions.has(perm)
+          .permissions.has(perm) ||
+        !(interaction.channel as GuildChannel)
+          .permissionsFor(interaction.guild!.members.me!)
+          .has(perm)
       ) {
         neededPerms.push(perm);
       }
