@@ -9,10 +9,7 @@ export default class PlayerAddListEvent extends Event {
   }
 
   async execute(client: AuroraClient, _queue: Queue, playlist: Playlist<any>) {
-    const l = await client.locales.getLocale(
-      playlist.metadata.i.guild.id,
-      playlist.metadata.i.user.id
-    );
+    const l = await client.locales.getLocale(playlist.metadata.i.guild.id);
 
     playlist.metadata.i.followUp({
       content: client.reply(

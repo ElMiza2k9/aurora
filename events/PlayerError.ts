@@ -13,11 +13,7 @@ export default class PlayerErrorEvent extends Event {
     channel: TextChannel,
     error: DisTubeError<string>
   ) {
-    const queue = await this.client.player.queues.get(channel.guild.id);
-    const l = await client.locales.getLocale(
-      channel.guild.id,
-      queue!.songs[0].user!.id
-    );
+    const l = await client.locales.getLocale(channel.guild.id);
     channel.send({
       content: client.reply(l("misc:error", { error: `${error.name}` }), ":x:"),
     });

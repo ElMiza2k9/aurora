@@ -9,10 +9,7 @@ export default class PlayerAddSongEvent extends Event {
   }
 
   async execute(client: AuroraClient, queue: Queue, song: Song<any>) {
-    const l = await client.locales.getLocale(
-      song.metadata.i.guild.id,
-      song.metadata.i.user.id
-    );
+    const l = await client.locales.getLocale(song.metadata.i.guild.id);
 
     song.metadata.i.followUp({
       content: client.reply(
