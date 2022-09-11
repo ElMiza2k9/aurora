@@ -38,7 +38,11 @@ export class AuroraClient extends Client<true> {
     this.player = new DistubePlayer(this, {
       nsfw: false,
       emitNewSongOnly: true,
-      plugins: [new YtDlpPlugin(), new SpotifyPlugin(), new SoundCloudPlugin()],
+      plugins: [
+        new YtDlpPlugin({ update: true }),
+        new SpotifyPlugin(),
+        new SoundCloudPlugin(),
+      ],
       emitAddSongWhenCreatingQueue: false,
       joinNewVoiceChannel: false,
     });
