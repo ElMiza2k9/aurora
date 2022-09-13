@@ -44,6 +44,7 @@ export class AuroraClient extends Client<true> {
         new SoundCloudPlugin(),
       ],
       emitAddSongWhenCreatingQueue: false,
+      leaveOnFinish: true,
       joinNewVoiceChannel: false,
     });
     this.config = Config;
