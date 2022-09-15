@@ -34,7 +34,7 @@ export default class OptsGeneralLocaleCommand extends SubCommand {
 
     await interaction.followUp({
       content: this.client.reply(
-        l("commands:opts:locale:server:reply", {
+        l("commands:opts:general:locale:reply", {
           locale: `${interaction.options.getString("locale")}`,
         }),
         ":globe_with_meridians:"
