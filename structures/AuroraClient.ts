@@ -3,7 +3,6 @@ import {
   Client,
   Collection,
   Guild,
-  GuildChannel,
   PermissionFlagsBits,
 } from "discord.js";
 import DistubePlayer from "distube";
@@ -154,6 +153,24 @@ export class AuroraClient extends Client<true> {
       throw Error("Expected interaction to be provided (vc)");
     }
 
+    if (
+      !interaction.member.voice.channel
+        .permissionsFor(interaction.guild.members.me)
+        .has(PermissionFlagsBits.Connect)
+    ) {
+      return interaction.followUp({
+        content: this.reply(locale("misc:voice:perms:connect"), ":x:"),
+      });
+    } else if (
+      !interaction.member.voice.channel
+        .permissionsFor(interaction.guild.members.me)
+        .has(PermissionFlagsBits.Speak)
+    ) {
+      return interaction.followUp({
+        content: this.reply(locale("misc:voice:perms:speak"), ":x:"),
+      });
+    }
+
     if (!interaction.member.voice.channel) {
       return interaction.followUp({
         content: this.reply(locale("misc:voice:not_in_voice"), ":x:"),
@@ -231,10 +248,7 @@ export class AuroraClient extends Client<true> {
       if (
         !(interaction.guild as Guild).members
           .resolve(interaction.member as any)
-          .permissions.has(perm) ||
-        !(interaction.channel as GuildChannel)
-          .permissionsFor(interaction.guild!.members.me!)
-          .has(perm)
+          .permissions.has(perm)
       ) {
         neededPerms.push(perm);
       }
@@ -268,10 +282,7 @@ export class AuroraClient extends Client<true> {
       if (
         !(interaction.guild as Guild).members
           .resolve(interaction.member as any)
-          .permissions.has(perm) ||
-        !(interaction.channel as GuildChannel)
-          .permissionsFor(interaction.guild!.members.me!)
-          .has(perm)
+          .permissions.has(perm)
       ) {
         neededPerms.push(perm);
       }
