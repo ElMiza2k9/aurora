@@ -1,6 +1,7 @@
 import {
   ApplicationCommandOptionType,
   escapeMarkdown,
+  time,
   UserFlags,
 } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
@@ -52,7 +53,7 @@ export default class InfoUserCommand extends SubCommand {
               value: `
 ${l("commands:info:user:fields:common_info:id", { id: `${user.id}` })}
 ${l("commands:info:user:fields:common_info:created_at", {
-  timestamp: `${this.client.formatTime(user.createdTimestamp, "R")}`,
+  timestamp: `${time(user.createdAt, "R")}`,
 })}
         `,
             },
@@ -61,7 +62,7 @@ ${l("commands:info:user:fields:common_info:created_at", {
               value: guildMember
                 ? `
 ${l("commands:info:user:fields:server_info:joined_at", {
-  timestamp: `${this.client.formatTime(guildMember.joinedAt, "R")}`,
+  timestamp: `${time(guildMember.joinedAt, "R")}`,
 })}
 ${l("commands:info:user:fields:server_info:nickname", {
   nickname: `${

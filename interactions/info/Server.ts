@@ -1,4 +1,4 @@
-import { ChannelType, escapeMarkdown } from "discord.js";
+import { ChannelType, escapeMarkdown, time } from "discord.js";
 import { AuroraClient } from "../../structures/AuroraClient";
 import { SubCommand } from "../../structures/SubCommand";
 
@@ -36,7 +36,7 @@ ${l("commands:info:server:fields:common_info:created_by", {
   user: `${serverOwner.user}`,
 })}
 ${l("commands:info:server:fields:common_info:created_at", {
-  timestamp: `${this.client.formatTime(guild.createdTimestamp, "R")}
+  timestamp: `${time(guild.createdAt, "R")}
 ${l("commands:info:server:fields:common_info:boost_count", {
   boosts: `${guild.premiumSubscriptionCount}`,
   level: `${l(`misc:boost_levels:${guild.premiumTier}`)}`,
