@@ -2,13 +2,13 @@ import { ApplicationCommandOptionType } from "discord.js";
 import { AuroraClient } from "../../../structures/AuroraClient";
 import { SubCommand } from "../../../structures/SubCommand";
 
-export default class OptsEmbedColorCommand extends SubCommand {
+export default class OptsGeneralColorCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "color",
-      groupName: "embed",
+      groupName: "general",
       topName: "opts",
-      description: "Edit server embed settings",
+      description: "Edit server embed color",
       options: [
         {
           name: "color",
@@ -26,14 +26,14 @@ export default class OptsEmbedColorCommand extends SubCommand {
     if (!/^#?([0-9a-f]{6})$/i.test(color)) {
       return interaction.followUp({
         content: this.client.reply(
-          l("commands:opts:embed:color:invalid_color"),
+          l("commands:opts:general:color:invalid_color"),
           ":x:"
         ),
       });
     }
 
     await this.client.updateGuild(interaction.guild.id, {
-      embed: { color: color.replace("#", "") },
+      settings: { general: { embed_color: color.replace("#", "") } },
     });
 
     await interaction.followUp({
