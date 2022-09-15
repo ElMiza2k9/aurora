@@ -1,5 +1,5 @@
 # Aurora
-A simple yet powerful entertainment solution for Discord servers of any size. Previously was just a private bot for my own Discord server, [Adwaita](https://discord.gg/ctKs8WRQR5).
+A simple yet powerful entertainment & utility bot for Discord servers of any shape and size. Previously was just a private bot for my own Discord server, [Adwaita](https://discord.gg/ctKs8WRQR5).
 
 ## Why this repo is called Aurora and not Ahri?
 There are several reasons why:

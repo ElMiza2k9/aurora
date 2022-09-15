@@ -1,12 +1,12 @@
 {
   "name": "aurora",
-  "version": "0.7.0",
-  "description": "A simple yet powerful entertainment solution for Discord servers of any size",
+  "version": "0.7.1",
+  "description": "A simple yet powerful entertainment & utility bot for Discord servers of any shape and size",
   "main": "index.ts",
   "scripts": {
     "prod": "ts-node index.ts",
     "dev": "nodemon",
-    "format": "prettier --write \"**/*.{js,ts,json}\"",
+    "format": "prettier --write \"**/*.{ts,json}\"",
     "prisma": "npx prisma format && npx prisma generate"
   },
   "engines": {
