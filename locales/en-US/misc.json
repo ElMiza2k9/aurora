@@ -6,8 +6,8 @@
     "2": "level 2",
     "3": "level 3"
   },
-  "no_server_nickname": "No nickname set",
-  "user_not_in_server": "This user didn't join this server.",
+  "no_server_nickname": "No nickname",
+  "user_not_in_server": "The user is not on this server.",
   "true": "Yes",
   "false": "No",
   "unknown": "Unknown",
@@ -40,6 +40,8 @@
     "song_added": "Added {{song}} to the queue.",
     "stopped": "Destroyed the voice connection because I was left all alone.",
     "unknown_author": "Unknown author",
-    "volume": "Volume"
+    "volume": "Volume",
+    "finished": "Finished playing server queue.",
+    "disconnected": "Cleared the queue and disconnected from voice channel."
   }
 }
