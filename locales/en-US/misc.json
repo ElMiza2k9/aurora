@@ -19,7 +19,11 @@
     "different_channel": "Please join {{channel}} first.",
     "no_connection": "There's no voice connection in this server.",
     "no_queue": "The queue is empty.",
-    "last_song": "The current track is the last one in the queue.\nIf you want to destroy the voice connection, use {{cmd}} instead."
+    "last_song": "The current track is the last one in the queue.\nIf you want to destroy the voice connection, use {{cmd}} instead.",
+    "perms": {
+      "connect": "I cannot connect to the channel you are trying to connect me to.",
+      "speak": "I cannot speak in the channel you are trying to connect me to."
+    }
   },
   "owner": {
     "empty_list": "Owners list is empty, please check your config file.",
