@@ -147,28 +147,11 @@ export class AuroraClient extends Client<true> {
     locale: any,
     checkConnection?: boolean,
     checkQueue?: boolean,
-    checkLast?: boolean
+    checkLast?: boolean,
+    checkPerms?: boolean
   ) {
     if (!interaction) {
       throw Error("Expected interaction to be provided (vc)");
-    }
-
-    if (
-      !interaction.member.voice.channel
-        .permissionsFor(interaction.guild.members.me)
-        .has(PermissionFlagsBits.Connect)
-    ) {
-      return interaction.followUp({
-        content: this.reply(locale("misc:voice:perms:connect"), ":x:"),
-      });
-    } else if (
-      !interaction.member.voice.channel
-        .permissionsFor(interaction.guild.members.me)
-        .has(PermissionFlagsBits.Speak)
-    ) {
-      return interaction.followUp({
-        content: this.reply(locale("misc:voice:perms:speak"), ":x:"),
-      });
     }
 
     if (!interaction.member.voice.channel) {
@@ -198,6 +181,26 @@ export class AuroraClient extends Client<true> {
       return interaction.followUp({
         content: this.reply(locale("misc:voice:not_same_channel"), ":x:"),
       });
+    }
+
+    if (checkPerms) {
+      if (
+        !interaction.member.voice.channel
+          .permissionsFor(interaction.guild.members.me)
+          .has(PermissionFlagsBits.Connect)
+      ) {
+        return interaction.followUp({
+          content: this.reply(locale("misc:voice:perms:connect"), ":x:"),
+        });
+      } else if (
+        !interaction.member.voice.channel
+          .permissionsFor(interaction.guild.members.me)
+          .has(PermissionFlagsBits.Speak)
+      ) {
+        return interaction.followUp({
+          content: this.reply(locale("misc:voice:perms:speak"), ":x:"),
+        });
+      }
     }
 
     if (checkConnection) {

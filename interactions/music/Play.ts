@@ -21,7 +21,14 @@ export default class MusicPlayCommand extends SubCommand {
   }
   async execute(interaction, l) {
     await interaction.deferReply();
-    const checked = await this.client.vc(interaction, l);
+    const checked = await this.client.vc(
+      interaction,
+      l,
+      false,
+      false,
+      false,
+      true
+    );
 
     if (checked === true) {
       const query = await interaction.options.getString("query");
