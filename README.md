@@ -1,8 +1,12 @@
 # Aurora
 A simple yet powerful entertainment solution for Discord servers of any size. Previously was just a private bot for my own Discord server, [Adwaita](https://discord.gg/ctKs8WRQR5).
 
-## Why this repo is called Aurora and not Tiramisu?
-That's because we still primarily develop this bot for Adwaita, and Aurora is the name of our private instance. It is also a reference to one of the oldest members of our server.
+## Why this repo is called Aurora and not Ahri?
+There are several reasons why:
+1. We still primarily develop this bot for Adwaita, and Aurora is the name of our private instance
+2. Aurora is also a reference to one of the oldest members of our server
+3. Renaming every component of this project would take a lot of time
+4. Renaming the repo will probably break all git remotes
 
 ## Contributing
 We strive to provide a quality product; however, nothing is ideal in this world. If you find any bugs or encounter issues, feel free to [open an issue](https://github.com/chamln/aurora/issues/new). If you found an issue and know how to fix it, or you have implemented a new feature, don't hesitate to [open a pull request](https://github.com/chamln/aurora/pulls) - we'll do our best to quickly review and merge your changes and inform you of problems, if any.
