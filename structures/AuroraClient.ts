@@ -19,7 +19,7 @@ import { PrismaClient } from "@prisma/client";
 import { SubCommand } from "./SubCommand";
 import { AuroraLocaleManager } from "./AuroraLocaleManager";
 import { AuroraTempManager } from "./AuroraTempManager";
-import { EmbedBuilder, TimestampStylesString } from "discord.js";
+import { EmbedBuilder } from "discord.js";
 import { Prisma } from "@prisma/client";
 
 export class AuroraClient extends Client<true> {
@@ -72,17 +72,11 @@ export class AuroraClient extends Client<true> {
 
     const dbGuild = await this.getGuild(interaction.guild?.id);
 
-    return new EmbedBuilder()
-      .setFooter({
-        text: dbGuild?.embed.show_author ? interaction.user?.tag : "",
-        iconURL: `${
-          dbGuild?.embed.show_author
-            ? interaction.user?.displayAvatarURL()
-            : null
-        }`,
-      })
-      .setColor(dbGuild?.embed.color ? `#${dbGuild?.embed.color}` : "#7289da")
-      .setTimestamp(dbGuild?.embed.show_timestamp ? Date.now() : null);
+    return new EmbedBuilder().setColor(
+      dbGuild?.settings.general.embed_color
+        ? `#${dbGuild?.settings.general.embed_color}`
+        : "#7289da"
+    );
   }
 
   /**
@@ -92,22 +86,6 @@ export class AuroraClient extends Client<true> {
    */
   reply(replyContent: string, emoji: string) {
     return `${emoji} ${replyContent}`;
-  }
-
-  /**
-   * Returns a formatted time
-   * @param { string | number | Date } timestamp Your timestamp
-   * @param {TimestampStylesString} type Formatting type
-   */
-  formatTime(timestamp: string | number | Date, type: TimestampStylesString) {
-    const parsed = new Date(timestamp).getTime() / 1000;
-    if (!timestamp) {
-      throw Error("time isn't provided (formatTime)");
-    } else if (!parsed) {
-      throw Error("time isn't parsable (formatTime)");
-    }
-
-    return `<t:${parseInt(parsed.toString())}:${type ?? "F"}>`;
   }
 
   async getGuild(guild_id: string | undefined) {
@@ -130,8 +108,7 @@ export class AuroraClient extends Client<true> {
       const guild = await this.db.guild.create({
         data: {
           guild_id: guild_id,
-          embed: {},
-          music: {},
+          settings: {},
         },
       });
 
@@ -151,7 +128,7 @@ export class AuroraClient extends Client<true> {
 
       await this.db.guild.updateMany({
         where: { guild_id: guild_id },
-        data,
+        data: data,
       });
     } catch (error) {
       console.log(error);
