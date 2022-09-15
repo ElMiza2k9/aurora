@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType } from "discord.js";
+import { ApplicationCommandOptionType, PermissionFlagsBits } from "discord.js";
 import { AuroraClient } from "../../../structures/AuroraClient";
 import { SubCommand } from "../../../structures/SubCommand";
 
@@ -9,6 +9,7 @@ export default class OptsGeneralColorCommand extends SubCommand {
       groupName: "general",
       topName: "opts",
       description: "Edit server embed color",
+      user_perms: [PermissionFlagsBits.ManageGuild],
       options: [
         {
           name: "color",
