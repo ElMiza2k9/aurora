@@ -1,11 +1,12 @@
 import { ApplicationCommandOptionType, PermissionFlagsBits } from "discord.js";
-import { AuroraClient } from "../../structures/AuroraClient";
-import { SubCommand } from "../../structures/SubCommand";
+import { AuroraClient } from "../../../structures/AuroraClient";
+import { SubCommand } from "../../../structures/SubCommand";
 
-export default class OptsLocaleCommand extends SubCommand {
+export default class OptsGeneralLocaleCommand extends SubCommand {
   constructor(client: AuroraClient) {
     super(client, {
       name: "locale",
+      groupName: "general",
       topName: "opts",
       description: "Manage this server's locale",
       user_perms: [PermissionFlagsBits.ManageGuild],
