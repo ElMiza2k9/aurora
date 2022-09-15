@@ -1,6 +1,6 @@
 {
   "name": "aurora",
-  "version": "0.6.2",
+  "version": "0.7.0",
   "description": "A simple yet powerful entertainment solution for Discord servers of any size",
   "main": "index.ts",
   "scripts": {
