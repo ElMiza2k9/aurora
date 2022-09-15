@@ -7,23 +7,19 @@ generator client {
   provider = "prisma-client-js"
 }
 
-type GuildEmbedData {
-  color          String  @default("7289da")
-  show_author    Boolean @default(true)
-  show_timestamp Boolean @default(true)
+type GuildSettingsGeneral {
+  embed_color String @default("7289da")
+  locale      String @default("en-US")
 }
 
-type GuildMusicData {
-  allow_duplicates Boolean @default(true)
-  lock_channel_id  String?
+type GuildSettings {
+  general GuildSettingsGeneral
 }
 
 model Guild {
-  id       String         @id @default(auto()) @map("_id") @db.ObjectId
-  guild_id String         @unique
-  locale   String         @default("en-US")
-  music    GuildMusicData
-  embed    GuildEmbedData
+  id       String        @id @default(auto()) @map("_id") @db.ObjectId
+  guild_id String        @unique
+  settings GuildSettings
 
   @@map("guilds")
 }
