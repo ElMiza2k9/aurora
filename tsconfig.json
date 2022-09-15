@@ -38,5 +38,5 @@
     "incremental": true
   },
   "exclude": ["node_modules", ".vscode", ".github", "**/*.md"],
-  "include": ["**/*.ts", "./*.js"]
+  "include": ["**/*.ts"]
 }
