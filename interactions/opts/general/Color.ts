@@ -38,7 +38,7 @@ export default class OptsGeneralColorCommand extends SubCommand {
 
     await interaction.followUp({
       content: this.client.reply(
-        l("commands:opts:embed:color:reply", {
+        l("commands:opts:general:color:reply", {
           color: `${color.replace("#", "")}`,
         }),
         ":art:"
