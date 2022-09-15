@@ -20,7 +20,7 @@
         "ram_heap": { "name": "ОЗУ (heap)", "value": "{{mem}} МБ" },
         "ram_all": { "name": "ОЗУ (всего)", "value": "{{mem}} МБ" }
       },
-      "footer": "© 2022 {{author}}. Лицензировано под {{license}}.",
+      "footer": "© 2022 {{author}}",
       "buttons": {
         "source": "Исходный код",
         "issues": "Трекер проблем",
@@ -83,7 +83,7 @@
       "paused": "Плеер поставлен на паузу."
     },
     "queue": {
-      "reply": "Вот очередь для {{server}}:",
+      "reply": "Очередь на сервере {{server}}:",
       "fields": {
         "now_playing": "Сейчас играет",
         "up_next": {

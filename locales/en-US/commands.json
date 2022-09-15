@@ -20,7 +20,7 @@
         "ram_heap": { "name": "RAM (heap)", "value": "{{mem}} MB" },
         "ram_all": { "name": "RAM (all)", "value": "{{mem}} MB" }
       },
-      "footer": "© 2022 {{author}}. Licensed under {{license}}.",
+      "footer": "© 2022 {{author}}",
       "buttons": {
         "source": "Source code",
         "issues": "Issue tracker",
