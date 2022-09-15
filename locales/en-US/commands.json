@@ -110,12 +110,13 @@
     }
   },
   "opts": {
-    "locale": {
-      "server": {
-        "reply": "Done - the new locale on this server is {{locale}}."
+    "general": {
+      "color": {
+        "invalid_color": "You specified a non-existent color.",
+        "reply": "Changed embeds color to {{color}}."
       },
-      "user": {
-        "reply": "Done - your new personal locale is {{locale}}."
+      "locale": {
+        "reply": "Changed server locale to {{locale}}."
       }
     },
     "tempvoice": {
